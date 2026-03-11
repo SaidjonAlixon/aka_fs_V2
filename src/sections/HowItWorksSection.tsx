@@ -1,0 +1,128 @@
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { FileText, Search, Truck, CheckCircle2, ArrowRight } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const HowItWorksSection = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const steps = [
+    {
+      step: '01',
+      icon: FileText,
+      title: 'Submit Your Load',
+      desc: 'Fill out a quick form or call us directly with your freight details, origin, and destination.',
+    },
+    {
+      step: '02',
+      icon: Search,
+      title: 'We Match Capacity',
+      desc: 'Our dispatch team instantly optimizes carrier selection from our vetted network.',
+    },
+    {
+      step: '03',
+      icon: Truck,
+      title: 'Freight Moves',
+      desc: 'Real-time GPS tracking keeps you informed every mile, from pickup to delivery.',
+    },
+    {
+      step: '04',
+      icon: CheckCircle2,
+      title: 'Confirmed Delivery',
+      desc: 'Get a digital POD and invoice instantly. Simple, fast, and always transparent.',
+    },
+  ];
+
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.step-card',
+        { y: 70, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 75%',
+            once: true,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        '.step-line',
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 70%',
+            once: true,
+          },
+        }
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="relative py-20 md:py-32 bg-[#060d14] overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-lime/20 to-transparent" />
+
+      <div className="container mx-auto px-6 lg:px-12">
+        <div className="text-center mb-16 md:mb-24">
+          <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-4 md:mb-6">Simple Process</span>
+          <h2 className="text-4xl md:text-7xl lg:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85]">
+            HOW IT <span className="text-lime">WORKS</span>
+          </h2>
+        </div>
+
+        {/* Steps grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 relative">
+          {/* Connecting line (desktop only) */}
+          <div className="hidden lg:block absolute top-[56px] left-[12.5%] right-[12.5%] h-[1px] bg-white/10">
+            <div className="step-line origin-left absolute inset-0 bg-lime/50" />
+          </div>
+
+          {steps.map((step, idx) => (
+            <div key={idx} className="step-card relative flex flex-col items-center text-center px-4 md:px-8 py-8 md:py-10 group">
+              {/* Number badge */}
+              <div className="relative z-10 mb-8">
+                <div className="w-28 h-28 border-2 border-white/10 group-hover:border-lime/50 transition-all duration-500 flex flex-col items-center justify-center bg-navy relative">
+                  <step.icon className="w-8 h-8 text-lime mb-1" />
+                  <span className="font-mono text-[10px] text-lime/60 tracking-widest">{step.step}</span>
+                  {/* Corner accents */}
+                  <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-lime/30" />
+                  <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-lime/30" />
+                </div>
+              </div>
+
+              <h3 className="font-space font-black text-2xl text-white uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
+                {step.title}
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
+
+              {/* Arrow (not last) */}
+              {idx < steps.length - 1 && (
+                <div className="hidden lg:flex absolute -right-3 top-14 z-20 text-lime">
+                  <ArrowRight className="w-6 h-6" />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HowItWorksSection;

@@ -1,0 +1,15 @@
+{
+  "name": "AKA FS Logistics",
+  "short_name": "AKA FS",
+  "icons": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0c10",
+  "theme_color": "#b6ff00"
+}
