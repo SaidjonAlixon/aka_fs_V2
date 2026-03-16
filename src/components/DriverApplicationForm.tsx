@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   X, Truck, Briefcase, CheckCircle2, 
-  ArrowRight, ArrowLeft, Upload, FileText,
+  ArrowRight, ArrowLeft, Upload,
   ShieldCheck, MapPin, ChevronRight, ChevronDown,
   Loader2
 } from 'lucide-react';
