@@ -5,7 +5,11 @@ import { Truck, Snowflake, Package, RefreshCw } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ServicesPreview = () => {
+interface ServicesPreviewProps {
+  onApplyClick?: () => void;
+}
+
+const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const services = [
@@ -100,6 +104,7 @@ const ServicesPreview = () => {
           {services.map((service, idx) => (
             <div
               key={idx}
+              onClick={onApplyClick}
               className="service-preview-card group relative p-6 md:p-8 bg-navy border border-white/5 hover:border-lime/30 transition-all duration-500 overflow-hidden cursor-pointer hover:-translate-y-4"
             >
               {/* Badge */}
@@ -125,7 +130,7 @@ const ServicesPreview = () => {
               <div className="absolute bottom-0 left-0 w-0 h-1 bg-lime group-hover:w-full transition-all duration-700" />
 
               <span className="text-lime text-xs font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Learn More →
+                Apply Now →
               </span>
             </div>
           ))}

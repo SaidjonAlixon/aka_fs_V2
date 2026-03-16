@@ -71,3 +71,20 @@ export default defineConfig([
   },
 ])
 ```
+
+## Driver Application (AKA FS Logistics)
+
+The site includes a production-ready driver application flow:
+
+- **Frontend:** Driver Application form (position selection → contact → documents → review). Files are uploaded to **Vercel Blob**; then form data is sent to the API.
+- **API:** Vercel serverless endpoints:
+  - `POST /api/blob-upload` — accepts a file (field `file` or `blob`), uploads to Vercel Blob (public, max 10MB), returns `{ url }`. Requires `BLOB_READ_WRITE_TOKEN`.
+  - `POST /api/applications` — accepts JSON (position, name, phone, email, address, experience, cdlType, ssn, documents with blob URLs), sends a formatted message to Telegram, returns `{ success: true }`. Requires `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
+
+**Environment variables** (see `.env.example`):
+
+- `BLOB_READ_WRITE_TOKEN` — from Vercel Dashboard → Storage → Blob
+- `TELEGRAM_BOT_TOKEN` — from [@BotFather](https://t.me/BotFather)
+- `TELEGRAM_CHAT_ID` — chat/group ID where notifications are sent
+
+**Local development:** For full flow (upload + Telegram), run `vercel dev` so the `/api` routes are available. With `npm run dev` only the frontend runs; form submit will fail unless the app is deployed and env vars are set.

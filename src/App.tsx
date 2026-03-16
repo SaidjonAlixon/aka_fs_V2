@@ -51,7 +51,7 @@ function App() {
                 <>
                   <Hero onApplyClick={() => setIsFormOpen(true)} />
                   <StatsSection />
-                  <ServicesPreview />
+                  <ServicesPreview onApplyClick={() => setIsFormOpen(true)} />
                   <WhyUsSection />
                   <HowItWorksSection />
                   <CapabilitiesSection onApplyClick={() => setIsFormOpen(true)} />
@@ -67,7 +67,7 @@ function App() {
               path="/about"
               element={
                 <>
-                  <Services className="z-20" />
+                  <Services onApplyClick={() => setIsFormOpen(true)} className="z-20" />
                   <Coverage className="z-30" />
                   <Industries onApplyClick={() => setIsFormOpen(true)} className="z-50" />
                   <Technology className="z-[60]" />
@@ -87,7 +87,7 @@ function App() {
           </Routes>
         </main>
 
-        <Footer />
+        <Footer onApplyClick={() => setIsFormOpen(true)} />
 
         <DriverApplicationForm 
           isOpen={isFormOpen} 

@@ -6,7 +6,11 @@ import { Linkedin, Twitter, Facebook } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Footer = () => {
+interface FooterProps {
+  onApplyClick?: () => void;
+}
+
+const Footer = ({ onApplyClick }: FooterProps) => {
   const footerRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -51,23 +55,31 @@ const Footer = () => {
 
       <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-8">
         {/* Logo */}
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          className="block"
-        >
-          <video
-            src="/grok-footer.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="h-24 w-auto object-contain mix-blend-screen"
-          />
-        </a>
+        <div className="flex flex-col items-center lg:items-start gap-4">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="block"
+          >
+            <video
+              src="/grok-footer.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-20 w-auto object-contain mix-blend-screen"
+            />
+          </a>
+          <button 
+            onClick={onApplyClick}
+            className="text-[10px] font-black text-lime uppercase tracking-[0.3em] hover:text-white transition-colors"
+          >
+            Join Our Fleet →
+          </button>
+        </div>
 
         {/* Navigation */}
         <nav className="flex flex-wrap justify-center gap-6 lg:gap-10">
@@ -80,6 +92,12 @@ const Footer = () => {
               {link.label}
             </NavLink>
           ))}
+          <button
+            onClick={onApplyClick}
+            className="font-space font-black text-sm uppercase tracking-[0.15em] text-lime hover:text-white transition-all duration-200"
+          >
+            APPLY
+          </button>
         </nav>
 
         {/* Social icons */}

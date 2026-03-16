@@ -102,131 +102,149 @@ const Contact = () => {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative bg-navy-light py-20 lg:py-32 px-6 lg:px-[7vw]"
+      className="relative min-h-[160vh] lg:min-h-[180vh] flex flex-col justify-end pb-40 px-6 lg:px-[8vw] overflow-hidden"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-        {/* Left column - Form */}
-        <div ref={leftRef}>
-          <h2 className="headline-section text-text-primary mb-4">
-            Let's Move Freight.
-          </h2>
-          <p className="body-text max-w-[40ch] mb-8">
-            Tell us what you're shipping. We'll respond within one business day.
-          </p>
+      {/* Background Image Layer - Fixed/Sticky for maximum clarity */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
+          <img
+            src="/images/Office.png"
+            alt="AKA FS Background"
+            className="w-full h-full object-cover object-[center_20%]"
+          />
+          {/* Minimalist, high-end overlays with seamless fade */}
+          <div className="absolute inset-0 bg-navy/20 backdrop-blur-[0.2px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-transparent to-navy" />
+          <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-navy to-transparent" />
+        </div>
+      </div>
 
-          {/* Contact info cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-            {contactInfo.map((info, index) => (
-              <div
-                key={index}
-                className="glass-card p-4 text-center hover:border-lime/30 transition-all duration-300"
-              >
-                <info.icon className="w-5 h-5 text-lime mx-auto mb-2" />
-                <div className="font-mono text-[10px] uppercase tracking-wider text-text-secondary mb-1">
-                  {info.label}
-                </div>
-                <div className="font-space text-sm text-text-primary">
-                  {info.value}
-                </div>
-              </div>
-            ))}
+      {/* Main Content - Pushed for depth but integrated via gradients */}
+      <div className="relative z-10 w-full pt-[80vh]">
+        {/* Refined Header - Slightly larger for impact */}
+        <div className="mb-24 max-w-3xl">
+          <div className="flex items-center gap-6 mb-8">
+            <div className="h-0.5 w-20 bg-lime" />
+            <span className="text-lime font-black tracking-[0.8em] uppercase text-[11px]">CONNECT WITH EXCELLENCE</span>
           </div>
-
-          {/* Form */}
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="form-field">
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-text-secondary mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-transparent border border-white/20 px-4 py-3 text-text-primary placeholder:text-text-secondary/50 focus:border-lime focus:outline-none transition-colors"
-                  placeholder="Your name"
-                />
-              </div>
-              <div className="form-field">
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-text-secondary mb-2">
-                  Company
-                </label>
-                <input
-                  type="text"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  className="w-full bg-transparent border border-white/20 px-4 py-3 text-text-primary placeholder:text-text-secondary/50 focus:border-lime focus:outline-none transition-colors"
-                  placeholder="Your company"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="form-field">
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-text-secondary mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-transparent border border-white/20 px-4 py-3 text-text-primary placeholder:text-text-secondary/50 focus:border-lime focus:outline-none transition-colors"
-                  placeholder="your@email.com"
-                />
-              </div>
-              <div className="form-field">
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-text-secondary mb-2">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full bg-transparent border border-white/20 px-4 py-3 text-text-primary placeholder:text-text-secondary/50 focus:border-lime focus:outline-none transition-colors"
-                  placeholder="(555) 000-0000"
-                />
-              </div>
-            </div>
-
-            <div className="form-field">
-              <label className="block font-mono text-[10px] uppercase tracking-wider text-text-secondary mb-2">
-                Freight Details
-              </label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={4}
-                className="w-full bg-transparent border border-white/20 px-4 py-3 text-text-primary placeholder:text-text-secondary/50 focus:border-lime focus:outline-none transition-colors resize-none"
-                placeholder="Tell us about your shipping needs..."
-              />
-            </div>
-
-            <button type="submit" className="btn-primary w-full justify-center">
-              <Send className="w-4 h-4 mr-2" />
-              Send Inquiry
-            </button>
-          </form>
+          <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-4">
+            GLOBAL <span className="text-lime">STANDARDS.</span><br />
+            LOCAL ROOTS.
+          </h2>
+          <p className="text-gray-400 text-lg md:text-xl font-medium max-w-[45ch] leading-relaxed">
+            Experience the AKA FS standard in logistics. Our experts are ready to optimize your supply chain.
+          </p>
         </div>
 
-        {/* Right column - Image */}
-        <div ref={rightRef} className="relative hidden lg:block">
-          <div className="absolute inset-0 overflow-hidden">
-            <img
-              src="/images/contact_truck_road.jpg"
-              alt="Truck on open road"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-navy-light/50 to-transparent" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Left Column - Substantial Info & Form */}
+          <div ref={leftRef} className="lg:col-span-7 space-y-10">
+            {/* Larger Info Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {contactInfo.map((info, index) => (
+                <div
+                  key={index}
+                  className="glass-card bg-navy/40 backdrop-blur-2xl p-6 border-white/5 flex flex-col gap-4 hover:border-lime/30 hover:bg-navy/60 transition-all border-l-4 border-l-lime/10 group"
+                >
+                  <div className="p-3 bg-navy/60 border border-white/10 text-lime w-fit group-hover:bg-lime group-hover:text-navy transition-all">
+                    <info.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-1">{info.label}</div>
+                    <div className="text-sm font-black text-white tracking-wide">{info.value}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Substantial Glass Form */}
+            <div className="glass-card bg-navy/50 backdrop-blur-3xl p-10 md:p-14 border-white/10 shadow-3xl">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 ml-1">Identity</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-navy/30 border-b-2 border-white/10 px-6 py-4 text-sm text-white focus:border-lime focus:outline-none focus:bg-white/5 transition-all"
+                      placeholder="Your Full Name"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 ml-1">Channel</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-navy/30 border-b-2 border-white/10 px-6 py-4 text-sm text-white focus:border-lime focus:outline-none focus:bg-white/5 transition-all"
+                      placeholder="Professional Email"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 ml-1">Requirements</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={3}
+                    className="w-full bg-navy/30 border-b-2 border-white/10 px-6 py-4 text-sm text-white focus:border-lime focus:outline-none focus:bg-white/5 transition-all resize-none"
+                    placeholder="Describe your logistics challenges or shipment details..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="group/btn relative w-full py-6 bg-lime text-navy font-black text-sm uppercase tracking-[0.5em] overflow-hidden transition-all hover:scale-[1.01] shadow-[0_0_60px_rgba(184,255,44,0.15)]"
+                  style={{ clipPath: 'polygon(1% 0, 100% 0, 99% 100%, 0 100%)' }}
+                >
+                  <span className="relative z-10 flex justify-center items-center gap-3">
+                    <Send className="w-5 h-5" />
+                    Secure Inbound Request
+                  </span>
+                  <div className="absolute inset-0 bg-white translate-x-[-101%] group-hover/btn:translate-x-0 transition-transform duration-700 ease-in-out" />
+                </button>
+              </form>
+            </div>
           </div>
-          {/* Diagonal slash overlay */}
-          <div className="absolute left-0 top-0 h-full w-16 bg-lime slash-bar opacity-80" />
+
+          {/* Right Column - Prominent Map */}
+          <div ref={rightRef} className="lg:col-span-5 h-full">
+            <div className="glass-card bg-navy/40 backdrop-blur-3xl p-2 border-white/10 h-full min-h-[500px] lg:min-h-[600px] relative group overflow-hidden">
+              <div className="w-full h-full relative overflow-hidden grayscale contrast-[1.1] hover:grayscale-0 transition-all duration-1000 brightness-90 hover:brightness-105">
+                <iframe
+                  title="AKA FS HQ"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190255.451631557!2d-87.8358485!3d41.8337329!2m3!1f0!2f0!3f0!3m2!1i1024!2ie768!4f13.1!3m3!1m2!1s0x880e2c3cd0f4cbed%3A0xafe0a6ad09c0c000!2sChicago%2C%20IL!5e0!3m2!1sen!2sus!4v1710433600000!5m2!1sen!2sus"
+                  className="absolute inset-0 w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-navy/60 via-transparent to-navy/20" />
+              </div>
+
+              {/* Floating HQ Identity */}
+              <div className="absolute top-10 left-10">
+                <div className="glass-card bg-navy/95 backdrop-blur-3xl border-lime/40 p-6 px-10 flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-lime animate-ping" />
+                    <h4 className="text-xl font-black text-white uppercase tracking-tight">CHICAGO HUB</h4>
+                  </div>
+                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.5em] ml-5">CENTRAL LOGISTICS CENTER</p>
+                </div>
+              </div>
+
+              <div className="absolute bottom-10 right-10 flex items-center gap-6">
+                <div className="h-px w-16 bg-white/20" />
+                <span className="text-[10px] font-black text-white uppercase tracking-[0.6em] opacity-40">Live Network Feed</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

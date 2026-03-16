@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   X, Truck, Briefcase, CheckCircle2, 
   ArrowRight, ArrowLeft, Upload, FileText,
-  ShieldCheck, MapPin, ChevronRight
+  ShieldCheck, MapPin, ChevronRight, ChevronDown,
+  Loader2
 } from 'lucide-react';
+import { uploadToBlob, submitApplication, type ApplicationPayload } from '../lib/driverApplicationApi';
 
 interface DriverApplicationFormProps {
   isOpen: boolean;
@@ -18,6 +20,10 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedPosition, setSelectedPosition] = useState<PositionType | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [cdlDropdownOpen, setCdlDropdownOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const cdlDropdownRef = useRef<HTMLDivElement>(null);
   
   // Handle open/close animation
   useEffect(() => {
@@ -39,13 +45,121 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
     location: '',
     cdlType: '',
     experienceYears: '',
-    termsAccepted: false
+    // Company Driver – Experience & License (Step 3)
+    ssnOrEid: '',
+    ssnImage: null as File | null,
+    licenseFront: null as File | null,
+    licenseBack: null as File | null,
+    medicalCard: null as File | null,
+    resumeDoc: null as File | null,
+    drivingExperienceYears: 0,
+    termsAccepted: false,
+    // Owner Operator – Documents & Truck (Step 3)
+    annualTruckInspection: null as File | null,
+    truckEngine: null as File | null,
+    truckUnderEngine: null as File | null,
+    truckTires: null as File | null,
+    // Lease Purchase – Documents & Truck (Step 3, 3-rasm)
+    leaseCapCard: null as File | null,
+    leaseAnnualInspection: null as File | null,
+    leaseTruckEngine: null as File | null,
+    leaseTruckUnderEngine: null as File | null,
+    leaseTruckTires: null as File | null,
   });
+
+  const ssnInputRef = useRef<HTMLInputElement>(null);
+  const licenseFrontRef = useRef<HTMLInputElement>(null);
+  const licenseBackRef = useRef<HTMLInputElement>(null);
+  const medicalRef = useRef<HTMLInputElement>(null);
+  const resumeRef = useRef<HTMLInputElement>(null);
+  const annualInspectionRef = useRef<HTMLInputElement>(null);
+  const truckEngineRef = useRef<HTMLInputElement>(null);
+  const truckUnderEngineRef = useRef<HTMLInputElement>(null);
+  const truckTiresRef = useRef<HTMLInputElement>(null);
+  const leaseCapCardRef = useRef<HTMLInputElement>(null);
+  const leaseAnnualInspectionRef = useRef<HTMLInputElement>(null);
+  const leaseTruckEngineRef = useRef<HTMLInputElement>(null);
+  const leaseTruckUnderEngineRef = useRef<HTMLInputElement>(null);
+  const leaseTruckTiresRef = useRef<HTMLInputElement>(null);
+
+  const CDL_OPTIONS = [
+    { value: 'Class A', label: 'CLASS A CDL' },
+    { value: 'Class B', label: 'CLASS B CDL' },
+    { value: 'Class C', label: 'CLASS C CDL' },
+  ];
+
+  useEffect(() => {
+    if (!cdlDropdownOpen) return;
+    const close = (e: MouseEvent) => {
+      if (cdlDropdownRef.current && !cdlDropdownRef.current.contains(e.target as Node)) setCdlDropdownOpen(false);
+    };
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [cdlDropdownOpen]);
 
   if (!isOpen && !isVisible) return null;
 
-  const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, STEP_COUNT));
+  const nextStep = () => { setSubmitError(null); setCurrentStep(prev => Math.min(prev + 1, STEP_COUNT)); };
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
+
+  async function handleSubmitApplication() {
+    if (!selectedPosition || !formData.termsAccepted) return;
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const documents: ApplicationPayload['documents'] = {};
+      const upload = async (file: File | null): Promise<string | undefined> => {
+        if (!file) return undefined;
+        return uploadToBlob(file);
+      };
+
+      if (selectedPosition === 'company') {
+        documents.ssnImage = await upload(formData.ssnImage) ?? undefined;
+        documents.licenseFront = await upload(formData.licenseFront) ?? undefined;
+        documents.licenseBack = await upload(formData.licenseBack) ?? undefined;
+        documents.medicalCard = await upload(formData.medicalCard) ?? undefined;
+        documents.resume = await upload(formData.resumeDoc) ?? undefined;
+      } else if (selectedPosition === 'owner') {
+        documents.ssnImage = await upload(formData.ssnImage) ?? undefined;
+        documents.licenseFront = await upload(formData.licenseFront) ?? undefined;
+        documents.licenseBack = await upload(formData.licenseBack) ?? undefined;
+        documents.medicalCard = await upload(formData.medicalCard) ?? undefined;
+        documents.truckInspection = await upload(formData.annualTruckInspection) ?? undefined;
+        documents.enginePhoto = await upload(formData.truckEngine) ?? undefined;
+        documents.underEnginePhoto = await upload(formData.truckUnderEngine) ?? undefined;
+        documents.tirePhoto = await upload(formData.truckTires) ?? undefined;
+      } else if (selectedPosition === 'lease') {
+        documents.capCard = await upload(formData.leaseCapCard) ?? undefined;
+        documents.truckInspection = await upload(formData.leaseAnnualInspection) ?? undefined;
+        documents.enginePhoto = await upload(formData.leaseTruckEngine) ?? undefined;
+        documents.underEnginePhoto = await upload(formData.leaseTruckUnderEngine) ?? undefined;
+        documents.tirePhoto = await upload(formData.leaseTruckTires) ?? undefined;
+      }
+
+      const positionLabel = selectedPosition === 'company' ? 'Company Driver' : selectedPosition === 'owner' ? 'Owner Operator' : 'Lease Purchase';
+      const experience = selectedPosition === 'company'
+        ? String(formData.drivingExperienceYears)
+        : (formData.experienceYears || '');
+
+      const payload: ApplicationPayload = {
+        position: positionLabel,
+        name: [formData.firstName, formData.lastName].filter(Boolean).join(' ') || '—',
+        phone: formData.phone || '—',
+        email: formData.email || '—',
+        address: formData.location || '—',
+        experience,
+        cdlType: `${formData.cdlType || 'Class A'} CDL`,
+        ssn: formData.ssnOrEid || '—',
+        documents,
+      };
+      await submitApplication(payload);
+      onClose();
+    } catch (e) {
+      setSubmitError(e instanceof Error ? e.message : 'Submission failed');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   const positions = [
     {
@@ -97,7 +211,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
               Step {currentStep} of {STEP_COUNT} — {
                 currentStep === 1 ? 'Position Selection' :
                 currentStep === 2 ? 'Contact Details' :
-                currentStep === 3 ? 'Professional Experience' : 'Application Review'
+                currentStep === 3 ? (selectedPosition === 'company' ? 'Experience & License' : selectedPosition === 'owner' || selectedPosition === 'lease' ? 'Documents & Truck' : 'Professional Experience') : 'Application Review'
               }
             </p>
           </div>
@@ -231,102 +345,440 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
               </div>
             )}
 
-            {currentStep === 3 && (
-              <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">CDL License Type</label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {['Class A', 'Class B'].map(type => (
-                        <button
-                          key={type}
-                          onClick={() => setFormData({...formData, cdlType: type})}
-                          className={`p-4 border font-space font-bold uppercase tracking-widest transition-all ${
-                            formData.cdlType === type ? 'bg-lime text-black border-lime shadow-glow' : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20'
-                          }`}
-                        >
-                          {type}
-                        </button>
-                      ))}
-                    </div>
+            {currentStep === 3 && selectedPosition === 'company' && (
+              /* Company Driver – Step 3: Experience & License (3-rasm) */
+              <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
+                <h3 className="text-xl font-space font-black text-white uppercase tracking-tight">Experience & License</h3>
+
+                <div className="space-y-3" ref={cdlDropdownRef}>
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.25em] block">Choose your CDL type</label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setCdlDropdownOpen((o) => !o)}
+                      className="w-full flex items-center justify-between px-4 py-3 border border-white/10 rounded-sm bg-lime text-navy font-space font-bold uppercase tracking-wide transition-all hover:bg-lime/90"
+                    >
+                      {(formData.cdlType || 'Class A') === 'Class A' && 'CLASS A CDL'}
+                      {(formData.cdlType || 'Class A') === 'Class B' && 'CLASS B CDL'}
+                      {(formData.cdlType || 'Class A') === 'Class C' && 'CLASS C CDL'}
+                      <ChevronDown className={`w-5 h-5 transition-transform ${cdlDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {cdlDropdownOpen && (
+                      <div className="absolute top-full left-0 right-0 mt-1 border border-white/10 overflow-hidden rounded-sm bg-[#0A0F1D] z-10 shadow-xl">
+                        {CDL_OPTIONS.map((opt) => (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            onClick={() => {
+                              setFormData({ ...formData, cdlType: opt.value });
+                              setCdlDropdownOpen(false);
+                            }}
+                            className={`w-full text-left px-4 py-3 border-b border-white/5 last:border-b-0 transition-all font-medium ${
+                              (formData.cdlType || 'Class A') === opt.value
+                                ? 'bg-lime text-navy font-bold'
+                                : 'bg-white/[0.03] text-white/90 hover:bg-white/5 hover:text-white'
+                            }`}
+                          >
+                            {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">Driving Experience</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {['< 1yr', '1-3yrs', '3-5yrs', '5-10yrs', '10+yrs'].map(range => (
-                        <button
-                          key={range}
-                          onClick={() => setFormData({...formData, experienceYears: range})}
-                          className={`p-3 border text-[11px] font-mono font-bold uppercase transition-all ${
-                            formData.experienceYears === range ? 'bg-lime text-black border-lime' : 'bg-white/5 border-white/10 text-white/30 hover:border-white/20'
-                          }`}
-                        >
-                          {range}
-                        </button>
-                      ))}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Your SSN or EID number</label>
+                  <input
+                    type="text"
+                    placeholder="Your SSN or EID number"
+                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all font-medium"
+                    value={formData.ssnOrEid}
+                    onChange={(e) => setFormData({ ...formData, ssnOrEid: e.target.value })}
+                  />
+                </div>
+
+                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">SSN (Image copy)</label>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <input
+                      ref={ssnInputRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={(e) => setFormData({ ...formData, ssnImage: e.target.files?.[0] ?? null })}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => ssnInputRef.current?.click()}
+                      className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all"
+                    >
+                      Choose file
+                    </button>
+                    <span className={`text-sm font-mono ${formData.ssnImage ? 'text-lime' : 'text-white/50'}`}>
+                      {formData.ssnImage?.name ?? 'File not selected'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">Years of commercial driving experience?</label>
+                  <input
+                    type="number"
+                    min={0}
+                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white focus:border-lime focus:outline-none transition-all font-medium"
+                    value={formData.drivingExperienceYears}
+                    onChange={(e) => setFormData({ ...formData, drivingExperienceYears: Math.max(0, parseInt(e.target.value, 10) || 0) })}
+                  />
+                </div>
+
+                <div className="space-y-3 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
+                      <input
+                        ref={licenseFrontRef}
+                        type="file"
+                        accept="image/*,.pdf"
+                        className="hidden"
+                        onChange={(e) => setFormData({ ...formData, licenseFront: e.target.files?.[0] ?? null })}
+                      />
+                      <button type="button" onClick={() => licenseFrontRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFront ? 'text-lime' : 'text-white/50'}`}>{formData.licenseFront?.name ?? 'File not selected'}</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
+                      <input
+                        ref={licenseBackRef}
+                        type="file"
+                        accept="image/*,.pdf"
+                        className="hidden"
+                        onChange={(e) => setFormData({ ...formData, licenseBack: e.target.files?.[0] ?? null })}
+                      />
+                      <button type="button" onClick={() => licenseBackRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBack ? 'text-lime' : 'text-white/50'}`}>{formData.licenseBack?.name ?? 'File not selected'}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   <div className="p-8 border-2 border-dashed border-white/10 hover:border-lime/30 transition-colors group cursor-pointer flex flex-col items-center justify-center text-center gap-3">
-                      <div className="p-3 rounded-full bg-white/5 group-hover:bg-lime/10 group-hover:text-lime transition-all">
-                        <Upload className="w-6 h-6" />
-                      </div>
-                      <div className="font-space font-bold text-sm uppercase tracking-widest text-white/70">Upload CDL (Front)</div>
-                      <div className="text-[10px] font-mono text-white/20 uppercase tracking-tighter">MAX 10MB • JPG, PNG, PDF</div>
-                   </div>
-                   <div className="p-8 border-2 border-dashed border-white/10 hover:border-lime/30 transition-colors group cursor-pointer flex flex-col items-center justify-center text-center gap-3">
-                      <div className="p-3 rounded-full bg-white/5 group-hover:bg-lime/10 group-hover:text-lime transition-all">
-                        <FileText className="w-6 h-6" />
-                      </div>
-                      <div className="font-space font-bold text-sm uppercase tracking-widest text-white/70">Upload Resume (Optional)</div>
-                      <div className="text-[10px] font-mono text-white/20 uppercase tracking-tighter">MAX 10MB • PDF, DOCX</div>
-                   </div>
-                </div>
-              </div>
-            )}
-
-            {currentStep === 4 && (
-              <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-8">
-                <div className="bg-white/[0.02] border border-white/5 p-8 space-y-8">
-                  <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                    <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">Selected Position</span>
-                    <span className="text-lime font-space font-black uppercase text-xl">{selectedPosition?.replace('_', ' ')}</span>
+                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Medical Card</label>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <input
+                      ref={medicalRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={(e) => setFormData({ ...formData, medicalCard: e.target.files?.[0] ?? null })}
+                    />
+                    <button type="button" onClick={() => medicalRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.medicalCard ? 'text-lime' : 'text-white/50'}`}>{formData.medicalCard?.name ?? 'File not selected'}</span>
                   </div>
+                </div>
 
-                  <div className="grid grid-cols-2 gap-y-6">
-                    <div>
-                      <div className="text-[9px] font-mono text-white/20 uppercase tracking-widest mb-1">Full Name</div>
-                      <div className="text-white font-space font-bold uppercase">{formData.firstName} {formData.lastName}</div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Resume / Document (Optional)</label>
+                  <div
+                    className="p-8 border-2 border-dashed border-white/20 bg-white/[0.02] hover:border-lime/40 hover:bg-lime/5 transition-all cursor-pointer flex flex-col items-center justify-center text-center gap-2 rounded-sm"
+                    onClick={() => resumeRef.current?.click()}
+                    onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('border-lime', 'bg-lime/10'); }}
+                    onDragLeave={(e) => { e.currentTarget.classList.remove('border-lime', 'bg-lime/10'); }}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      e.currentTarget.classList.remove('border-lime', 'bg-lime/10');
+                      const f = e.dataTransfer.files?.[0];
+                      if (f) setFormData((prev) => ({ ...prev, resumeDoc: f }));
+                    }}
+                  >
+                    <input
+                      ref={resumeRef}
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      className="hidden"
+                      onChange={(e) => setFormData({ ...formData, resumeDoc: e.target.files?.[0] ?? null })}
+                    />
+                    <div className={`p-3 rounded-full ${formData.resumeDoc ? 'bg-lime/20 text-lime' : 'bg-white/5 text-white/50'}`}>
+                      <Upload className="w-6 h-6" />
                     </div>
-                    <div>
-                      <div className="text-[9px] font-mono text-white/20 uppercase tracking-widest mb-1">Email</div>
-                      <div className="text-white font-space font-bold uppercase">{formData.email}</div>
-                    </div>
-                    <div>
-                      <div className="text-[9px] font-mono text-white/20 uppercase tracking-widest mb-1">Phone</div>
-                      <div className="text-white font-space font-bold uppercase">{formData.phone}</div>
-                    </div>
-                    <div>
-                      <div className="text-[9px] font-mono text-white/20 uppercase tracking-widest mb-1">CDL / Experience</div>
-                      <div className="text-white font-space font-bold uppercase">{formData.cdlType} • {formData.experienceYears}</div>
-                    </div>
+                    <p className="text-white/70 text-sm">to upload or drag and drop</p>
+                    <p className="text-[10px] font-mono text-white/40">PDF, JPEG, JPG, PNG (Max 10MB)</p>
+                    {formData.resumeDoc && <p className="text-lime text-sm font-mono font-bold">{formData.resumeDoc.name}</p>}
                   </div>
                 </div>
 
                 <label className="flex items-start gap-4 cursor-pointer group">
                   <div className="relative mt-1">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       className="peer sr-only"
                       checked={formData.termsAccepted}
-                      onChange={(e) => setFormData({...formData, termsAccepted: e.target.checked})}
+                      onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
                     />
-                    <div className="w-6 h-6 bg-white/5 border-2 border-white/10 peer-checked:bg-lime peer-checked:border-lime transition-all" />
-                    <CheckCircle2 className="absolute top-0 left-0 w-6 h-6 text-black opacity-0 peer-checked:opacity-100 transition-opacity" />
+                    <div className="w-5 h-5 bg-white/5 border-2 border-white/10 peer-checked:bg-lime peer-checked:border-lime transition-all rounded" />
+                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
                   </div>
-                  <span className="text-xs text-text-secondary leading-relaxed font-inter font-medium">
+                  <span className="text-sm text-text-secondary">Accept terms and conditions</span>
+                </label>
+              </div>
+            )}
+
+            {currentStep === 3 && selectedPosition === 'owner' && (
+              /* Owner Operator – Step 3: Documents & Truck (3-rasm) */
+              <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
+                <h3 className="text-xl font-space font-black text-white uppercase tracking-tight">Owner Operator – Documents & Truck</h3>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Your SSN or EID number</label>
+                  <input
+                    type="text"
+                    placeholder="Your SSN or EID number"
+                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all font-medium rounded-sm"
+                    value={formData.ssnOrEid}
+                    onChange={(e) => setFormData({ ...formData, ssnOrEid: e.target.value })}
+                  />
+                </div>
+
+                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">SSN (Image Copy)</label>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <input ref={ssnInputRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, ssnImage: e.target.files?.[0] ?? null })} />
+                    <button type="button" onClick={() => ssnInputRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.ssnImage ? 'text-lime' : 'text-white/50'}`}>{formData.ssnImage?.name ?? 'File not selected'}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
+                      <input ref={licenseFrontRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, licenseFront: e.target.files?.[0] ?? null })} />
+                      <button type="button" onClick={() => licenseFrontRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFront ? 'text-lime' : 'text-white/50'}`}>{formData.licenseFront?.name ?? 'File not selected'}</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
+                      <input ref={licenseBackRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, licenseBack: e.target.files?.[0] ?? null })} />
+                      <button type="button" onClick={() => licenseBackRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBack ? 'text-lime' : 'text-white/50'}`}>{formData.licenseBack?.name ?? 'File not selected'}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Medical Card</label>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <input ref={medicalRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, medicalCard: e.target.files?.[0] ?? null })} />
+                    <button type="button" onClick={() => medicalRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.medicalCard ? 'text-lime' : 'text-white/50'}`}>{formData.medicalCard?.name ?? 'File not selected'}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Annual truck inspection</label>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <input ref={annualInspectionRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, annualTruckInspection: e.target.files?.[0] ?? null })} />
+                    <button type="button" onClick={() => annualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.annualTruckInspection ? 'text-lime' : 'text-white/50'}`}>{formData.annualTruckInspection?.name ?? 'File not selected'}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Please upload truck pictures (engine, under engine, tires)</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-mono text-white/50 uppercase">Engine</div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <input ref={truckEngineRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, truckEngine: e.target.files?.[0] ?? null })} />
+                        <button type="button" onClick={() => truckEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.truckEngine ? 'text-lime' : 'text-white/50'}`}>{formData.truckEngine?.name ?? 'File not selected'}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-mono text-white/50 uppercase">Under engine</div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <input ref={truckUnderEngineRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, truckUnderEngine: e.target.files?.[0] ?? null })} />
+                        <button type="button" onClick={() => truckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.truckUnderEngine ? 'text-lime' : 'text-white/50'}`}>{formData.truckUnderEngine?.name ?? 'File not selected'}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-mono text-white/50 uppercase">Tires</div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <input ref={truckTiresRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, truckTires: e.target.files?.[0] ?? null })} />
+                        <button type="button" onClick={() => truckTiresRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.truckTires ? 'text-lime' : 'text-white/50'}`}>{formData.truckTires?.name ?? 'File not selected'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <label className="flex items-start gap-4 cursor-pointer group">
+                  <div className="relative mt-0.5">
+                    <input type="checkbox" className="peer sr-only" checked={formData.termsAccepted} onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })} />
+                    <div className="w-5 h-5 bg-transparent border-2 border-white/30 rounded-sm peer-checked:bg-lime peer-checked:border-lime transition-all" />
+                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-navy opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+                  </div>
+                  <span className="text-sm text-white/90 leading-relaxed">Accept terms and conditions</span>
+                </label>
+              </div>
+            )}
+
+            {currentStep === 3 && selectedPosition === 'lease' && (
+              /* Lease Purchase – Documents & Truck (3-rasm) */
+              <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
+                <h3 className="text-xl font-space font-black text-white uppercase tracking-tight">Lease Purchase – Documents & Truck</h3>
+
+                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Registration Card (CAP Card)</label>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <input ref={leaseCapCardRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, leaseCapCard: e.target.files?.[0] ?? null })} />
+                    <button type="button" onClick={() => leaseCapCardRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.leaseCapCard ? 'text-lime' : 'text-white/50'}`}>{formData.leaseCapCard?.name ?? 'File not selected'}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Annual truck inspection</label>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <input ref={leaseAnnualInspectionRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, leaseAnnualInspection: e.target.files?.[0] ?? null })} />
+                    <button type="button" onClick={() => leaseAnnualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.leaseAnnualInspection ? 'text-lime' : 'text-white/50'}`}>{formData.leaseAnnualInspection?.name ?? 'File not selected'}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Please upload truck pictures (engine, under engine, tires)</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-mono text-white/50 uppercase">Engine</div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <input ref={leaseTruckEngineRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, leaseTruckEngine: e.target.files?.[0] ?? null })} />
+                        <button type="button" onClick={() => leaseTruckEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckEngine ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckEngine?.name ?? 'File not selected'}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-mono text-white/50 uppercase">Under engine</div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <input ref={leaseTruckUnderEngineRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, leaseTruckUnderEngine: e.target.files?.[0] ?? null })} />
+                        <button type="button" onClick={() => leaseTruckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckUnderEngine ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckUnderEngine?.name ?? 'File not selected'}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-mono text-white/50 uppercase">Tires</div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <input ref={leaseTruckTiresRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, leaseTruckTires: e.target.files?.[0] ?? null })} />
+                        <button type="button" onClick={() => leaseTruckTiresRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckTires ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckTires?.name ?? 'File not selected'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <label className="flex items-start gap-4 cursor-pointer group">
+                  <div className="relative mt-0.5">
+                    <input type="checkbox" className="peer sr-only" checked={formData.termsAccepted} onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })} />
+                    <div className="w-5 h-5 bg-transparent border-2 border-white/30 rounded-sm peer-checked:bg-lime peer-checked:border-lime transition-all" />
+                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-navy opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+                  </div>
+                  <span className="text-sm text-white/90 leading-relaxed">Accept terms and conditions</span>
+                </label>
+              </div>
+            )}
+
+            {currentStep === 4 && (
+              <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                  <div className="space-y-6">
+                    <div>
+                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Selected Position</div>
+                      <div className="text-lime font-space font-black uppercase text-lg md:text-xl">
+                        {selectedPosition === 'company' ? 'Company Driver' : selectedPosition === 'owner' ? 'Owner Operator' : selectedPosition === 'lease' ? 'Lease Purchase' : ''}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Full Name</div>
+                      <div className="text-white font-space font-bold uppercase">{formData.firstName && formData.lastName ? `${formData.firstName} ${formData.lastName}` : '—'}</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Phone</div>
+                      <div className="text-white font-space font-bold uppercase">{formData.phone || '—'}</div>
+                    </div>
+                  </div>
+                  <div className="space-y-6">
+                    <div>
+                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Email</div>
+                      <div className="text-white font-space font-bold uppercase">{formData.email || '—'}</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">CDL / Experience</div>
+                      <div className="text-white font-space font-bold uppercase">
+                        {selectedPosition === 'company'
+                          ? `${(formData.cdlType || 'Class A').toUpperCase()} • ${formData.drivingExperienceYears} YRS`
+                          : `${(formData.cdlType || 'Class A').toUpperCase()} • ${formData.experienceYears || '—'}`
+                        }
+                      </div>
+                    </div>
+                    {(selectedPosition === 'company' || selectedPosition === 'owner') && (
+                      <div>
+                        <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">SSN / EID</div>
+                        <div className="text-white font-space font-bold uppercase">{formData.ssnOrEid || '—'}</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {selectedPosition === 'company' && (formData.licenseFront || formData.licenseBack || formData.medicalCard || formData.resumeDoc) && (
+                  <div>
+                    <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Documents</div>
+                    <div className="text-white/80 text-sm font-mono">
+                      {formData.licenseFront && <>License (front): {formData.licenseFront.name}</>}
+                      {formData.licenseBack && <> · License (back): {formData.licenseBack.name}</>}
+                      {formData.medicalCard && <> · Medical: {formData.medicalCard.name}</>}
+                      {formData.resumeDoc && <> · Resume: {formData.resumeDoc.name}</>}
+                    </div>
+                  </div>
+                )}
+                {selectedPosition === 'owner' && (formData.licenseFront || formData.licenseBack || formData.medicalCard || formData.annualTruckInspection || formData.truckEngine || formData.truckUnderEngine || formData.truckTires) && (
+                  <div>
+                    <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Documents & Truck</div>
+                    <div className="text-white/80 text-sm font-mono space-y-1">
+                      {formData.licenseFront && <div>License (front): {formData.licenseFront.name}</div>}
+                      {formData.licenseBack && <div>License (back): {formData.licenseBack.name}</div>}
+                      {formData.medicalCard && <div>Medical card: {formData.medicalCard.name}</div>}
+                      {formData.annualTruckInspection && <div>Annual truck inspection: {formData.annualTruckInspection.name}</div>}
+                      {formData.truckEngine && <div>Truck (engine): {formData.truckEngine.name}</div>}
+                      {formData.truckUnderEngine && <div>Truck (under engine): {formData.truckUnderEngine.name}</div>}
+                      {formData.truckTires && <div>Truck (tires): {formData.truckTires.name}</div>}
+                    </div>
+                  </div>
+                )}
+                {selectedPosition === 'lease' && (formData.leaseCapCard || formData.leaseAnnualInspection || formData.leaseTruckEngine || formData.leaseTruckUnderEngine || formData.leaseTruckTires) && (
+                  <div>
+                    <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Documents & Truck</div>
+                    <div className="text-white/80 text-sm font-mono space-y-1">
+                      {formData.leaseCapCard && <div>Registration (CAP Card): {formData.leaseCapCard.name}</div>}
+                      {formData.leaseAnnualInspection && <div>Annual truck inspection: {formData.leaseAnnualInspection.name}</div>}
+                      {formData.leaseTruckEngine && <div>Truck (engine): {formData.leaseTruckEngine.name}</div>}
+                      {formData.leaseTruckUnderEngine && <div>Truck (under engine): {formData.leaseTruckUnderEngine.name}</div>}
+                      {formData.leaseTruckTires && <div>Truck (tires): {formData.leaseTruckTires.name}</div>}
+                    </div>
+                  </div>
+                )}
+
+                {submitError && (
+                  <p className="text-red-400 text-sm font-mono">{submitError}</p>
+                )}
+                <label className="flex items-start gap-4 cursor-pointer group">
+                  <div className="relative mt-0.5">
+                    <input
+                      type="checkbox"
+                      className="peer sr-only"
+                      checked={formData.termsAccepted}
+                      onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
+                    />
+                    <div className="w-5 h-5 bg-transparent border-2 border-white/30 rounded-sm peer-checked:bg-lime peer-checked:border-lime transition-all" />
+                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-navy opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+                  </div>
+                  <span className="text-sm text-white/90 leading-relaxed">
                     I confirm that the information provided is accurate and I agree to AKA FS LOGISTICS’ terms and conditions regarding driver recruitment and data handling.
                   </span>
                 </label>
@@ -336,11 +788,11 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
         </div>
 
         {/* Footer / Navigation Buttons */}
-        <div className="p-6 md:p-8 border-t border-white/5 flex items-center justify-between bg-[#0D1426]">
-          <div className="hidden md:block">
-             <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest">
-               Submission ID: #AKA-{Math.random().toString(36).substr(2, 6).toUpperCase()}
-             </span>
+        <div className="p-6 md:p-8 border-t border-white/5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-[#0D1426]">
+          <div className="flex items-center">
+            <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
+              Submission ID: #AKA-{Math.random().toString(36).substr(2, 6).toUpperCase()}
+            </span>
           </div>
 
           <div className="flex gap-4 w-full md:w-auto">
@@ -364,13 +816,22 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </button>
             ) : (
-              <button 
-                onClick={onClose}
-                disabled={!formData.termsAccepted}
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-lime text-navy font-space font-black text-xs uppercase tracking-widest hover:bg-white disabled:opacity-30 disabled:hover:bg-lime transition-all shadow-[0_0_30px_rgba(184,255,44,0.3)]"
+              <button
+                onClick={handleSubmitApplication}
+                disabled={!formData.termsAccepted || isSubmitting}
+                className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-lime text-navy font-space font-black text-xs uppercase tracking-widest hover:bg-white disabled:opacity-30 disabled:hover:bg-lime transition-all shadow-[0_0_30px_rgba(184,255,44,0.3)]"
               >
-                Submit Application
-                <ArrowRight className="w-4 h-4" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Submitting…
+                  </>
+                ) : (
+                  <>
+                    Submit Application
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </>
+                )}
               </button>
             )}
           </div>

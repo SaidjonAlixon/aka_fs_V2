@@ -7,9 +7,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface ServicesProps {
   className?: string;
+  onApplyClick?: () => void;
 }
 
-const Services = ({ className = '' }: ServicesProps) => {
+const Services = ({ className = '', onApplyClick }: ServicesProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const serviceListRef = useRef<HTMLDivElement>(null);
@@ -49,12 +50,37 @@ const Services = ({ className = '' }: ServicesProps) => {
         },
       });
 
-      // ENTRANCE
+      // ENTRANCE - More aggressive reveal for ONE TEAM
       scrollTl.fromTo(
         headlineRef.current,
-        { x: '-40vw', opacity: 0 },
-        { x: 0, opacity: 1, ease: 'power2.out' },
+        { x: '-15vw', opacity: 0 },
+        { x: 0, opacity: 1, ease: 'power2.out', duration: 0.4 },
         0
+      );
+
+      // Sequential line reveal
+      const lines = headlineRef.current?.querySelectorAll('.headline-line');
+      if (lines) {
+        scrollTl.fromTo(
+          lines,
+          { y: 80, opacity: 0, rotateX: -20 },
+          { 
+            y: 0, 
+            opacity: 1, 
+            rotateX: 0, 
+            stagger: 0.4, 
+            duration: 0.8, 
+            ease: 'back.out(1.2)' 
+          },
+          0.1
+        );
+      }
+
+      scrollTl.fromTo(
+        '.description-text',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
+        0.8
       );
 
       scrollTl.fromTo(
@@ -88,6 +114,15 @@ const Services = ({ className = '' }: ServicesProps) => {
           0.75
         );
       }
+
+      // Scroll Dot Animation
+      gsap.to('.scroll-dot', {
+        y: 12,
+        opacity: 0,
+        repeat: -1,
+        duration: 1.5,
+        ease: 'power2.inOut'
+      });
     }, section);
 
     return () => ctx.revert();
@@ -122,11 +157,15 @@ const Services = ({ className = '' }: ServicesProps) => {
       {/* Content - repositioned further right */}
       <div className="absolute inset-x-6 md:inset-x-auto md:left-[18vw] top-[15vh] md:top-[20vh] md:w-[35vw] max-w-[600px] z-20">
         <div ref={headlineRef} className="will-change-transform">
-          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
-            ONE <span className="text-lime">TEAM.</span><br />
-            THREE LANES.
+          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85] overflow-hidden">
+            <div className="headline-line block">
+              ONE <span className="text-lime">TEAM.</span>
+            </div>
+            <div className="headline-line block">
+              THREE LANES.
+            </div>
           </h2>
-          <p className="text-gray-300 text-lg md:text-2xl leading-relaxed max-w-md">
+          <p className="description-text text-gray-300 text-lg md:text-2xl leading-relaxed max-w-md opacity-0">
             Dry van, temperature-controlled, and flatbed—built for schedules that don't bend.
           </p>
         </div>
@@ -156,9 +195,23 @@ const Services = ({ className = '' }: ServicesProps) => {
           </div>
         ))}
 
-        <a href="#contact" className="btn-primary inline-flex mt-4 md:mt-8 py-3 md:py-5 px-6 md:px-10 text-xs md:text-base uppercase tracking-widest font-bold">
+        <button 
+          onClick={onApplyClick}
+          className="btn-primary inline-flex mt-4 md:mt-8 py-3 md:py-5 px-6 md:px-10 text-xs md:text-base uppercase tracking-widest font-bold text-center"
+        >
           See All Capabilities
-        </a>
+        </button>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-60 z-30">
+        <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-white to-transparent" />
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1.5 overflow-hidden">
+            <div className="scroll-dot w-1.5 h-1.5 bg-lime rounded-full" />
+          </div>
+          <span className="text-[10px] text-white uppercase tracking-[0.4em] font-black">Scroll</span>
+        </div>
       </div>
     </section>
   );
