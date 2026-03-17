@@ -80,39 +80,73 @@ export default async function handler(request: Request): Promise<Response> {
       return jsonResponse({ error: 'Telegram not configured' }, 500);
     }
 
+    console.log('[applications] Incoming request');
+
     let body: ApplicationBody;
     try {
       body = (await request.json()) as ApplicationBody;
     } catch {
-      return jsonResponse({ error: 'Invalid JSON body' }, 400);
+      console.error('[applications] Invalid JSON body');
+      return jsonResponse({ success: false, error: 'Invalid JSON body' }, 400);
     }
 
     const text = buildTelegramMessage(body);
     const url = `${TELEGRAM_API}${token}/sendMessage`;
-    const res = await fetch(url, {
+
+    console.log('[applications] Sending Telegram request to', url);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, 5000);
+
+    let res: Response;
+    try {
+      res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: chatId,
         text,
         disable_web_page_preview: true,
-      }),
-    });
+        }),
+        signal: controller.signal,
+      });
+    } catch (err) {
+      clearTimeout(timeoutId);
+      console.error('[applications] Telegram fetch failed:', err);
+      return jsonResponse(
+        {
+          success: false,
+          error:
+            err instanceof Error && err.name === 'AbortError'
+              ? 'Telegram request timed out'
+              : 'Telegram request failed',
+        },
+        502,
+      );
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     if (!res.ok) {
       const err = await res.text();
       console.error('[applications] Telegram error:', res.status, err);
       return jsonResponse(
-        { error: 'Failed to send notification', details: err },
+        { success: false, error: 'Failed to send notification', details: err },
         502
       );
     }
 
+    console.log('[applications] Telegram request succeeded');
     return jsonResponse({ success: true });
   } catch (err) {
-    console.error('[applications]', err);
+    console.error('[applications] Unexpected error:', err);
     return jsonResponse(
-      { error: err instanceof Error ? err.message : 'Submission failed' },
+      {
+        success: false,
+        error: err instanceof Error ? err.message : 'Submission failed',
+      },
       500
     );
   }
