@@ -23,7 +23,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
   const [cdlDropdownOpen, setCdlDropdownOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [uploadStatus, setUploadStatus] = useState<'uploading' | 'uploaded' | null>(null);
   const cdlDropdownRef = useRef<HTMLDivElement>(null);
   
   // Handle open/close animation
@@ -1050,15 +1049,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
               Submission ID: #AKA-{Math.random().toString(36).substr(2, 6).toUpperCase()}
             </span>
-            {uploadStatus && (
-              <span
-                className={`font-mono text-[11px] tracking-[0.25em] uppercase ${
-                  uploadStatus === 'uploaded' ? 'text-lime' : 'text-white/60'
-                }`}
-              >
-                {uploadStatus === 'uploaded' ? 'UPLOAD' : 'UPLOADING...'}
-              </span>
-            )}
           </div>
 
           <div className="flex gap-4 w-full md:w-auto">
