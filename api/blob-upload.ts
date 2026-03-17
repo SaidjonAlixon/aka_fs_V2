@@ -1,61 +1,53 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { put } from '@vercel/blob';
-
-export const runtime = 'edge';
 
 const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
 
-function jsonResponse(data: object, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
-}
-
-export default async function handler(request: Request): Promise<Response> {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    if (request.method === 'OPTIONS') {
-      return jsonResponse({}, 200);
+    if (req.method === 'OPTIONS') {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      return res.status(200).end();
     }
-    if (request.method !== 'POST') {
-      return jsonResponse({ error: 'Method not allowed' }, 405);
+
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
     }
 
     const token = process.env.BLOB_READ_WRITE_TOKEN;
     if (!token) {
-      return jsonResponse({ error: 'Blob storage not configured' }, 500);
+      return res.status(500).json({ error: 'Blob storage not configured' });
     }
 
-    const formData = await request.formData();
-    const file = formData.get('file') ?? formData.get('blob');
-    if (!file || !(file instanceof File)) {
-      return jsonResponse({ error: 'No file provided. Use field name "file" or "blob".' }, 400);
+    const contentLength = Number(req.headers['content-length'] || 0);
+    if (contentLength > MAX_SIZE_BYTES) {
+      return res
+        .status(400)
+        .json({ error: `File too large. Maximum size is ${MAX_SIZE_BYTES / 1024 / 1024}MB.` });
     }
 
-    if (file.size > MAX_SIZE_BYTES) {
-      return jsonResponse(
-        { error: `File too large. Maximum size is ${MAX_SIZE_BYTES / 1024 / 1024}MB.` },
-        400
-      );
-    }
+    const originalName =
+      (Array.isArray(req.query.filename) ? req.query.filename[0] : req.query.filename) ||
+      'upload.bin';
 
-    const pathname = `driver-apps/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
-    const blob = await put(pathname, file, {
+    const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const pathname = `driver-apps/${Date.now()}-${safeName}`;
+
+    const blob = await put(pathname, req, {
       access: 'public',
       addRandomSuffix: true,
       token,
     });
 
-    return jsonResponse({ url: blob.url });
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return res.status(200).json({ url: blob.url });
   } catch (err) {
     console.error('[blob-upload]', err);
-    return jsonResponse(
-      { error: err instanceof Error ? err.message : 'Upload failed' },
-      500
-    );
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return res
+      .status(500)
+      .json({ error: err instanceof Error ? err.message : 'Upload failed' });
   }
 }

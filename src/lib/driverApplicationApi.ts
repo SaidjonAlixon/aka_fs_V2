@@ -1,11 +1,13 @@
 const API_BASE = import.meta.env.DEV ? 'http://localhost:4000' : '';
 
 export async function uploadToBlob(file: File): Promise<string> {
-  const formData = new FormData();
-  formData.append('file', file);
-  const res = await fetch(`${API_BASE}/api/blob-upload`, {
+  const url = `${API_BASE}/api/blob-upload?filename=${encodeURIComponent(file.name)}`;
+  const res = await fetch(url, {
     method: 'POST',
-    body: formData,
+    headers: {
+      'Content-Type': file.type || 'application/octet-stream',
+    },
+    body: file,
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: res.statusText }));
