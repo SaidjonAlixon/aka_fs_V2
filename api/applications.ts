@@ -1,16 +1,6 @@
-const TELEGRAM_API = 'https://api.telegram.org/bot';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-function jsonResponse(data: object, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
-}
+const TELEGRAM_API = 'https://api.telegram.org/bot';
 
 interface ApplicationBody {
   position?: string;
@@ -65,29 +55,30 @@ function buildTelegramMessage(body: ApplicationBody): string {
   return lines.join('\n');
 }
 
-export default async function handler(request: Request): Promise<Response> {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    if (request.method === 'OPTIONS') {
-      return jsonResponse({}, 200);
+    if (req.method === 'OPTIONS') {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      return res.status(200).end();
     }
-    if (request.method !== 'POST') {
-      return jsonResponse({ error: 'Method not allowed' }, 405);
+    if (req.method !== 'POST') {
+      return res.status(405).json({ success: false, error: 'Method not allowed' });
     }
 
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
     if (!token || !chatId) {
-      return jsonResponse({ error: 'Telegram not configured' }, 500);
+      return res.status(500).json({ success: false, error: 'Telegram not configured' });
     }
 
     console.log('[applications] Incoming request');
 
-    let body: ApplicationBody;
-    try {
-      body = (await request.json()) as ApplicationBody;
-    } catch {
-      console.error('[applications] Invalid JSON body');
-      return jsonResponse({ success: false, error: 'Invalid JSON body' }, 400);
+    const body = (req.body || {}) as ApplicationBody;
+    if (!body || typeof body !== 'object') {
+      console.error('[applications] Invalid JSON body (empty or not object)');
+      return res.status(400).json({ success: false, error: 'Invalid JSON body' });
     }
 
     const text = buildTelegramMessage(body);
@@ -100,54 +91,53 @@ export default async function handler(request: Request): Promise<Response> {
       controller.abort();
     }, 5000);
 
-    let res: Response;
+    let tgRes: Response;
     try {
-      res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        disable_web_page_preview: true,
+      tgRes = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text,
+          disable_web_page_preview: true,
         }),
         signal: controller.signal,
       });
     } catch (err) {
       clearTimeout(timeoutId);
       console.error('[applications] Telegram fetch failed:', err);
-      return jsonResponse(
-        {
-          success: false,
-          error:
-            err instanceof Error && err.name === 'AbortError'
-              ? 'Telegram request timed out'
-              : 'Telegram request failed',
-        },
-        502,
-      );
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      return res.status(502).json({
+        success: false,
+        error:
+          err instanceof Error && err.name === 'AbortError'
+            ? 'Telegram request timed out'
+            : 'Telegram request failed',
+      });
     } finally {
       clearTimeout(timeoutId);
     }
 
-    if (!res.ok) {
-      const err = await res.text();
-      console.error('[applications] Telegram error:', res.status, err);
-      return jsonResponse(
-        { success: false, error: 'Failed to send notification', details: err },
-        502
-      );
+    if (!tgRes.ok) {
+      const errText = await tgRes.text();
+      console.error('[applications] Telegram error:', tgRes.status, errText);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      return res.status(502).json({
+        success: false,
+        error: 'Failed to send notification',
+        details: errText,
+      });
     }
 
     console.log('[applications] Telegram request succeeded');
-    return jsonResponse({ success: true });
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return res.status(200).json({ success: true });
   } catch (err) {
     console.error('[applications] Unexpected error:', err);
-    return jsonResponse(
-      {
-        success: false,
-        error: err instanceof Error ? err.message : 'Submission failed',
-      },
-      500
-    );
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return res.status(500).json({
+      success: false,
+      error: err instanceof Error ? err.message : 'Submission failed',
+    });
   }
 }
