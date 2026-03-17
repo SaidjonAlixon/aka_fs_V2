@@ -1,5 +1,7 @@
 import { put } from '@vercel/blob';
 
+export const runtime = 'edge';
+
 const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
 
 function jsonResponse(data: object, status = 200) {
