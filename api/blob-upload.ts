@@ -5,12 +5,20 @@ const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
 function jsonResponse(data: object, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
   });
 }
 
 export default async function handler(request: Request): Promise<Response> {
   try {
+    if (request.method === 'OPTIONS') {
+      return jsonResponse({}, 200);
+    }
     if (request.method !== 'POST') {
       return jsonResponse({ error: 'Method not allowed' }, 405);
     }

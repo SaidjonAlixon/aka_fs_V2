@@ -3,7 +3,12 @@ const TELEGRAM_API = 'https://api.telegram.org/bot';
 function jsonResponse(data: object, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
   });
 }
 
@@ -62,6 +67,9 @@ function buildTelegramMessage(body: ApplicationBody): string {
 
 export default async function handler(request: Request): Promise<Response> {
   try {
+    if (request.method === 'OPTIONS') {
+      return jsonResponse({}, 200);
+    }
     if (request.method !== 'POST') {
       return jsonResponse({ error: 'Method not allowed' }, 405);
     }

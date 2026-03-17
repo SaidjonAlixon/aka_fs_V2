@@ -23,6 +23,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
   const [cdlDropdownOpen, setCdlDropdownOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<'uploading' | 'uploaded' | null>(null);
   const cdlDropdownRef = useRef<HTMLDivElement>(null);
   
   // Handle open/close animation
@@ -48,23 +49,37 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
     // Company Driver – Experience & License (Step 3)
     ssnOrEid: '',
     ssnImage: null as File | null,
+    ssnImageUrl: '',
     licenseFront: null as File | null,
+    licenseFrontUrl: '',
     licenseBack: null as File | null,
+    licenseBackUrl: '',
     medicalCard: null as File | null,
+    medicalCardUrl: '',
     resumeDoc: null as File | null,
+    resumeDocUrl: '',
     drivingExperienceYears: 0,
     termsAccepted: false,
     // Owner Operator – Documents & Truck (Step 3)
     annualTruckInspection: null as File | null,
+    annualTruckInspectionUrl: '',
     truckEngine: null as File | null,
+    truckEngineUrl: '',
     truckUnderEngine: null as File | null,
+    truckUnderEngineUrl: '',
     truckTires: null as File | null,
+    truckTiresUrl: '',
     // Lease Purchase – Documents & Truck (Step 3, 3-rasm)
     leaseCapCard: null as File | null,
+    leaseCapCardUrl: '',
     leaseAnnualInspection: null as File | null,
+    leaseAnnualInspectionUrl: '',
     leaseTruckEngine: null as File | null,
+    leaseTruckEngineUrl: '',
     leaseTruckUnderEngine: null as File | null,
+    leaseTruckUnderEngineUrl: '',
     leaseTruckTires: null as File | null,
+    leaseTruckTiresUrl: '',
   });
 
   const ssnInputRef = useRef<HTMLInputElement>(null);
@@ -108,32 +123,28 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
     setSubmitError(null);
     try {
       const documents: ApplicationPayload['documents'] = {};
-      const upload = async (file: File | null): Promise<string | undefined> => {
-        if (!file) return undefined;
-        return uploadToBlob(file);
-      };
 
       if (selectedPosition === 'company') {
-        documents.ssnImage = await upload(formData.ssnImage) ?? undefined;
-        documents.licenseFront = await upload(formData.licenseFront) ?? undefined;
-        documents.licenseBack = await upload(formData.licenseBack) ?? undefined;
-        documents.medicalCard = await upload(formData.medicalCard) ?? undefined;
-        documents.resume = await upload(formData.resumeDoc) ?? undefined;
+        documents.ssnImage = formData.ssnImageUrl || undefined;
+        documents.licenseFront = formData.licenseFrontUrl || undefined;
+        documents.licenseBack = formData.licenseBackUrl || undefined;
+        documents.medicalCard = formData.medicalCardUrl || undefined;
+        documents.resume = formData.resumeDocUrl || undefined;
       } else if (selectedPosition === 'owner') {
-        documents.ssnImage = await upload(formData.ssnImage) ?? undefined;
-        documents.licenseFront = await upload(formData.licenseFront) ?? undefined;
-        documents.licenseBack = await upload(formData.licenseBack) ?? undefined;
-        documents.medicalCard = await upload(formData.medicalCard) ?? undefined;
-        documents.truckInspection = await upload(formData.annualTruckInspection) ?? undefined;
-        documents.enginePhoto = await upload(formData.truckEngine) ?? undefined;
-        documents.underEnginePhoto = await upload(formData.truckUnderEngine) ?? undefined;
-        documents.tirePhoto = await upload(formData.truckTires) ?? undefined;
+        documents.ssnImage = formData.ssnImageUrl || undefined;
+        documents.licenseFront = formData.licenseFrontUrl || undefined;
+        documents.licenseBack = formData.licenseBackUrl || undefined;
+        documents.medicalCard = formData.medicalCardUrl || undefined;
+        documents.truckInspection = formData.annualTruckInspectionUrl || undefined;
+        documents.enginePhoto = formData.truckEngineUrl || undefined;
+        documents.underEnginePhoto = formData.truckUnderEngineUrl || undefined;
+        documents.tirePhoto = formData.truckTiresUrl || undefined;
       } else if (selectedPosition === 'lease') {
-        documents.capCard = await upload(formData.leaseCapCard) ?? undefined;
-        documents.truckInspection = await upload(formData.leaseAnnualInspection) ?? undefined;
-        documents.enginePhoto = await upload(formData.leaseTruckEngine) ?? undefined;
-        documents.underEnginePhoto = await upload(formData.leaseTruckUnderEngine) ?? undefined;
-        documents.tirePhoto = await upload(formData.leaseTruckTires) ?? undefined;
+        documents.capCard = formData.leaseCapCardUrl || undefined;
+        documents.truckInspection = formData.leaseAnnualInspectionUrl || undefined;
+        documents.enginePhoto = formData.leaseTruckEngineUrl || undefined;
+        documents.underEnginePhoto = formData.leaseTruckUnderEngineUrl || undefined;
+        documents.tirePhoto = formData.leaseTruckTiresUrl || undefined;
       }
 
       const positionLabel = selectedPosition === 'company' ? 'Company Driver' : selectedPosition === 'owner' ? 'Owner Operator' : 'Lease Purchase';
@@ -406,7 +417,18 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                       type="file"
                       accept="image/*,.pdf"
                       className="hidden"
-                      onChange={(e) => setFormData({ ...formData, ssnImage: e.target.files?.[0] ?? null })}
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, ssnImage: file, ssnImageUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, ssnImageUrl: url }));
+                          } catch {
+                            // ignore upload error here; submit will fail later
+                          }
+                        }
+                      }}
                     />
                     <button
                       type="button"
@@ -415,8 +437,8 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                     >
                       Choose file
                     </button>
-                    <span className={`text-sm font-mono ${formData.ssnImage ? 'text-lime' : 'text-white/50'}`}>
-                      {formData.ssnImage?.name ?? 'File not selected'}
+                    <span className={`text-sm font-mono ${formData.ssnImageUrl ? 'text-lime' : 'text-white/50'}`}>
+                      {formData.ssnImage ? (formData.ssnImageUrl ? 'UPLOAD' : formData.ssnImage.name) : 'File not selected'}
                     </span>
                   </div>
                 </div>
@@ -436,15 +458,24 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                   <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
-                      <input
-                        ref={licenseFrontRef}
-                        type="file"
-                        accept="image/*,.pdf"
-                        className="hidden"
-                        onChange={(e) => setFormData({ ...formData, licenseFront: e.target.files?.[0] ?? null })}
-                      />
+                    <input
+                      ref={licenseFrontRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, licenseFront: file, licenseFrontUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, licenseFrontUrl: url }));
+                          } catch {}
+                        }
+                      }}
+                    />
                       <button type="button" onClick={() => licenseFrontRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
-                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFront ? 'text-lime' : 'text-white/50'}`}>{formData.licenseFront?.name ?? 'File not selected'}</span>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFrontUrl ? 'text-lime' : 'text-white/50'}`}>{formData.licenseFront ? (formData.licenseFrontUrl ? 'UPLOAD' : formData.licenseFront.name) : 'File not selected'}</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
                       <input
@@ -452,10 +483,19 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         type="file"
                         accept="image/*,.pdf"
                         className="hidden"
-                        onChange={(e) => setFormData({ ...formData, licenseBack: e.target.files?.[0] ?? null })}
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0] ?? null;
+                          setFormData((prev) => ({ ...prev, licenseBack: file, licenseBackUrl: '' }));
+                          if (file) {
+                            try {
+                              const url = await uploadToBlob(file);
+                              setFormData((prev) => ({ ...prev, licenseBackUrl: url }));
+                            } catch {}
+                          }
+                        }}
                       />
                       <button type="button" onClick={() => licenseBackRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
-                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBack ? 'text-lime' : 'text-white/50'}`}>{formData.licenseBack?.name ?? 'File not selected'}</span>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBackUrl ? 'text-lime' : 'text-white/50'}`}>{formData.licenseBack ? (formData.licenseBackUrl ? 'UPLOAD' : formData.licenseBack.name) : 'File not selected'}</span>
                     </div>
                   </div>
                 </div>
@@ -468,10 +508,19 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                       type="file"
                       accept="image/*,.pdf"
                       className="hidden"
-                      onChange={(e) => setFormData({ ...formData, medicalCard: e.target.files?.[0] ?? null })}
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, medicalCard: file, medicalCardUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, medicalCardUrl: url }));
+                          } catch {}
+                        }
+                      }}
                     />
                     <button type="button" onClick={() => medicalRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.medicalCard ? 'text-lime' : 'text-white/50'}`}>{formData.medicalCard?.name ?? 'File not selected'}</span>
+                    <span className={`text-sm font-mono ${formData.medicalCardUrl ? 'text-lime' : 'text-white/50'}`}>{formData.medicalCard ? (formData.medicalCardUrl ? 'UPLOAD' : formData.medicalCard.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
@@ -494,14 +543,27 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                       type="file"
                       accept=".pdf,.jpg,.jpeg,.png"
                       className="hidden"
-                      onChange={(e) => setFormData({ ...formData, resumeDoc: e.target.files?.[0] ?? null })}
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, resumeDoc: file, resumeDocUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, resumeDocUrl: url }));
+                          } catch {}
+                        }
+                      }}
                     />
                     <div className={`p-3 rounded-full ${formData.resumeDoc ? 'bg-lime/20 text-lime' : 'bg-white/5 text-white/50'}`}>
                       <Upload className="w-6 h-6" />
                     </div>
                     <p className="text-white/70 text-sm">to upload or drag and drop</p>
                     <p className="text-[10px] font-mono text-white/40">PDF, JPEG, JPG, PNG (Max 10MB)</p>
-                    {formData.resumeDoc && <p className="text-lime text-sm font-mono font-bold">{formData.resumeDoc.name}</p>}
+                    {formData.resumeDoc && (
+                      <p className={`text-sm font-mono font-bold ${formData.resumeDocUrl ? 'text-lime' : 'text-white/70'}`}>
+                        {formData.resumeDocUrl ? 'UPLOAD' : formData.resumeDoc.name}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -540,9 +602,24 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
                   <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">SSN (Image Copy)</label>
                   <div className="flex flex-wrap items-center gap-3">
-                    <input ref={ssnInputRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, ssnImage: e.target.files?.[0] ?? null })} />
+                    <input
+                      ref={ssnInputRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, ssnImage: file, ssnImageUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, ssnImageUrl: url }));
+                          } catch {}
+                        }
+                      }}
+                    />
                     <button type="button" onClick={() => ssnInputRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.ssnImage ? 'text-lime' : 'text-white/50'}`}>{formData.ssnImage?.name ?? 'File not selected'}</span>
+                    <span className={`text-sm font-mono ${formData.ssnImageUrl ? 'text-lime' : 'text-white/50'}`}>{formData.ssnImage ? (formData.ssnImageUrl ? 'UPLOAD' : formData.ssnImage.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
@@ -550,14 +627,44 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                   <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
-                      <input ref={licenseFrontRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, licenseFront: e.target.files?.[0] ?? null })} />
+                    <input
+                      ref={licenseFrontRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, licenseFront: file, licenseFrontUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, licenseFrontUrl: url }));
+                          } catch {}
+                        }
+                      }}
+                    />
                       <button type="button" onClick={() => licenseFrontRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
-                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFront ? 'text-lime' : 'text-white/50'}`}>{formData.licenseFront?.name ?? 'File not selected'}</span>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFrontUrl ? 'text-lime' : 'text-white/50'}`}>{formData.licenseFront ? (formData.licenseFrontUrl ? 'UPLOAD' : formData.licenseFront.name) : 'File not selected'}</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
-                      <input ref={licenseBackRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, licenseBack: e.target.files?.[0] ?? null })} />
+                      <input
+                        ref={licenseBackRef}
+                        type="file"
+                        accept="image/*,.pdf"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0] ?? null;
+                          setFormData((prev) => ({ ...prev, licenseBack: file, licenseBackUrl: '' }));
+                          if (file) {
+                            try {
+                              const url = await uploadToBlob(file);
+                              setFormData((prev) => ({ ...prev, licenseBackUrl: url }));
+                            } catch {}
+                          }
+                        }}
+                      />
                       <button type="button" onClick={() => licenseBackRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
-                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBack ? 'text-lime' : 'text-white/50'}`}>{formData.licenseBack?.name ?? 'File not selected'}</span>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBackUrl ? 'text-lime' : 'text-white/50'}`}>{formData.licenseBack ? (formData.licenseBackUrl ? 'UPLOAD' : formData.licenseBack.name) : 'File not selected'}</span>
                     </div>
                   </div>
                 </div>
@@ -565,18 +672,48 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
                   <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Medical Card</label>
                   <div className="flex flex-wrap items-center gap-3">
-                    <input ref={medicalRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, medicalCard: e.target.files?.[0] ?? null })} />
+                    <input
+                      ref={medicalRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, medicalCard: file, medicalCardUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, medicalCardUrl: url }));
+                          } catch {}
+                        }
+                      }}
+                    />
                     <button type="button" onClick={() => medicalRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.medicalCard ? 'text-lime' : 'text-white/50'}`}>{formData.medicalCard?.name ?? 'File not selected'}</span>
+                    <span className={`text-sm font-mono ${formData.medicalCardUrl ? 'text-lime' : 'text-white/50'}`}>{formData.medicalCard ? (formData.medicalCardUrl ? 'UPLOAD' : formData.medicalCard.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
                 <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
                   <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Annual truck inspection</label>
                   <div className="flex flex-wrap items-center gap-3">
-                    <input ref={annualInspectionRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, annualTruckInspection: e.target.files?.[0] ?? null })} />
+                    <input
+                      ref={annualInspectionRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, annualTruckInspection: file, annualTruckInspectionUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, annualTruckInspectionUrl: url }));
+                          } catch {}
+                        }
+                      }}
+                    />
                     <button type="button" onClick={() => annualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.annualTruckInspection ? 'text-lime' : 'text-white/50'}`}>{formData.annualTruckInspection?.name ?? 'File not selected'}</span>
+                    <span className={`text-sm font-mono ${formData.annualTruckInspectionUrl ? 'text-lime' : 'text-white/50'}`}>{formData.annualTruckInspection ? (formData.annualTruckInspectionUrl ? 'UPLOAD' : formData.annualTruckInspection.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
@@ -586,25 +723,70 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                     <div className="space-y-1">
                       <div className="text-[9px] font-mono text-white/50 uppercase">Engine</div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <input ref={truckEngineRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, truckEngine: e.target.files?.[0] ?? null })} />
+                        <input
+                          ref={truckEngineRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0] ?? null;
+                            setFormData((prev) => ({ ...prev, truckEngine: file, truckEngineUrl: '' }));
+                            if (file) {
+                              try {
+                                const url = await uploadToBlob(file);
+                                setFormData((prev) => ({ ...prev, truckEngineUrl: url }));
+                              } catch {}
+                            }
+                          }}
+                        />
                         <button type="button" onClick={() => truckEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.truckEngine ? 'text-lime' : 'text-white/50'}`}>{formData.truckEngine?.name ?? 'File not selected'}</span>
+                        <span className={`text-xs font-mono truncate ${formData.truckEngineUrl ? 'text-lime' : 'text-white/50'}`}>{formData.truckEngine ? (formData.truckEngineUrl ? 'UPLOAD' : formData.truckEngine.name) : 'File not selected'}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
                       <div className="text-[9px] font-mono text-white/50 uppercase">Under engine</div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <input ref={truckUnderEngineRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, truckUnderEngine: e.target.files?.[0] ?? null })} />
+                        <input
+                          ref={truckUnderEngineRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0] ?? null;
+                            setFormData((prev) => ({ ...prev, truckUnderEngine: file, truckUnderEngineUrl: '' }));
+                            if (file) {
+                              try {
+                                const url = await uploadToBlob(file);
+                                setFormData((prev) => ({ ...prev, truckUnderEngineUrl: url }));
+                              } catch {}
+                            }
+                          }}
+                        />
                         <button type="button" onClick={() => truckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.truckUnderEngine ? 'text-lime' : 'text-white/50'}`}>{formData.truckUnderEngine?.name ?? 'File not selected'}</span>
+                        <span className={`text-xs font-mono truncate ${formData.truckUnderEngineUrl ? 'text-lime' : 'text-white/50'}`}>{formData.truckUnderEngine ? (formData.truckUnderEngineUrl ? 'UPLOAD' : formData.truckUnderEngine.name) : 'File not selected'}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
                       <div className="text-[9px] font-mono text-white/50 uppercase">Tires</div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <input ref={truckTiresRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, truckTires: e.target.files?.[0] ?? null })} />
+                        <input
+                          ref={truckTiresRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0] ?? null;
+                            setFormData((prev) => ({ ...prev, truckTires: file, truckTiresUrl: '' }));
+                            if (file) {
+                              try {
+                                const url = await uploadToBlob(file);
+                                setFormData((prev) => ({ ...prev, truckTiresUrl: url }));
+                              } catch {}
+                            }
+                          }}
+                        />
                         <button type="button" onClick={() => truckTiresRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.truckTires ? 'text-lime' : 'text-white/50'}`}>{formData.truckTires?.name ?? 'File not selected'}</span>
+                        <span className={`text-xs font-mono truncate ${formData.truckTiresUrl ? 'text-lime' : 'text-white/50'}`}>{formData.truckTires ? (formData.truckTiresUrl ? 'UPLOAD' : formData.truckTires.name) : 'File not selected'}</span>
                       </div>
                     </div>
                   </div>
@@ -629,18 +811,48 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
                   <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Registration Card (CAP Card)</label>
                   <div className="flex flex-wrap items-center gap-3">
-                    <input ref={leaseCapCardRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, leaseCapCard: e.target.files?.[0] ?? null })} />
+                    <input
+                      ref={leaseCapCardRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, leaseCapCard: file, leaseCapCardUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, leaseCapCardUrl: url }));
+                          } catch {}
+                        }
+                      }}
+                    />
                     <button type="button" onClick={() => leaseCapCardRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.leaseCapCard ? 'text-lime' : 'text-white/50'}`}>{formData.leaseCapCard?.name ?? 'File not selected'}</span>
+                    <span className={`text-sm font-mono ${formData.leaseCapCardUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseCapCard ? (formData.leaseCapCardUrl ? 'UPLOAD' : formData.leaseCapCard.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
                 <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
                   <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Annual truck inspection</label>
                   <div className="flex flex-wrap items-center gap-3">
-                    <input ref={leaseAnnualInspectionRef} type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setFormData({ ...formData, leaseAnnualInspection: e.target.files?.[0] ?? null })} />
+                    <input
+                      ref={leaseAnnualInspectionRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setFormData((prev) => ({ ...prev, leaseAnnualInspection: file, leaseAnnualInspectionUrl: '' }));
+                        if (file) {
+                          try {
+                            const url = await uploadToBlob(file);
+                            setFormData((prev) => ({ ...prev, leaseAnnualInspectionUrl: url }));
+                          } catch {}
+                        }
+                      }}
+                    />
                     <button type="button" onClick={() => leaseAnnualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.leaseAnnualInspection ? 'text-lime' : 'text-white/50'}`}>{formData.leaseAnnualInspection?.name ?? 'File not selected'}</span>
+                    <span className={`text-sm font-mono ${formData.leaseAnnualInspectionUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseAnnualInspection ? (formData.leaseAnnualInspectionUrl ? 'UPLOAD' : formData.leaseAnnualInspection.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
@@ -650,25 +862,70 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                     <div className="space-y-1">
                       <div className="text-[9px] font-mono text-white/50 uppercase">Engine</div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <input ref={leaseTruckEngineRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, leaseTruckEngine: e.target.files?.[0] ?? null })} />
+                        <input
+                          ref={leaseTruckEngineRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0] ?? null;
+                            setFormData((prev) => ({ ...prev, leaseTruckEngine: file, leaseTruckEngineUrl: '' }));
+                            if (file) {
+                              try {
+                                const url = await uploadToBlob(file);
+                                setFormData((prev) => ({ ...prev, leaseTruckEngineUrl: url }));
+                              } catch {}
+                            }
+                          }}
+                        />
                         <button type="button" onClick={() => leaseTruckEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckEngine ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckEngine?.name ?? 'File not selected'}</span>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckEngineUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckEngine ? (formData.leaseTruckEngineUrl ? 'UPLOAD' : formData.leaseTruckEngine.name) : 'File not selected'}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
                       <div className="text-[9px] font-mono text-white/50 uppercase">Under engine</div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <input ref={leaseTruckUnderEngineRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, leaseTruckUnderEngine: e.target.files?.[0] ?? null })} />
+                        <input
+                          ref={leaseTruckUnderEngineRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0] ?? null;
+                            setFormData((prev) => ({ ...prev, leaseTruckUnderEngine: file, leaseTruckUnderEngineUrl: '' }));
+                            if (file) {
+                              try {
+                                const url = await uploadToBlob(file);
+                                setFormData((prev) => ({ ...prev, leaseTruckUnderEngineUrl: url }));
+                              } catch {}
+                            }
+                          }}
+                        />
                         <button type="button" onClick={() => leaseTruckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckUnderEngine ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckUnderEngine?.name ?? 'File not selected'}</span>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckUnderEngineUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckUnderEngine ? (formData.leaseTruckUnderEngineUrl ? 'UPLOAD' : formData.leaseTruckUnderEngine.name) : 'File not selected'}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
                       <div className="text-[9px] font-mono text-white/50 uppercase">Tires</div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <input ref={leaseTruckTiresRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFormData({ ...formData, leaseTruckTires: e.target.files?.[0] ?? null })} />
+                        <input
+                          ref={leaseTruckTiresRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0] ?? null;
+                            setFormData((prev) => ({ ...prev, leaseTruckTires: file, leaseTruckTiresUrl: '' }));
+                            if (file) {
+                              try {
+                                const url = await uploadToBlob(file);
+                                setFormData((prev) => ({ ...prev, leaseTruckTiresUrl: url }));
+                              } catch {}
+                            }
+                          }}
+                        />
                         <button type="button" onClick={() => leaseTruckTiresRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckTires ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckTires?.name ?? 'File not selected'}</span>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckTiresUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckTires ? (formData.leaseTruckTiresUrl ? 'UPLOAD' : formData.leaseTruckTires.name) : 'File not selected'}</span>
                       </div>
                     </div>
                   </div>
@@ -789,10 +1046,19 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
 
         {/* Footer / Navigation Buttons */}
         <div className="p-6 md:p-8 border-t border-white/5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-[#0D1426]">
-          <div className="flex items-center">
+          <div className="flex flex-col gap-1">
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
               Submission ID: #AKA-{Math.random().toString(36).substr(2, 6).toUpperCase()}
             </span>
+            {uploadStatus && (
+              <span
+                className={`font-mono text-[11px] tracking-[0.25em] uppercase ${
+                  uploadStatus === 'uploaded' ? 'text-lime' : 'text-white/60'
+                }`}
+              >
+                {uploadStatus === 'uploaded' ? 'UPLOAD' : 'UPLOADING...'}
+              </span>
+            )}
           </div>
 
           <div className="flex gap-4 w-full md:w-auto">

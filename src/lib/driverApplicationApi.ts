@@ -1,4 +1,4 @@
-const API_BASE = '';
+const API_BASE = import.meta.env.DEV ? 'http://localhost:4000' : '';
 
 export async function uploadToBlob(file: File): Promise<string> {
   const formData = new FormData();
