@@ -54,7 +54,7 @@ function App() {
                   <ServicesPreview onApplyClick={() => setIsFormOpen(true)} />
                   <WhyUsSection />
                   <HowItWorksSection />
-                  <CapabilitiesSection onApplyClick={() => setIsFormOpen(true)} />
+                  <CapabilitiesSection />
                   <NetworkSection />
                   <TestimonialsHome />
                   <HomeCTA onApplyClick={() => setIsFormOpen(true)} />
