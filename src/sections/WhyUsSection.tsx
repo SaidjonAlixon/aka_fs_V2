@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { CheckCircle, Zap, Users, HeartHandshake, DollarSign, Lock } from 'lucide-react';
+import { DollarSign, Route, HeartHandshake, ShieldCheck, Clock, Map } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,12 +9,12 @@ const WhyUsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const reasons = [
-    { icon: CheckCircle, title: 'Guaranteed On-Time', desc: '99.2% on-time delivery backed by real-time tracking and proactive communication.' },
-    { icon: Zap, title: 'Instant Quoting', desc: 'Get capacity and quotes within minutes — not hours. We move at the speed of business.' },
-    { icon: Users, title: 'Dedicated Team', desc: 'A single point of contact who knows your freight, your lanes, and your expectations.' },
-    { icon: HeartHandshake, title: 'Partnership Mindset', desc: "We treat every shipment like it's our own cargo. Your success is our success." },
-    { icon: DollarSign, title: 'Transparent Pricing', desc: 'No hidden fees. No surprises. Just clear, competitive rates you can plan around.' },
-    { icon: Lock, title: 'Cargo Security', desc: 'GPS-tracked, fully insured freight with real-time alerts for peace of mind.' },
+    { icon: DollarSign, title: 'HIGH RPM LOADS', desc: 'Maximize your revenue with top paying freight and strong rate negotiation.' },
+    { icon: Route, title: 'CONSISTENT MILES & PAY', desc: 'Stay moving with reliable loads and steady weekly income.' },
+    { icon: HeartHandshake, title: 'NO STRESS DISPATCH', desc: 'We handle the planning, booking, and communication so you can focus.' },
+    { icon: ShieldCheck, title: 'SAFETY FIRST', desc: 'We prioritize safe routes, compliance and your well being on every trip.' },
+    { icon: Clock, title: '24/7 DISPATCH & FLEET SUPPORT', desc: 'Day or night, our team ensures your trucks stay running and your business keeps moving.' },
+    { icon: Map, title: 'NATIONWIDE OPPORTUNITIES', desc: 'Access loads across the U.S. to keep your truck running.' },
   ];
 
   useLayoutEffect(() => {

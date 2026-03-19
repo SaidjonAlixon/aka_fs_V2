@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Truck, Thermometer, Container } from 'lucide-react';
+import { Truck, Package, Zap, Activity } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,19 +19,24 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
 
   const services = [
     {
+      icon: Package,
+      title: 'No touch freight',
+      description: '',
+    },
+    {
       icon: Truck,
-      title: 'Dry Van',
-      description: 'Secure, tracked, on-time.',
+      title: 'Preloaded trailers',
+      description: '',
     },
     {
-      icon: Thermometer,
-      title: 'Reefer',
-      description: 'Temp-controlled, compliant.',
+      icon: Zap,
+      title: 'Fast pick & drop',
+      description: '',
     },
     {
-      icon: Container,
-      title: 'Flatbed',
-      description: 'Oversized, permitted, safe.',
+      icon: Activity,
+      title: 'Fast Operations',
+      description: '',
     },
   ];
 
@@ -157,16 +162,16 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
       {/* Content - repositioned further right */}
       <div className="absolute inset-x-6 md:inset-x-auto md:left-[18vw] top-[15vh] md:top-[20vh] md:w-[35vw] max-w-[600px] z-20">
         <div ref={headlineRef} className="will-change-transform">
-          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85] overflow-hidden">
-            <div className="headline-line block">
-              ONE <span className="text-lime">TEAM.</span>
+          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
+            <div className="headline-line block pr-4">
+              POWER ONLY <span className="text-lime">SOLUTIONS.</span>
             </div>
             <div className="headline-line block">
-              THREE LANES.
+              BUILT FOR SPEED
             </div>
           </h2>
           <p className="description-text text-gray-300 text-lg md:text-2xl leading-relaxed max-w-md opacity-0">
-            Dry van, temperature-controlled, and flatbed—built for schedules that don't bend.
+            Maximizing efficiency with our dedicated power-only freight network.
           </p>
         </div>
       </div>
@@ -189,7 +194,9 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
                 <h3 className="font-space font-black text-lg md:text-2xl text-text-primary uppercase tracking-wide mb-1 md:mb-2">
                   {service.title}
                 </h3>
-                <p className="text-gray-400 text-sm md:text-lg leading-relaxed">{service.description}</p>
+                {service.description && (
+                  <p className="text-gray-400 text-sm md:text-lg leading-relaxed">{service.description}</p>
+                )}
               </div>
             </div>
           </div>
@@ -199,7 +206,7 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
           onClick={onApplyClick}
           className="btn-primary inline-flex mt-4 md:mt-8 py-3 md:py-5 px-6 md:px-10 text-xs md:text-base uppercase tracking-widest font-bold text-center"
         >
-          See All Capabilities
+          Apply Now
         </button>
       </div>
 

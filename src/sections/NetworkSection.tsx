@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MapPin, Route, Radio, Wifi } from 'lucide-react';
+import { MapPin, Calendar, Zap, TrendingUp, Users, Timer } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,10 +18,11 @@ const NetworkSection = () => {
   ];
 
   const features = [
-    { icon: Radio, text: 'Live GPS on every trailer' },
-    { icon: Wifi, text: 'Real-time status updates' },
-    { icon: Route, text: 'Dynamic route optimization' },
-    { icon: MapPin, text: 'Geofenced delivery alerts' },
+    { icon: Calendar, title: 'PREBOOK LOADS', desc: "We plan ahead so you're not waiting after delivery - next load ready." },
+    { icon: Zap, title: 'HOTSHOT / URGENT LOAD PRIORITY', desc: 'Access to time sensitive loads with better rates.' },
+    { icon: TrendingUp, title: 'RATE NEGOTIATION EXPERTS', desc: 'We fight for best rates not cheap freight.' },
+    { icon: Users, title: 'DRIVER FOCUSED DISPATCH', desc: "We don't overload you we build schedules that work." },
+    { icon: Timer, title: 'FAST TURNAROUND LOADS', desc: 'Pick up and drop quickly more loads per week.' },
   ];
 
   useLayoutEffect(() => {
@@ -64,23 +65,28 @@ const NetworkSection = () => {
           {/* Left: Headline + features */}
           <div>
             <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-8">National Reach</span>
-            <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-8 md:mb-10">
-              A NETWORK<br />THAT <span className="text-lime">NEVER</span><br />SLEEPS.
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-8 md:mb-10">
+              KEEP YOUR <br />TRUCK <span className="text-lime">MOVING</span><br />ALWAYS.
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed mb-12 max-w-md">
-              340+ active trucks, 48 states covered, 24/7 dispatch. Our network runs around the clock so your supply chain never stops.
+              We keep your truck loaded with preplanned power only freight, strong RPM, and real dispatch support day and night.
             </p>
 
             <div className="space-y-4">
               {features.map((f, idx) => (
-                <div key={idx} className="network-feature flex items-center gap-5 p-4 border border-white/5 hover:border-lime/30 transition-all duration-300 group">
-                  <div className="p-3 bg-lime/10 group-hover:bg-lime/20 transition-colors rounded-sm">
+                <div key={idx} className="network-feature flex flex-col md:flex-row items-start md:items-center gap-4 p-4 border border-white/5 hover:border-lime/30 transition-all duration-300 group">
+                  <div className="p-3 bg-lime/10 group-hover:bg-lime/20 transition-colors rounded-sm shrink-0">
                     <f.icon className="w-5 h-5 text-lime" />
                   </div>
-                  <span className="font-space font-bold text-sm uppercase tracking-wide text-gray-300 group-hover:text-white transition-colors">
-                    {f.text}
-                  </span>
-                  <div className="ml-auto w-2 h-2 rounded-full bg-lime animate-pulse" />
+                  <div className="flex-1">
+                    <div className="font-space font-bold text-sm uppercase tracking-wide text-white mb-1 group-hover:text-lime transition-colors">
+                      {f.title}
+                    </div>
+                    <div className="text-gray-400 text-xs">
+                      {f.desc}
+                    </div>
+                  </div>
+                  <div className="hidden md:block ml-auto w-2 h-2 rounded-full bg-lime animate-pulse shrink-0" />
                 </div>
               ))}
             </div>

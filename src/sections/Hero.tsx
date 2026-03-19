@@ -176,13 +176,17 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
         className="absolute inset-x-6 md:inset-x-auto md:left-[7vw] top-[15vh] md:top-[20vh] md:w-[46vw] max-w-[700px] z-10 will-change-transform"
       >
         <span className="eyebrow block mb-6 text-lime uppercase tracking-widest text-sm font-semibold">
-          Nationwide Freight
+          AKA FS LLC
         </span>
-        <h1 className="text-5xl md:text-8xl lg:text-9xl font-black text-white uppercase tracking-tighter leading-[0.9] mb-6">
-          FREIGHT <br /> THAT MOVES <br /> LIKE CLOCKWORK
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-[0.9] mb-6">
+          FREIGHT <br /> THAT NEVER <br /> STOPS MOVING
         </h1>
+        <h2 className="text-white font-bold text-lg md:text-xl mb-4 tracking-wide">
+          POWERING YOUR FREIGHT. DELIVERING RESULTS.
+        </h2>
         <p className="text-gray-300 text-lg md:text-xl max-w-lg mb-8 leading-relaxed">
-          Reliable dry van, reefer, and flatbed logistics—on time, every time.
+          Run strong with reliable power-only loads and consistent miles. <br className="hidden md:block"/>
+          24/7 dispatch. No-touch freight. Real support.
         </p>
         <div className="flex flex-wrap gap-4">
           <button 
@@ -204,13 +208,13 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
       >
         <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-lime/30 bg-black/60 backdrop-blur-md mb-6 shadow-[0_0_20px_rgba(182,255,0,0.15)] text-lime eyebrow">
           <Cpu className="w-5 h-5" />
-          Adaptive Technology
+          Smart dispatch. Maximum Efficiency.
         </div>
         <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-white mb-4 uppercase tracking-wider leading-tight">
           Intelligent <br /> Routing
         </h2>
         <p className="text-gray-200 text-lg max-w-[400px]">
-          AI-driven logistics ensuring zero downtime, pinpoint accuracy, and maximum efficiency across the global grid.
+          We use advanced dispatch strategies and real-time tracking to reduce empty miles, increase profits, and keep your trucks moving without delays.
         </p>
       </div>
 
@@ -223,20 +227,12 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
           <div className="absolute top-0 right-0 w-32 h-32 bg-lime/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
           <ShieldCheck className="w-12 h-12 text-lime shrink-0" />
           <div>
-            <h3 className="text-2xl md:text-5xl lg:text-6xl font-black text-white mb-3 md:mb-4 uppercase tracking-wide">
-              Unyielding Reliability
+            <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-white mb-3 md:mb-4 uppercase tracking-wide">
+              Built for Reliability.<br />Trusted Every Mile.
             </h3>
             <p className="text-gray-300 mb-8 text-lg leading-relaxed">
-              Our ever-evolving fleet transforms the most complex logistical challenges into fully automated, secure solutions.
+              Our experienced team handles complex logistics with precision delivering consistent loads, secure operations, and on-time performance every time.
             </p>
-            <div className="flex gap-4">
-              <button 
-                onClick={onApplyClick}
-                className="px-6 py-3 bg-lime text-black font-bold tracking-widest text-sm hover:bg-white transition-all uppercase rounded-sm shadow-[0_0_20px_rgba(184,255,44,0.3)]"
-              >
-                Apply Now
-              </button>
-            </div>
           </div>
         </div>
       </div>

@@ -1,24 +1,24 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Package, BarChart3, Globe2, ShieldCheck } from 'lucide-react';
+import { Truck, DollarSign, Activity, Clock } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface CapabilitiesSectionProps {
-  onApplyClick?: () => void;
+  // Optional props
 }
 
-const CapabilitiesSection = ({ onApplyClick }: CapabilitiesSectionProps) => {
+const CapabilitiesSection = ({}: CapabilitiesSectionProps = {}) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const capabilities = [
-    { icon: Package, label: 'Full Truckload (FTL)' },
-    { icon: BarChart3, label: 'Partial Loads (LTL)' },
-    { icon: Globe2, label: 'Cross-Country Lanes' },
-    { icon: ShieldCheck, label: 'Hazmat Certified' },
+    { icon: Truck, label: 'POWER ONLY OPERATIONS' },
+    { icon: DollarSign, label: 'HIGH RPM LOADS' },
+    { icon: Activity, label: 'CONSISTENT WORK' },
+    { icon: Clock, label: '24/7 DISPATCH & FLEET' },
   ];
 
   useLayoutEffect(() => {
@@ -85,11 +85,11 @@ const CapabilitiesSection = ({ onApplyClick }: CapabilitiesSectionProps) => {
           {/* Right content */}
           <div ref={contentRef}>
             <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-8">Our Capabilities</span>
-            <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-6 md:mb-8">
-              BUILT TO <br /><span className="text-lime">SCALE</span><br />WITH YOU.
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-6 md:mb-8">
+              GROW YOUR <br /><span className="text-lime">BUSINESS</span><br />WITH CONFIDENCE.
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed mb-12 max-w-lg">
-              From single loads to dedicated fleets, we grow with your logistics needs. No volume too small, no lane too complex.
+              Whether you're an owner operator or managing a fleet, we provide consistent power only loads, strong rates, and full dispatch support to keep you moving.
             </p>
 
             {/* Capabilities list */}
@@ -106,13 +106,6 @@ const CapabilitiesSection = ({ onApplyClick }: CapabilitiesSectionProps) => {
               ))}
             </div>
 
-            <button
-              onClick={onApplyClick}
-              className="inline-flex items-center gap-4 font-space font-black text-xs md:text-sm uppercase tracking-widest text-lime border border-lime/30 px-6 md:px-8 py-4 md:py-5 hover:bg-lime hover:text-navy transition-all duration-300 shadow-[0_0_20px_rgba(184,255,44,0.2)]"
-            >
-              Apply Now
-              <span className="text-lg md:text-xl">→</span>
-            </button>
           </div>
         </div>
       </div>

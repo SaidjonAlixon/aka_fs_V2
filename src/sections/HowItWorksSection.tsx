@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FileText, Search, Truck, CheckCircle2, ArrowRight } from 'lucide-react';
+import { UserPlus, Target, Truck, DollarSign, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,27 +11,27 @@ const HowItWorksSection = () => {
   const steps = [
     {
       step: '01',
-      icon: FileText,
-      title: 'Submit Your Load',
-      desc: 'Fill out a quick form or call us directly with your freight details, origin, and destination.',
+      icon: UserPlus,
+      title: 'Get Set Up',
+      desc: 'Sign up with our company and get ready to start receiving PO loads.',
     },
     {
       step: '02',
-      icon: Search,
-      title: 'We Match Capacity',
-      desc: 'Our dispatch team instantly optimizes carrier selection from our vetted network.',
+      icon: Target,
+      title: 'We Find Your Load',
+      desc: 'We secure high RPM, preloaded trailers with fast pick & drop no waiting, no stress.',
     },
     {
       step: '03',
       icon: Truck,
-      title: 'Freight Moves',
-      desc: 'Real-time GPS tracking keeps you informed every mile, from pickup to delivery.',
+      title: 'Pick Up & Go',
+      desc: 'Hook your trailer and hit the road. All loads are no touch, secured and ready.',
     },
     {
       step: '04',
-      icon: CheckCircle2,
-      title: 'Confirmed Delivery',
-      desc: 'Get a digital POD and invoice instantly. Simple, fast, and always transparent.',
+      icon: DollarSign,
+      title: 'Get Paid Fast',
+      desc: 'Get paid quickly with transparent rates and consistent weekly settlements.',
     },
   ];
 
@@ -79,11 +79,14 @@ const HowItWorksSection = () => {
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-lime/20 to-transparent" />
 
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16 md:mb-24">
+        <div className="text-center mb-16 md:mb-24 px-4">
           <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-4 md:mb-6">Simple Process</span>
-          <h2 className="text-4xl md:text-7xl lg:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85]">
-            HOW IT <span className="text-lime">WORKS</span>
+          <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-[0.85]">
+            HOW PO DISPATCH <span className="text-lime">WORKS</span>
           </h2>
+          <p className="text-gray-400 text-lg md:text-xl font-medium mt-6">
+            Simple. Fast. No touch freight. Built for drivers.
+          </p>
         </div>
 
         {/* Steps grid */}
