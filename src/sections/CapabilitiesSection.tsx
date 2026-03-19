@@ -71,7 +71,7 @@ const CapabilitiesSection = ({}: CapabilitiesSectionProps = {}) => {
               <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 right-4 md:right-8 glass-card p-4 md:p-6">
                 <div className="font-mono text-[8px] md:text-[10px] uppercase tracking-widest text-lime mb-2 md:mb-3">Active Right Now</div>
                 <div className="flex items-end gap-2 md:gap-3">
-                  <span className="font-space font-black text-3xl md:text-5xl text-white">340+</span>
+                  <span className="font-space font-black text-3xl md:text-5xl text-white">250+</span>
                   <span className="text-gray-400 text-[10px] md:text-sm pb-1 md:pb-2">active trucks on road today</span>
                 </div>
               </div>

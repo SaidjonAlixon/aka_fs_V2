@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Truck, Snowflake, Package, RefreshCw } from 'lucide-react';
+import { Truck, PackageX, Zap, Clock } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,28 +14,28 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
 
   const services = [
     {
+      icon: PackageX,
+      title: 'No Touch Freight',
+      desc: 'Keep moving and earning. Never worry about loading or unloading the cargo yourself.',
+      badge: 'Driver First',
+    },
+    {
       icon: Truck,
-      title: 'Dry Van',
-      desc: 'Full truckload capacity for general freight. Reliable, efficient, cost-effective.',
-      badge: 'Most Popular',
+      title: 'Preloaded Trailers',
+      desc: 'Hook up and go. Our preloaded trailers save you hours of wait time at the dock.',
+      badge: 'Efficient',
     },
     {
-      icon: Snowflake,
-      title: 'Reefer',
-      desc: 'Temperature-controlled transport for perishable and sensitive goods.',
-      badge: 'Cold Chain',
+      icon: Zap,
+      title: 'Fast Pick & Drop',
+      desc: 'Streamlined facility operations engineered to minimize your dwell time.',
+      badge: 'High RPM',
     },
     {
-      icon: Package,
-      title: 'Flatbed',
-      desc: 'Oversized and heavy freight transported with precision and care.',
-      badge: 'Heavy Haul',
-    },
-    {
-      icon: RefreshCw,
-      title: 'Intermodal',
-      desc: 'Combined rail and truck shipping for maximum cost efficiency.',
-      badge: 'Eco-Friendly',
+      icon: Clock,
+      title: 'Fast Operations',
+      desc: '24/7 dispatch and support dedicated to resolving issues instantly and keeping you rolling.',
+      badge: 'Support',
     },
   ];
 
@@ -89,14 +89,14 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">
           <div className="services-headline">
             <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-4 md:mb-6">What We Move</span>
-            <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-[0.85]">
-              THREE<br />
-              <span className="text-lime">LANES.</span><br />
-              ONE TEAM.
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tighter leading-[0.95]">
+              POWER ONLY <br />
+              <span className="text-lime">SOLUTIONS.</span><br />
+              BUILT FOR SPEED.
             </h2>
           </div>
           <p className="text-gray-400 text-base md:text-lg max-w-sm leading-relaxed">
-            Whether it's dry van, reefer, or flatbed — we have the capacity and expertise to move it.
+            Preloaded trailers, no touch freight, and high RPM loads built for drivers who want consistency, speed, and real support.
           </p>
         </div>
 

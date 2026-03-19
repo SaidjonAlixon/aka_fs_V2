@@ -88,7 +88,7 @@ const TestimonialsHome = () => {
     };
   }, []);
 
-  const Card = ({ t, idx, floatDelay = 0 }: { t: typeof testimonials[0]; idx: number; floatDelay?: number }) => (
+  const Card = ({ t, floatDelay = 0 }: { t: typeof testimonials[0]; floatDelay?: number }) => (
     <div
       className="testimonial-card flex-shrink-0 w-80 md:w-[400px] mx-4 relative group cursor-default"
       style={{ animation: `floatCard ${3 + (floatDelay % 2)}s ease-in-out infinite alternate`, animationDelay: `${floatDelay * 0.4}s` }}
@@ -116,8 +116,7 @@ const TestimonialsHome = () => {
 
         <div className="flex items-center gap-4">
           <div
-            className="w-12 h-12 flex items-center justify-center font-space font-black text-navy text-xl bg-lime flex-shrink-0"
-            style={{ animation: `spinSlow ${8 + idx}s linear infinite` }}
+            className="w-12 h-12 flex items-center justify-center rounded-full font-space font-black text-navy text-xl bg-lime flex-shrink-0"
           >
             {t.name[0]}
           </div>
@@ -162,7 +161,7 @@ const TestimonialsHome = () => {
       <div className="overflow-hidden mb-8">
         <div ref={track1Ref} className="flex" style={{ width: 'max-content', x: '0%' } as React.CSSProperties}>
           {allCards.map((t, idx) => (
-            <Card key={`r1-${idx}`} t={t} idx={idx} floatDelay={idx} />
+            <Card key={`r1-${idx}`} t={t} floatDelay={idx} />
           ))}
         </div>
       </div>

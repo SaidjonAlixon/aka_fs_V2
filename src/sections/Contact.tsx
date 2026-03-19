@@ -20,8 +20,8 @@ const Contact = () => {
   });
 
   const contactInfo = [
-    { icon: Mail, label: 'Email', value: 'dispatch@akafs.com' },
-    { icon: Phone, label: 'Phone', value: '1-800-555-0142' },
+    { icon: Mail, label: 'Email', value: 'info@akafsllc.com' },
+    { icon: Phone, label: 'Phone', value: '+1 (412) 235-3377' },
     { icon: Clock, label: 'Hours', value: 'Mon–Fri 6am–10pm ET' },
   ];
 
@@ -220,7 +220,7 @@ const Contact = () => {
               <div className="w-full h-full relative overflow-hidden grayscale contrast-[1.1] hover:grayscale-0 transition-all duration-1000 brightness-90 hover:brightness-105">
                 <iframe
                   title="AKA FS HQ"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190255.451631557!2d-87.8358485!3d41.8337329!2m3!1f0!2f0!3f0!3m2!1i1024!2ie768!4f13.1!3m3!1m2!1s0x880e2c3cd0f4cbed%3A0xafe0a6ad09c0c000!2sChicago%2C%20IL!5e0!3m2!1sen!2sus!4v1710433600000!5m2!1sen!2sus"
+                  src="https://maps.google.com/maps?q=400%20Lydia%20Street,%20Suite%20103,%20Carnegie,%20PA%2015106&t=&z=13&ie=UTF8&iwloc=&output=embed"
                   className="absolute inset-0 w-full h-full border-0"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -233,9 +233,11 @@ const Contact = () => {
                 <div className="glass-card bg-navy/95 backdrop-blur-3xl border-lime/40 p-6 px-10 flex flex-col gap-2">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 rounded-full bg-lime animate-ping" />
-                    <h4 className="text-xl font-black text-white uppercase tracking-tight">CHICAGO HUB</h4>
+                    <h4 className="text-xl font-black text-white uppercase tracking-tight">HEADQUARTERS</h4>
                   </div>
-                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.5em] ml-5">CENTRAL LOGISTICS CENTER</p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] ml-5 leading-relaxed">
+                    400 Lydia Street, Suite 103<br/>Carnegie, PA 15106
+                  </p>
                 </div>
               </div>
 

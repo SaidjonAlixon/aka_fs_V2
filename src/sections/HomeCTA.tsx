@@ -73,7 +73,7 @@ const HomeCTA = ({ onApplyClick }: HomeCTAProps) => {
 
             <div className="flex flex-col sm:flex-row items-center gap-8">
               <a
-                href="tel:+1234567890"
+                href="tel:+14122353377"
                 className="flex items-center gap-3 text-gray-300 hover:text-lime transition-colors group"
               >
                 <div className="p-3 border border-white/10 group-hover:border-lime/50 transition-colors">
@@ -81,12 +81,12 @@ const HomeCTA = ({ onApplyClick }: HomeCTAProps) => {
                 </div>
                 <div className="text-left">
                   <div className="text-[10px] font-mono uppercase tracking-widest text-lime/60">Call Us</div>
-                  <div className="font-space font-bold uppercase">+1 (800) 123-4567</div>
+                  <div className="font-space font-bold uppercase">+1 (412) 235-3377</div>
                 </div>
               </a>
 
               <a
-                href="mailto:info@akafs.com"
+                href="mailto:info@akafsllc.com"
                 className="flex items-center gap-3 text-gray-300 hover:text-lime transition-colors group"
               >
                 <div className="p-3 border border-white/10 group-hover:border-lime/50 transition-colors">
@@ -94,7 +94,7 @@ const HomeCTA = ({ onApplyClick }: HomeCTAProps) => {
                 </div>
                 <div className="text-left">
                   <div className="text-[10px] font-mono uppercase tracking-widest text-lime/60">Email Us</div>
-                  <div className="font-space font-bold uppercase">info@akafs.com</div>
+                  <div className="font-space font-bold uppercase">info@akafsllc.com</div>
                 </div>
               </a>
             </div>
