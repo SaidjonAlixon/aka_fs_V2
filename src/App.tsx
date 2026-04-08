@@ -29,12 +29,15 @@ import Careers from './sections/Careers';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 
+import { Toaster } from 'sonner';
+
 function App() {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
     <Router>
       <div className="relative bg-background min-h-screen">
+        <Toaster position="top-right" richColors />
         {/* Grain overlay */}
         <div className="grain-overlay" />
 

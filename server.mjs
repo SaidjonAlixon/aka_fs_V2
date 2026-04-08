@@ -28,6 +28,10 @@ app.options('/api/applications', (req, res) => {
   res.sendStatus(200);
 });
 
+app.options('/api/contact', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.options('/api/blob-upload', (req, res) => {
   res.sendStatus(200);
 });
@@ -96,6 +100,63 @@ app.post('/api/applications', async (req, res) => {
     return jsonResponse(res, { success: true });
   } catch (err) {
     console.error('[applications]', err);
+    return jsonResponse(
+      res,
+      { error: err instanceof Error ? err.message : 'Submission failed' },
+      500,
+    );
+  }
+});
+
+app.post('/api/contact', async (req, res) => {
+  try {
+    const token = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+    if (!token || !chatId) {
+      return jsonResponse(res, { error: 'Telegram not configured' }, 500);
+    }
+
+    const { name, company, email, phone, message } = req.body ?? {};
+
+    const lines = [
+      '📩 New Contact Inquiry',
+      '',
+      `Name: ${name ?? '—'}`,
+      `Company: ${company ?? '—'}`,
+      `Email: ${email ?? '—'}`,
+      `Phone: ${phone ?? '—'}`,
+      '',
+      'Message:',
+      message ?? '—',
+      '',
+    ];
+
+    const text = lines.join('\n');
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+    const tgRes = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        disable_web_page_preview: true,
+      }),
+    });
+
+    if (!tgRes.ok) {
+      const errText = await tgRes.text();
+      console.error('[contact] Telegram error:', tgRes.status, errText);
+      return jsonResponse(
+        res,
+        { error: 'Failed to send notification', details: errText },
+        502,
+      );
+    }
+
+    return jsonResponse(res, { success: true });
+  } catch (err) {
+    console.error('[contact]', err);
     return jsonResponse(
       res,
       { error: err instanceof Error ? err.message : 'Submission failed' },

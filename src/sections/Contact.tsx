@@ -1,7 +1,8 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, Phone, Clock, Send } from 'lucide-react';
+import { Mail, Phone, Clock, Send, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,7 @@ const Contact = () => {
   const rightRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -87,11 +89,33 @@ const Contact = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    alert('Thank you for your inquiry! We will respond within one business day.');
-    setFormData({ name: '', company: '', email: '', phone: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      toast.success('Thank you for your inquiry! We will respond within one business day.');
+      setFormData({ name: '', company: '', email: '', phone: '', message: '' });
+    } catch (error) {
+      console.error('Contact form error:', error);
+      toast.error(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -193,12 +217,17 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="group/btn relative w-full py-6 bg-lime text-navy font-black text-sm uppercase tracking-[0.5em] overflow-hidden transition-all hover:scale-[1.01] shadow-[0_0_60px_rgba(184,255,44,0.15)]"
+                  disabled={isSubmitting}
+                  className="group/btn relative w-full py-6 bg-lime text-navy font-black text-sm uppercase tracking-[0.5em] overflow-hidden transition-all hover:scale-[1.01] shadow-[0_0_60px_rgba(184,255,44,0.15)] disabled:opacity-70 disabled:cursor-not-allowed"
                   style={{ clipPath: 'polygon(1% 0, 100% 0, 99% 100%, 0 100%)' }}
                 >
                   <span className="relative z-10 flex justify-center items-center gap-3">
-                    <Send className="w-5 h-5" />
-                    Secure Inbound Request
+                    {isSubmitting ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <Send className="w-5 h-5" />
+                    )}
+                    {isSubmitting ? 'Sending Request...' : 'Secure Inbound Request'}
                   </span>
                   <div className="absolute inset-0 bg-white translate-x-[-101%] group-hover/btn:translate-x-0 transition-transform duration-700 ease-in-out" />
                 </button>
