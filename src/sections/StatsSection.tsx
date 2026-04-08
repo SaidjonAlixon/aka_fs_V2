@@ -86,7 +86,7 @@ const StatsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-40 bg-navy overflow-hidden">
+    <section ref={sectionRef} className="relative py-20 md:py-40 bg-background overflow-hidden">
       {/* Grid lines */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -103,7 +103,7 @@ const StatsSection = () => {
         <div className="stats-headline text-center mb-20">
           <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime">Performance Metrics</span>
           {/* Animated connector line under eyebrow */}
-          <div className="mx-auto mt-4 w-48 h-[2px] bg-white/5 relative overflow-hidden">
+          <div className="mx-auto mt-4 w-48 h-[2px] bg-foreground/10 relative overflow-hidden">
             <div className="stats-line absolute inset-0 bg-lime/60 origin-left" style={{ transform: 'scaleX(0)' }} />
           </div>
         </div>
@@ -113,7 +113,7 @@ const StatsSection = () => {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className={`stat-card-${idx} group relative text-center p-6 md:p-10 border border-white/5 hover:border-lime/30 transition-colors duration-500 bg-white/[0.02] hover:bg-white/[0.05] overflow-hidden`}
+              className={`stat-card-${idx} group relative text-center p-6 md:p-10 border border-foreground/10 hover:border-lime/30 transition-colors duration-500 bg-foreground/[0.02] hover:bg-foreground/[0.05] overflow-hidden`}
             >
               {/* Top accent bar */}
               <div className="absolute top-0 left-0 w-0 h-[2px] bg-lime group-hover:w-full transition-all duration-700" />
@@ -130,13 +130,13 @@ const StatsSection = () => {
                 </div>
               </div>
 
-              <div className="font-space font-black text-3xl md:text-5xl lg:text-6xl text-white mb-2 group-hover:text-lime transition-colors duration-300">
+              <div className="font-space font-black text-3xl md:text-5xl lg:text-6xl text-foreground mb-2 group-hover:text-lime transition-colors duration-300">
                 {stat.value}
               </div>
-              <div className="font-space font-bold text-sm uppercase tracking-widest text-white mb-1">
+              <div className="font-space font-bold text-sm uppercase tracking-widest text-foreground mb-1">
                 {stat.label}
               </div>
-              <div className="text-gray-500 text-xs uppercase tracking-wider">
+              <div className="text-text-secondary text-xs uppercase tracking-wider font-bold">
                 {stat.sub}
               </div>
 

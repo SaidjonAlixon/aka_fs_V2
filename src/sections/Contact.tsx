@@ -102,36 +102,28 @@ const Contact = () => {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative min-h-[160vh] lg:min-h-[180vh] flex flex-col justify-end pb-40 px-6 lg:px-[8vw] overflow-hidden"
+      className="relative min-h-screen py-24 md:py-32 px-6 lg:px-[8vw] overflow-hidden bg-background"
     >
-      {/* Background Image Layer - Fixed/Sticky for maximum clarity */}
+      {/* Dynamic Background Visuals */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="sticky top-0 h-screen w-full overflow-hidden">
-          <img
-            src="/images/Office.png"
-            alt="AKA FS Background"
-            className="w-full h-full object-cover object-[center_20%]"
-          />
-          {/* Minimalist, high-end overlays with seamless fade */}
-          <div className="absolute inset-0 bg-navy/20 backdrop-blur-[0.2px]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-transparent to-navy" />
-          <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-navy to-transparent" />
-        </div>
+        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-lime/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-navy-light/20 blur-[100px] rounded-full" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(184,255,44,0.02)_0%,transparent_100%)]" />
       </div>
 
-      {/* Main Content - Pushed for depth but integrated via gradients */}
-      <div className="relative z-10 w-full pt-[80vh]">
-        {/* Refined Header - Slightly larger for impact */}
-        <div className="mb-24 max-w-3xl">
+      {/* Main Content */}
+      <div className="relative z-10 w-full">
+        {/* Refined Header */}
+        <div className="mb-20 max-w-3xl">
           <div className="flex items-center gap-6 mb-8">
-            <div className="h-0.5 w-20 bg-lime" />
-            <span className="text-lime font-black tracking-[0.8em] uppercase text-[11px]">CONNECT WITH EXCELLENCE</span>
+            <div className="h-0.5 w-16 bg-lime" />
+            <span className="text-lime font-black tracking-[0.6em] uppercase text-[10px]">CONNECT WITH EXCELLENCE</span>
           </div>
-          <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-4">
+          <h2 className="text-4xl md:text-7xl font-black text-foreground uppercase tracking-tighter leading-none mb-6">
             GLOBAL <span className="text-lime">STANDARDS.</span><br />
             LOCAL ROOTS.
           </h2>
-          <p className="text-gray-400 text-lg md:text-xl font-medium max-w-[45ch] leading-relaxed">
+          <p className="text-text-secondary text-lg md:text-xl font-medium max-w-[45ch] leading-relaxed">
             Experience the AKA FS standard in logistics. Our experts are ready to optimize your supply chain.
           </p>
         </div>
@@ -144,21 +136,21 @@ const Contact = () => {
               {contactInfo.map((info, index) => (
                 <div
                   key={index}
-                  className="glass-card bg-navy/40 backdrop-blur-2xl p-6 border-white/5 flex flex-col gap-4 hover:border-lime/30 hover:bg-navy/60 transition-all border-l-4 border-l-lime/10 group"
+                  className="glass-card bg-background/40 backdrop-blur-2xl p-6 border-foreground/10 flex flex-col gap-4 hover:border-lime/30 hover:bg-secondary transition-all border-l-4 border-l-lime/10 group"
                 >
-                  <div className="p-3 bg-navy/60 border border-white/10 text-lime w-fit group-hover:bg-lime group-hover:text-navy transition-all">
+                  <div className="p-3 bg-secondary border border-foreground/10 text-lime w-fit group-hover:bg-lime group-hover:text-navy transition-all">
                     <info.icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-1">{info.label}</div>
-                    <div className="text-sm font-black text-white tracking-wide">{info.value}</div>
+                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary mb-1">{info.label}</div>
+                    <div className="text-sm font-black text-foreground tracking-wide">{info.value}</div>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Substantial Glass Form */}
-            <div className="glass-card bg-navy/50 backdrop-blur-3xl p-10 md:p-14 border-white/10 shadow-3xl">
+            <div className="glass-card bg-background/50 backdrop-blur-3xl p-10 md:p-14 border-foreground/10 shadow-3xl">
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   <div className="space-y-2">
@@ -169,7 +161,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full bg-navy/30 border-b-2 border-white/10 px-6 py-4 text-sm text-white focus:border-lime focus:outline-none focus:bg-white/5 transition-all"
+                      className="w-full bg-foreground/5 border-b-2 border-foreground/10 px-6 py-4 text-sm text-foreground focus:border-lime focus:outline-none focus:bg-lime/5 transition-all"
                       placeholder="Your Full Name"
                     />
                   </div>
@@ -181,20 +173,20 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full bg-navy/30 border-b-2 border-white/10 px-6 py-4 text-sm text-white focus:border-lime focus:outline-none focus:bg-white/5 transition-all"
+                      className="w-full bg-foreground/5 border-b-2 border-foreground/10 px-6 py-4 text-sm text-foreground focus:border-lime focus:outline-none focus:bg-lime/5 transition-all"
                       placeholder="Professional Email"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 ml-1">Requirements</label>
+                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-text-secondary ml-1">Requirements</label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full bg-navy/30 border-b-2 border-white/10 px-6 py-4 text-sm text-white focus:border-lime focus:outline-none focus:bg-white/5 transition-all resize-none"
+                    className="w-full bg-foreground/5 border-b-2 border-foreground/10 px-6 py-4 text-sm text-foreground focus:border-lime focus:outline-none focus:bg-foreground/10 transition-all resize-none"
                     placeholder="Describe your logistics challenges or shipment details..."
                   />
                 </div>
@@ -216,7 +208,7 @@ const Contact = () => {
 
           {/* Right Column - Prominent Map */}
           <div ref={rightRef} className="lg:col-span-5 h-full">
-            <div className="glass-card bg-navy/40 backdrop-blur-3xl p-2 border-white/10 h-full min-h-[500px] lg:min-h-[600px] relative group overflow-hidden">
+            <div className="glass-card bg-background/40 backdrop-blur-3xl p-2 border-foreground/10 h-full min-h-[500px] lg:min-h-[600px] relative group overflow-hidden">
               <div className="w-full h-full relative overflow-hidden grayscale contrast-[1.1] hover:grayscale-0 transition-all duration-1000 brightness-90 hover:brightness-105">
                 <iframe
                   title="AKA FS HQ"
@@ -225,25 +217,25 @@ const Contact = () => {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-navy/60 via-transparent to-navy/20" />
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-background/60 via-transparent to-background/20" />
               </div>
 
               {/* Floating HQ Identity */}
               <div className="absolute top-10 left-10">
-                <div className="glass-card bg-navy/95 backdrop-blur-3xl border-lime/40 p-6 px-10 flex flex-col gap-2">
+                <div className="glass-card bg-background/95 backdrop-blur-3xl border-lime/40 p-6 px-10 flex flex-col gap-2">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 rounded-full bg-lime animate-ping" />
-                    <h4 className="text-xl font-black text-white uppercase tracking-tight">HEADQUARTERS</h4>
+                    <h4 className="text-xl font-black text-foreground uppercase tracking-tight">HEADQUARTERS</h4>
                   </div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] ml-5 leading-relaxed">
+                  <p className="text-[10px] text-text-secondary font-black uppercase tracking-[0.2em] ml-5 leading-relaxed">
                     400 Lydia Street, Suite 103<br/>Carnegie, PA 15106
                   </p>
                 </div>
               </div>
 
               <div className="absolute bottom-10 right-10 flex items-center gap-6">
-                <div className="h-px w-16 bg-white/20" />
-                <span className="text-[10px] font-black text-white uppercase tracking-[0.6em] opacity-40">Live Network Feed</span>
+                <div className="h-px w-16 bg-foreground/20" />
+                <span className="text-[10px] font-black text-foreground uppercase tracking-[0.6em] opacity-40">Live Network Feed</span>
               </div>
             </div>
           </div>

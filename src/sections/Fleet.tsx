@@ -157,18 +157,18 @@ const Fleet = () => {
     <section
       ref={sectionRef}
       id="fleet"
-      className="relative w-full h-screen overflow-hidden bg-navy"
+      className="relative w-full h-screen overflow-hidden bg-background"
     >
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full object-cover"
       />
       
-      <div className="absolute inset-0 bg-gradient-to-r from-navy/70 via-transparent to-navy/50 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/50 pointer-events-none" />
 
       <div
         ref={slashNavyRef}
-        className="absolute left-[-2vw] top-0 h-full w-[15vw] bg-navy/80 skew-x-[-15deg] origin-top border-r border-white/5 pointer-events-none"
+        className="absolute left-[-2vw] top-0 h-full w-[15vw] bg-background/80 skew-x-[-15deg] origin-top border-r border-foreground/10 pointer-events-none shadow-2xl"
       />
       <div
         ref={slashLimeRef}
@@ -179,11 +179,11 @@ const Fleet = () => {
         <div className="grid lg:grid-cols-2 gap-24 w-full items-center">
           
           <div ref={headlineRef} className="max-w-2xl">
-            <h2 className="text-5xl md:text-8xl lg:text-9xl font-black text-white mb-8 uppercase tracking-tighter leading-[0.85]">
+            <h2 className="text-5xl md:text-8xl lg:text-9xl font-black text-foreground mb-8 uppercase tracking-tighter leading-[0.85]">
               NEWER <span className="text-lime">TRUCKS.</span><br />
               FEWER DELAYS.
             </h2>
-            <p className="text-gray-300 text-xl md:text-2xl leading-relaxed max-w-lg">
+            <p className="text-foreground text-xl md:text-2xl leading-relaxed max-w-lg font-bold">
               Late-model tractors with preventive maintenance, ELD compliance, and 24/7 roadside support.
             </p>
           </div>

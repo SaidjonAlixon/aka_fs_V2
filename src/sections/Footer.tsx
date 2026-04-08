@@ -48,7 +48,7 @@ const Footer = ({ onApplyClick }: FooterProps) => {
   return (
     <footer
       ref={footerRef}
-      className="relative bg-navy py-12 lg:py-16 px-6 lg:px-[7vw] border-t border-white/5"
+      className="relative bg-background py-12 lg:py-16 px-6 lg:px-[7vw] border-t border-foreground/10"
     >
       {/* Decorative slash */}
       <div className="absolute top-0 left-[7vw] w-24 h-1 bg-lime slash-bar -translate-y-1/2" />
@@ -70,7 +70,7 @@ const Footer = ({ onApplyClick }: FooterProps) => {
               muted
               loop
               playsInline
-              className="h-20 w-auto object-contain mix-blend-screen"
+              className="h-20 w-auto object-contain logo-filter"
             />
           </a>
           <button 
@@ -130,7 +130,7 @@ const Footer = ({ onApplyClick }: FooterProps) => {
       </div>
 
       {/* Bottom row */}
-      <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-4 text-center sm:text-left">
+      <div className="mt-10 pt-6 border-t border-foreground/10 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-4 text-center sm:text-left">
         <p className="font-mono text-[10px] text-text-secondary">
           © 2026 AKA FS Logistics. All rights reserved.
         </p>

@@ -52,27 +52,27 @@ const CapabilitiesSection = ({}: CapabilitiesSectionProps = {}) => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-32 bg-[#060d14] overflow-hidden">
+    <section ref={sectionRef} className="relative py-20 md:py-32 bg-background overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-lime/20 to-transparent" />
 
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left visual */}
           <div ref={imageRef} className="relative">
-            <div className="aspect-[4/3] bg-navy border border-white/10 relative overflow-hidden">
+            <div className="aspect-[4/3] bg-secondary border border-foreground/10 relative overflow-hidden">
               <img
                 src="/images/safety_wet_road.jpg"
                 alt="AKA FS Fleet"
                 className="w-full h-full object-cover opacity-60"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent" />
 
               {/* Overlay badge */}
               <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 right-4 md:right-8 glass-card p-4 md:p-6">
                 <div className="font-mono text-[8px] md:text-[10px] uppercase tracking-widest text-lime mb-2 md:mb-3">Active Right Now</div>
                 <div className="flex items-end gap-2 md:gap-3">
-                  <span className="font-space font-black text-3xl md:text-5xl text-white">250+</span>
-                  <span className="text-gray-400 text-[10px] md:text-sm pb-1 md:pb-2">active trucks on road today</span>
+                  <span className="font-space font-black text-3xl md:text-5xl text-foreground">250+</span>
+                  <span className="text-text-secondary text-[10px] md:text-sm pb-1 md:pb-2 font-bold">active trucks on road today</span>
                 </div>
               </div>
 
@@ -85,21 +85,21 @@ const CapabilitiesSection = ({}: CapabilitiesSectionProps = {}) => {
           {/* Right content */}
           <div ref={contentRef}>
             <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-8">Our Capabilities</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-6 md:mb-8">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground uppercase tracking-tighter leading-[0.85] mb-6 md:mb-8">
               GROW YOUR <br /><span className="text-lime">BUSINESS</span><br />WITH CONFIDENCE.
             </h2>
-            <p className="text-gray-400 text-lg leading-relaxed mb-12 max-w-lg">
+            <p className="text-text-secondary text-lg leading-relaxed mb-12 max-w-lg font-bold">
               Whether you're an owner operator or managing a fleet, we provide consistent power only loads, strong rates, and full dispatch support to keep you moving.
             </p>
 
             {/* Capabilities list */}
             <div className="grid grid-cols-2 gap-4 mb-12">
               {capabilities.map((cap, idx) => (
-                <div key={idx} className="flex items-center gap-4 group p-4 border border-white/5 hover:border-lime/30 transition-all duration-300">
+                <div key={idx} className="flex items-center gap-4 group p-4 border border-foreground/10 hover:border-lime/30 transition-all duration-300 bg-secondary">
                   <div className="p-3 bg-lime/10 group-hover:bg-lime/20 transition-colors">
                     <cap.icon className="w-5 h-5 text-lime" />
                   </div>
-                  <span className="font-space font-bold text-sm uppercase tracking-tight text-gray-300 group-hover:text-white transition-colors">
+                  <span className="font-space font-bold text-sm uppercase tracking-tight text-foreground group-hover:text-lime transition-colors">
                     {cap.label}
                   </span>
                 </div>

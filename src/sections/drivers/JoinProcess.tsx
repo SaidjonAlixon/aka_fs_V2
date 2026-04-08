@@ -84,15 +84,15 @@ const JoinProcess = ({ onApplyClick }: JoinProcessProps) => {
   return (
     <section 
       ref={sectionRef} 
-      className="relative py-24 md:py-32 bg-navy-dark"
+      className="relative py-24 md:py-32 bg-background"
     >
       <div className="container mx-auto px-6">
         <div className="text-center mb-20 md:mb-32">
           <span className="text-lime font-black tracking-[0.5em] uppercase text-xs mb-4 block">
             The Journey
           </span>
-          <h2 className="text-4xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
-            HOW TO <span className="text-lime text-outline-white">JOIN</span> AKA FS
+          <h2 className="text-4xl md:text-8xl font-black text-foreground uppercase tracking-tighter leading-none">
+            HOW TO <span className="text-lime text-outline-foreground">JOIN</span> AKA FS
           </h2>
         </div>
 
@@ -101,7 +101,7 @@ const JoinProcess = ({ onApplyClick }: JoinProcessProps) => {
           className="relative max-w-5xl mx-auto"
         >
           {/* Central Line */}
-          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-white/10 -translate-x-1/2 z-0">
+          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-foreground/10 -translate-x-1/2 z-0">
             <div className="timeline-line w-full h-full bg-lime origin-top transform-gpu" />
           </div>
 
@@ -114,22 +114,22 @@ const JoinProcess = ({ onApplyClick }: JoinProcessProps) => {
                 }`}
               >
                 {/* Visual marker */}
-                <div className="absolute left-[20px] md:left-1/2 top-0 -translate-x-1/2 w-4 h-4 bg-navy-dark border-4 border-lime z-10 rounded-full" />
+                <div className="absolute left-[20px] md:left-1/2 top-0 -translate-x-1/2 w-4 h-4 bg-background border-4 border-lime z-10 rounded-full" />
 
                 <div className={`w-full md:w-1/2 flex ${idx % 2 === 1 ? 'md:justify-start' : 'md:justify-end'} pl-16 md:pl-0`}>
-                  <div className="glass-card p-8 md:p-10 border-white/5 bg-navy-light/20 hover:bg-navy-light/40 transition-all duration-500 max-w-md group">
+                  <div className="glass-card p-8 md:p-10 border-foreground/10 bg-secondary/20 hover:bg-secondary/40 transition-all duration-500 max-w-md group">
                     <div className="flex items-center gap-6 mb-6">
-                      <div className="text-4xl md:text-6xl font-black text-white/10 group-hover:text-lime/20 transition-colors tracking-tighter">
+                      <div className="text-4xl md:text-6xl font-black text-foreground/10 group-hover:text-lime/20 transition-colors tracking-tighter">
                         {step.number}
                       </div>
-                      <div className="p-4 bg-navy border border-white/10 text-lime group-hover:bg-lime group-hover:text-navy transition-all duration-500">
+                      <div className="p-4 bg-secondary border border-foreground/10 text-lime group-hover:bg-lime group-hover:text-navy transition-all duration-500">
                         <step.icon className="w-6 h-6" />
                       </div>
                     </div>
-                    <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
+                    <h3 className="text-2xl font-black text-foreground uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
                       {step.title}
                     </h3>
-                    <p className="text-gray-400 font-medium leading-relaxed">
+                    <p className="text-text-secondary font-black leading-relaxed">
                       {step.desc}
                     </p>
                   </div>

@@ -103,7 +103,7 @@ const Industries = ({ className = '', onApplyClick }: IndustriesProps) => {
     <section
       ref={sectionRef}
       id="industries"
-      className={`relative w-full h-screen overflow-hidden bg-navy ${className}`}
+      className={`relative w-full h-screen overflow-hidden bg-background ${className}`}
       style={{ perspective: '1000px' }}
     >
       {/* Background image with deeper overlay */}
@@ -113,13 +113,13 @@ const Industries = ({ className = '', onApplyClick }: IndustriesProps) => {
           alt="Reefer truck at night"
           className="bg-full opacity-40 grayscale-[0.5]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
       </div>
 
       {/* Slash bars */}
       <div
         ref={slashNavyRef}
-        className="absolute left-[-5vw] top-0 h-full w-[12vw] bg-navy/95 skew-x-[-12deg] origin-top border-r border-white/5 z-0 shadow-2xl"
+        className="absolute left-[-5vw] top-0 h-full w-[12vw] bg-background/95 skew-x-[-12deg] origin-top border-r border-foreground/10 z-0 shadow-2xl"
       />
       <div
         ref={slashLimeRef}
@@ -129,11 +129,11 @@ const Industries = ({ className = '', onApplyClick }: IndustriesProps) => {
       {/* Content */}
       <div className="absolute inset-x-6 md:inset-x-auto md:left-[18vw] top-[12vh] md:top-[20vh] md:w-[35vw] max-w-[650px] z-20">
         <div ref={headlineRef} className="will-change-transform">
-          <h2 className="text-4xl sm:text-5xl md:text-8xl lg:text-9xl font-black text-white mb-4 md:mb-8 uppercase tracking-tighter leading-[0.85]">
+          <h2 className="text-4xl sm:text-5xl md:text-8xl lg:text-9xl font-black text-foreground mb-4 md:mb-8 uppercase tracking-tighter leading-[0.85]">
             BUILT <span className="text-lime">FOR</span><br />
             YOUR SECTOR.
           </h2>
-          <p className="text-gray-300 text-base sm:text-lg md:text-2xl leading-relaxed max-w-lg mb-6 md:mb-12">
+          <p className="text-foreground text-base sm:text-lg md:text-2xl leading-relaxed max-w-lg mb-6 md:mb-12 font-bold">
             Compliance, handling, and delivery windows tailored to your industry. 100% specialized logistics.
           </p>
 
@@ -165,12 +165,12 @@ const Industries = ({ className = '', onApplyClick }: IndustriesProps) => {
                 index % 2 === 1 ? 'md:mt-12' : ''
               }`}
             >
-              <div className="relative glass-card p-3 sm:p-4 lg:p-10 border-white/5 hover:border-lime/40 transition-all duration-500 group-hover:-translate-y-2 sm:group-hover:-translate-y-4 group-hover:bg-navy-light/90 overflow-hidden h-full">
+              <div className="relative glass-card p-3 sm:p-4 lg:p-10 border-foreground/10 hover:border-lime/40 transition-all duration-500 group-hover:-translate-y-2 sm:group-hover:-translate-y-4 group-hover:bg-secondary/90 overflow-hidden h-full">
                 {/* Background Accent */}
                 <div className="absolute top-0 right-0 w-16 h-16 sm:w-24 sm:h-24 bg-lime/5 -mr-8 -mt-8 sm:-mr-12 sm:-mt-12 rounded-full blur-2xl sm:blur-3xl group-hover:bg-lime/20 transition-all duration-500" />
                 
                 <div className="flex flex-col items-start gap-3 sm:gap-4 lg:gap-6 relative z-10">
-                  <div className="p-2 sm:p-3 md:p-5 bg-navy border border-white/10 rounded-sm group-hover:border-lime/50 group-hover:bg-lime/10 transition-all duration-500 transform group-hover:rotate-[360deg]">
+                  <div className="p-2 sm:p-3 md:p-5 bg-secondary border border-foreground/10 rounded-sm group-hover:border-lime/50 group-hover:bg-lime/10 transition-all duration-500 transform group-hover:rotate-[360deg]">
                     <industry.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-lime" />
                   </div>
                   
@@ -178,7 +178,7 @@ const Industries = ({ className = '', onApplyClick }: IndustriesProps) => {
                     <h3 className="font-space font-black text-xs sm:text-lg lg:text-3xl text-text-primary uppercase tracking-tight mb-1 group-hover:text-lime transition-colors">
                       {industry.name}
                     </h3>
-                    <p className="text-gray-400 text-[10px] sm:text-sm lg:text-base leading-snug opacity-0 sm:opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 sm:translate-y-4 group-hover:translate-y-0 line-clamp-2 hidden sm:block">
+                    <p className="text-text-secondary text-[10px] sm:text-sm lg:text-base leading-snug opacity-0 sm:opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 sm:translate-y-4 group-hover:translate-y-0 line-clamp-2 hidden sm:block font-bold">
                       {industry.desc}
                     </p>
                   </div>

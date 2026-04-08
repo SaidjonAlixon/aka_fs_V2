@@ -114,7 +114,7 @@ const Sustainability = ({ className = '' }: SustainabilityProps) => {
       {/* Slash bars - repositioned */}
       <div
         ref={slashNavyRef}
-        className="absolute left-[-5vw] top-0 h-full w-[12vw] bg-navy/90 skew-x-[-12deg] origin-top border-r border-white/5 z-0"
+        className="absolute left-[-5vw] top-0 h-full w-[12vw] bg-background/90 skew-x-[-12deg] origin-top border-r border-foreground/10 z-0 shadow-2xl"
       />
       <div
         ref={slashLimeRef}
@@ -124,11 +124,11 @@ const Sustainability = ({ className = '' }: SustainabilityProps) => {
       {/* Content */}
       <div className="absolute inset-x-6 md:inset-x-auto md:left-[15vw] top-[12vh] md:top-[20vh] md:w-[35vw] max-w-[600px] z-20">
         <div ref={headlineRef} className="will-change-transform">
-          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
+          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-foreground mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
             GREENER <span className="text-lime">MILES.</span><br />
             SMARTER ROUTES.
           </h2>
-          <p className="text-gray-300 text-lg md:text-2xl leading-relaxed max-w-md">
+          <p className="text-foreground text-lg md:text-2xl leading-relaxed max-w-md font-bold">
             Fuel efficiency, route optimization, and a modern fleet that reduces emissions per mile.
           </p>
         </div>

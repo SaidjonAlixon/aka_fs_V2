@@ -56,8 +56,8 @@ const NetworkSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-32 bg-navy overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section ref={sectionRef} className="relative py-20 md:py-32 bg-background overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-foreground/10 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-bl from-lime/5 via-transparent to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-6 lg:px-12">
@@ -65,24 +65,24 @@ const NetworkSection = () => {
           {/* Left: Headline + features */}
           <div>
             <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-8">National Reach</span>
-            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-8 md:mb-10">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-foreground uppercase tracking-tighter leading-[0.85] mb-8 md:mb-10">
               KEEP YOUR <br />TRUCK <span className="text-lime">MOVING</span><br />ALWAYS.
             </h2>
-            <p className="text-gray-400 text-lg leading-relaxed mb-12 max-w-md">
+            <p className="text-text-secondary text-lg leading-relaxed mb-12 max-w-md font-bold">
               We keep your truck loaded with preplanned power only freight, strong RPM, and real dispatch support day and night.
             </p>
 
             <div className="space-y-4">
               {features.map((f, idx) => (
-                <div key={idx} className="network-feature flex flex-col md:flex-row items-start md:items-center gap-4 p-4 border border-white/5 hover:border-lime/30 transition-all duration-300 group">
+                <div key={idx} className="network-feature flex flex-col md:flex-row items-start md:items-center gap-4 p-4 border border-foreground/10 hover:border-lime/30 transition-all duration-300 group bg-secondary">
                   <div className="p-3 bg-lime/10 group-hover:bg-lime/20 transition-colors rounded-sm shrink-0">
                     <f.icon className="w-5 h-5 text-lime" />
                   </div>
                   <div className="flex-1">
-                    <div className="font-space font-bold text-sm uppercase tracking-wide text-white mb-1 group-hover:text-lime transition-colors">
+                    <div className="font-space font-bold text-sm uppercase tracking-wide text-foreground mb-1 group-hover:text-lime transition-colors">
                       {f.title}
                     </div>
-                    <div className="text-gray-400 text-xs">
+                    <div className="text-text-secondary text-xs font-bold">
                       {f.desc}
                     </div>
                   </div>
@@ -98,7 +98,7 @@ const NetworkSection = () => {
               {regions.map((region, idx) => (
                 <div
                   key={idx}
-                  className="region-card group relative p-6 border border-white/5 hover:border-lime/30 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-400 overflow-hidden"
+                  className="region-card group relative p-6 border border-foreground/10 hover:border-lime/30 bg-foreground/[0.02] hover:bg-foreground/[0.05] transition-all duration-400 overflow-hidden"
                 >
                   <div className="absolute top-0 left-0 w-full h-[2px] bg-lime/0 group-hover:bg-lime/50 transition-all duration-500" />
                   
@@ -108,10 +108,10 @@ const NetworkSection = () => {
                       LIVE
                     </span>
                   </div>
-                  <div className="font-space font-black text-xl md:text-2xl text-white uppercase tracking-tight mb-1 group-hover:text-lime transition-colors">
+                  <div className="font-space font-black text-xl md:text-2xl text-foreground uppercase tracking-tight mb-1 group-hover:text-lime transition-colors">
                     {region.label}
                   </div>
-                  <div className="text-gray-500 text-[10px] md:text-xs font-mono uppercase tracking-widest mb-2 md:mb-3">{region.coverage}</div>
+                  <div className="text-text-secondary text-[10px] md:text-xs font-mono uppercase tracking-widest mb-2 md:mb-3 font-bold">{region.coverage}</div>
                   <div className="text-lime text-xs md:text-sm font-space font-bold">{region.active} Active</div>
                 </div>
               ))}

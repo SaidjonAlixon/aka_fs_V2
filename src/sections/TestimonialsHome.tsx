@@ -24,21 +24,21 @@ const testimonials = [
     name: 'James R.',
     role: 'Logistics VP, ManuCorp',
     quote: 'From quoting to delivery, AKA FS is the most professional carrier we\'ve worked with in 20 years of logistics.',
-    rating: 5,
+    rating: 4.5,
     accent: 'from-purple-500/20 to-purple-500/5',
   },
   {
     name: 'Linda W.',
     role: 'Director of Logistics, AgriCo',
     quote: 'Incredible service. They handle our seasonal loads without a single delay. Truly a reliable partner.',
-    rating: 5,
+    rating: 4,
     accent: 'from-orange-400/20 to-orange-400/5',
   },
   {
     name: 'Carlos M.',
     role: 'CEO, FastMedical Supply',
     quote: 'The real-time tracking and communication is unmatched. We run a tight operation and AKA FS keeps up every time.',
-    rating: 5,
+    rating: 4.5,
     accent: 'from-cyan-400/20 to-cyan-400/5',
   },
 ];
@@ -93,10 +93,10 @@ const TestimonialsHome = () => {
       className="testimonial-card flex-shrink-0 w-80 md:w-[400px] mx-4 relative group cursor-default"
       style={{ animation: `floatCard ${3 + (floatDelay % 2)}s ease-in-out infinite alternate`, animationDelay: `${floatDelay * 0.4}s` }}
     >
-      <div className={`relative p-8 border border-white/5 group-hover:border-lime/30 bg-gradient-to-br ${t.accent} backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-3 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden`}>
+      <div className={`relative p-8 border border-foreground/10 group-hover:border-lime/30 bg-gradient-to-br ${t.accent} backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-3 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)] overflow-hidden`}>
         {/* Rotating decoration circle */}
         <div
-          className="absolute -top-10 -right-10 w-32 h-32 rounded-full border border-white/5 opacity-30 group-hover:opacity-70 transition-opacity"
+          className="absolute -top-10 -right-10 w-32 h-32 rounded-full border border-foreground/5 opacity-30 group-hover:opacity-70 transition-opacity"
           style={{ animation: 'spinSlow 10s linear infinite' }}
         />
         <div
@@ -107,12 +107,24 @@ const TestimonialsHome = () => {
         <Quote className="w-10 h-10 text-lime/10 absolute top-4 right-4 group-hover:text-lime/30 transition-colors" />
 
         <div className="flex gap-1 mb-6">
-          {Array.from({ length: t.rating }).map((_, i) => (
-            <Star key={i} className="w-4 h-4 text-lime fill-lime" />
-          ))}
+          {[...Array(5)].map((_, i) => {
+            const isFull = i < Math.floor(t.rating);
+            const isHalf = !isFull && (i < t.rating);
+            return (
+              <div key={i} className="relative">
+                <Star className="w-4 h-4 text-foreground/10" />
+                {isFull && <Star className="w-4 h-4 text-lime fill-lime absolute top-0 left-0" />}
+                {isHalf && (
+                  <div className="absolute top-0 left-0 w-[50%] overflow-hidden">
+                    <Star className="w-4 h-4 text-lime fill-lime" />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        <p className="text-gray-200 text-base leading-relaxed mb-8 font-space">"{t.quote}"</p>
+        <p className="text-foreground text-base leading-relaxed mb-8 font-space font-bold italic">"{t.quote}"</p>
 
         <div className="flex items-center gap-4">
           <div
@@ -121,8 +133,8 @@ const TestimonialsHome = () => {
             {t.name[0]}
           </div>
           <div>
-            <div className="font-space font-black text-white uppercase tracking-tight text-sm">{t.name}</div>
-            <div className="text-lime/60 text-[10px] font-mono uppercase tracking-widest">{t.role}</div>
+            <div className="font-space font-black text-foreground uppercase tracking-tight text-sm">{t.name}</div>
+            <div className="text-lime/60 text-[10px] font-mono uppercase tracking-widest font-black">{t.role}</div>
           </div>
         </div>
 
@@ -132,7 +144,7 @@ const TestimonialsHome = () => {
   );
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-32 bg-navy overflow-hidden">
+    <section ref={sectionRef} className="relative py-20 md:py-32 bg-background overflow-hidden">
       <style>{`
         @keyframes floatCard {
           0% { transform: translateY(0px) rotate(-0.5deg); }
@@ -151,7 +163,7 @@ const TestimonialsHome = () => {
       <div className="container mx-auto px-6 lg:px-12 mb-20">
         <div className="t-headline text-center">
           <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-6">Client Voices</span>
-          <h2 className="text-4xl md:text-7xl lg:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85]">
+          <h2 className="text-4xl md:text-7xl lg:text-9xl font-black text-foreground uppercase tracking-tighter leading-[0.85]">
             WHAT THEY <span className="text-lime">SAY</span>
           </h2>
         </div>

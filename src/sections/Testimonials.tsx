@@ -79,7 +79,7 @@ const Testimonials = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-navy py-20 lg:py-32 px-6 lg:px-[7vw]"
+      className="relative bg-background py-20 lg:py-32 px-6 lg:px-[7vw]"
     >
       <div ref={headerRef} className="mb-12 lg:mb-16">
         <h2 className="headline-section text-text-primary mb-4">
@@ -103,7 +103,7 @@ const Testimonials = () => {
             <p className="font-space text-lg text-text-primary leading-relaxed mb-6">
               "{testimonial.quote}"
             </p>
-            <div className="border-t border-white/10 pt-4">
+            <div className="border-t border-foreground/10 pt-4">
               <div className="font-space font-semibold text-text-primary text-sm">
                 {testimonial.author}
               </div>

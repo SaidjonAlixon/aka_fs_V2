@@ -55,16 +55,16 @@ const DriverRequirements = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="relative py-24 md:py-32 bg-navy-dark"
+      className="relative py-24 md:py-32 bg-background"
     >
       <div className="container mx-auto px-6">
         <div className="text-center mb-16 md:mb-24">
-          <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none mb-6">
+          <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-foreground uppercase tracking-tighter leading-none mb-6">
             QUALIFICATION <br />
             <span className="text-lime text-outline-lime">STANDARDS</span>
           </h2>
           <div className="w-24 h-1 bg-lime mx-auto mb-8" />
-          <p className="text-gray-400 text-lg md:text-2xl max-w-2xl mx-auto uppercase tracking-widest font-bold">
+          <p className="text-text-secondary text-lg md:text-2xl max-w-2xl mx-auto uppercase tracking-widest font-black opacity-80 transition-opacity">
             High standards for high performance.
           </p>
         </div>
@@ -72,15 +72,15 @@ const DriverRequirements = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 max-w-6xl mx-auto">
           {requirements.map((req, idx) => (
             <div key={idx} className="requirement-card group">
-              <div className="glass-card p-8 md:p-12 border-white/5 group-hover:bg-lime/5 group-hover:border-lime/20 transition-all duration-500 flex flex-col sm:flex-row items-start gap-8">
-                <div className="p-6 bg-navy border border-white/10 text-lime group-hover:scale-110 group-hover:bg-lime group-hover:text-navy transition-all duration-500">
+              <div className="glass-card p-8 md:p-12 border-foreground/10 group-hover:bg-lime/5 group-hover:border-lime/20 transition-all duration-500 flex flex-col sm:flex-row items-start gap-8">
+                <div className="p-6 bg-secondary border border-foreground/10 text-lime group-hover:scale-110 group-hover:bg-lime group-hover:text-navy transition-all duration-500">
                   <req.icon className="w-8 h-8 md:w-10 md:h-10" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
+                  <h3 className="text-2xl font-black text-foreground uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
                     {req.title}
                   </h3>
-                  <p className="text-gray-400 text-lg leading-relaxed font-medium">
+                  <p className="text-text-secondary text-lg leading-relaxed font-black">
                     {req.desc}
                   </p>
                 </div>
@@ -90,7 +90,7 @@ const DriverRequirements = () => {
         </div>
 
         <div className="mt-20 text-center">
-            <p className="text-white/40 text-sm font-black uppercase tracking-[0.4em]">
+            <p className="text-foreground/40 text-sm font-black uppercase tracking-[0.4em]">
                 All drivers must meet these minimum criteria to be considered.
             </p>
         </div>

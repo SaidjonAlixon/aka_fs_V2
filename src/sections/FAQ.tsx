@@ -112,7 +112,7 @@ const FAQ = () => {
             >
               <button
                 onClick={() => toggleItem(index)}
-                className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
+                className="w-full flex items-center justify-between p-5 text-left hover:bg-foreground/5 transition-colors"
               >
                 <span className="font-space font-semibold text-text-primary pr-4">
                   {faq.question}

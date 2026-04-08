@@ -6,26 +6,60 @@
 
 @layer base {
   :root {
-    --background: 220 30% 4%;
-    --foreground: 220 20% 97%;
-    --card: 220 25% 8%;
-    --card-foreground: 220 20% 97%;
-    --popover: 220 25% 8%;
-    --popover-foreground: 220 20% 97%;
+    --background: 0 0% 100%;
+    --foreground: 225 38% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 225 38% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 38% 5%;
     --primary: 78 100% 58%;
-    --primary-foreground: 220 30% 4%;
-    --secondary: 220 20% 12%;
-    --secondary-foreground: 220 20% 97%;
-    --muted: 220 20% 12%;
-    --muted-foreground: 220 15% 68%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 20% 98%;
+    --secondary-foreground: 225 38% 5%;
+    --muted: 210 20% 98%;
+    --muted-foreground: 0 0% 32%;
     --accent: 78 100% 58%;
-    --accent-foreground: 220 30% 4%;
+    --accent-foreground: 225 38% 5%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 78 100% 58%;
+    --radius: 0.5rem;
+    
+    /* AKA FS Brand Variables - Light Mode */
+    --navy: 210 20% 98%;
+    --navy-light: 210 20% 96%;
+    --text-primary: 225 38% 5%;
+    --text-secondary: 225 20% 30%;
+  }
+
+  .dark {
+    --background: 225 38% 5%;
+    --foreground: 225 33% 96%;
+    --card: 221 40% 10%;
+    --card-foreground: 225 33% 96%;
+    --popover: 221 40% 10%;
+    --popover-foreground: 225 33% 96%;
+    --primary: 78 100% 58%;
+    --primary-foreground: 225 38% 5%;
+    --secondary: 221 40% 10%;
+    --secondary-foreground: 225 33% 96%;
+    --muted: 221 40% 10%;
+    --muted-foreground: 221 21% 72%;
+    --accent: 78 100% 58%;
+    --accent-foreground: 225 38% 5%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 225 33% 96%;
     --border: 220 15% 18%;
     --input: 220 15% 18%;
     --ring: 78 100% 58%;
-    --radius: 0.5rem;
+    
+    /* AKA FS Brand Variables - Dark Mode */
+    --navy: 225 38% 5%;
+    --navy-light: 221 40% 10%;
+    --text-primary: 225 33% 96%;
+    --text-secondary: 221 21% 72%;
   }
 }
 
@@ -39,7 +73,7 @@
   }
   
   body {
-    @apply bg-navy text-text-primary font-inter antialiased;
+    @apply bg-background text-foreground font-inter antialiased transition-colors duration-300;
     overflow-x: hidden;
   }
   
@@ -51,7 +85,7 @@
 @layer components {
   /* Glassmorphism card */
   .glass-card {
-    @apply bg-navy-light/70 backdrop-blur-md border border-white/10 rounded-sm;
+    @apply bg-navy-light/70 backdrop-blur-md border border-foreground/10 rounded-sm;
   }
   
   /* Diagonal slash bars */
@@ -76,7 +110,7 @@
   
   /* Section base */
   .section-pinned {
-    @apply relative w-screen h-screen overflow-hidden;
+    @apply relative w-screen h-screen overflow-hidden bg-background;
     will-change: transform;
   }
   
@@ -113,7 +147,7 @@
   
   /* CTA Button secondary */
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-transparent border border-white/20 text-text-primary font-space font-semibold text-sm uppercase tracking-wider transition-all duration-200;
+    @apply inline-flex items-center justify-center px-6 py-3 bg-transparent border border-foreground/20 text-text-primary font-space font-semibold text-sm uppercase tracking-wider transition-all duration-200;
   }
   
   .btn-secondary:hover {
@@ -128,6 +162,16 @@
   /* Full background image */
   .bg-full {
     @apply absolute inset-0 w-full h-full object-cover;
+  }
+
+  /* Logo filter for theme awareness with color preservation */
+  .logo-filter {
+    filter: invert(1) hue-rotate(180deg) brightness(1.2);
+    transition: filter 0.5s ease;
+  }
+
+  .dark .logo-filter {
+    filter: none;
   }
 }
 

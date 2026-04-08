@@ -30,7 +30,7 @@ const HowItWorksSection = () => {
     {
       step: '04',
       icon: DollarSign,
-      title: 'Get Paid Fast',
+      title: 'Get Paid Weekly',
       desc: 'Get paid quickly with transparent rates and consistent weekly settlements.',
     },
   ];
@@ -75,16 +75,16 @@ const HowItWorksSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-32 bg-[#060d14] overflow-hidden">
+    <section ref={sectionRef} className="relative py-20 md:py-32 bg-background overflow-hidden">
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-lime/20 to-transparent" />
 
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-16 md:mb-24 px-4">
           <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-4 md:mb-6">Simple Process</span>
-          <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-[0.85]">
+          <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-foreground uppercase tracking-tighter leading-[0.85]">
             HOW PO DISPATCH <span className="text-lime">WORKS</span>
           </h2>
-          <p className="text-gray-400 text-lg md:text-xl font-medium mt-6">
+          <p className="text-text-secondary text-lg md:text-xl font-black mt-6">
             Simple. Fast. No touch freight. Built for drivers.
           </p>
         </div>
@@ -92,7 +92,7 @@ const HowItWorksSection = () => {
         {/* Steps grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 relative">
           {/* Connecting line (desktop only) */}
-          <div className="hidden lg:block absolute top-[56px] left-[12.5%] right-[12.5%] h-[1px] bg-white/10">
+          <div className="hidden lg:block absolute top-[56px] left-[12.5%] right-[12.5%] h-[1px] bg-foreground/10">
             <div className="step-line origin-left absolute inset-0 bg-lime/50" />
           </div>
 
@@ -100,7 +100,7 @@ const HowItWorksSection = () => {
             <div key={idx} className="step-card relative flex flex-col items-center text-center px-4 md:px-8 py-8 md:py-10 group">
               {/* Number badge */}
               <div className="relative z-10 mb-8">
-                <div className="w-28 h-28 border-2 border-white/10 group-hover:border-lime/50 transition-all duration-500 flex flex-col items-center justify-center bg-navy relative">
+                <div className="w-28 h-28 border-2 border-foreground/10 group-hover:border-lime/50 transition-all duration-500 flex flex-col items-center justify-center bg-secondary relative">
                   <step.icon className="w-8 h-8 text-lime mb-1" />
                   <span className="font-mono text-[10px] text-lime/60 tracking-widest">{step.step}</span>
                   {/* Corner accents */}
@@ -109,10 +109,10 @@ const HowItWorksSection = () => {
                 </div>
               </div>
 
-              <h3 className="font-space font-black text-2xl text-white uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
+              <h3 className="font-space font-black text-2xl text-foreground uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
                 {step.title}
               </h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
+              <p className="text-text-secondary text-sm leading-relaxed font-bold">{step.desc}</p>
 
               {/* Arrow (not last) */}
               {idx < steps.length - 1 && (

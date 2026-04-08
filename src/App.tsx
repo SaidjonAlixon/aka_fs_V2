@@ -34,7 +34,7 @@ function App() {
 
   return (
     <Router>
-      <div className="relative bg-navy min-h-screen">
+      <div className="relative bg-background min-h-screen">
         {/* Grain overlay */}
         <div className="grain-overlay" />
 

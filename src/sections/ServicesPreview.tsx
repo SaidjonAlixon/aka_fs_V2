@@ -81,7 +81,7 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-32 bg-[#060d14] overflow-hidden">
+    <section ref={sectionRef} className="relative py-20 md:py-32 bg-background overflow-hidden">
       {/* Left accent bar */}
       <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-transparent via-lime to-transparent" />
 
@@ -89,13 +89,13 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">
           <div className="services-headline">
             <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-4 md:mb-6">What We Move</span>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tighter leading-[0.95]">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground uppercase tracking-tighter leading-[0.95]">
               POWER ONLY <br />
               <span className="text-lime">SOLUTIONS.</span><br />
               BUILT FOR SPEED.
             </h2>
           </div>
-          <p className="text-gray-400 text-base md:text-lg max-w-sm leading-relaxed">
+          <p className="text-text-secondary text-base md:text-lg max-w-sm leading-relaxed font-bold">
             Preloaded trailers, no touch freight, and high RPM loads built for drivers who want consistency, speed, and real support.
           </p>
         </div>
@@ -105,7 +105,7 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
             <div
               key={idx}
               onClick={onApplyClick}
-              className="service-preview-card group relative p-6 md:p-8 bg-navy border border-white/5 hover:border-lime/30 transition-all duration-500 overflow-hidden cursor-pointer hover:-translate-y-4"
+              className="service-preview-card group relative p-6 md:p-8 bg-secondary border border-foreground/10 hover:border-lime/30 transition-all duration-500 overflow-hidden cursor-pointer hover:-translate-y-4"
             >
               {/* Badge */}
               <div className="absolute top-5 right-5">
@@ -119,10 +119,10 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
                 <service.icon className="w-10 h-10 text-lime" />
               </div>
 
-              <h3 className="font-space font-black text-3xl text-white uppercase mb-4 group-hover:text-lime transition-colors">
+              <h3 className="font-space font-black text-3xl text-foreground uppercase mb-4 group-hover:text-lime transition-colors">
                 {service.title}
               </h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-6">
+              <p className="text-text-secondary text-sm leading-relaxed mb-6 font-bold">
                 {service.desc}
               </p>
 

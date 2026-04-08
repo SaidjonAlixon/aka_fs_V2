@@ -38,18 +38,18 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom AKA FS colors
+        // Custom AKA FS colors - Now using CSS variables for theme support
         navy: {
-          DEFAULT: '#070B14',
-          light: '#0E1626',
+          DEFAULT: 'hsl(var(--navy))',
+          light: 'hsl(var(--navy-light))',
         },
         lime: {
-          DEFAULT: '#B8FF2C',
+          DEFAULT: '#B8FF2C',    // Keep constant or use var if needed
           dark: '#9AD920',
         },
         text: {
-          primary: '#F2F5FA',
-          secondary: '#A7B1C6',
+          primary: 'hsl(var(--text-primary))',
+          secondary: 'hsl(var(--text-secondary))',
         },
       },
       fontFamily: {

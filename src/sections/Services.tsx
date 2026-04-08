@@ -137,41 +137,54 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
     <section
       ref={sectionRef}
       id="about"
-      className={`relative w-full h-screen overflow-hidden bg-navy ${className}`}
+      className={`relative w-full h-screen overflow-hidden bg-background ${className}`}
     >
-      {/* Background image */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/services_warehouse.jpg"
-          alt="Warehouse interior"
-          className="bg-full opacity-60"
+      {/* Dynamic Background Visuals */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Abstract Glows */}
+        <div 
+          className="absolute top-[20%] right-[-5%] w-[60vw] h-[60vw] opacity-30 will-change-transform"
+          style={{
+            background: 'radial-gradient(circle, rgba(184,255,44,0.15) 0%, transparent 70%)',
+            filter: 'blur(100px)'
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/40 to-transparent" />
+        <div 
+          className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] opacity-20 will-change-transform"
+          style={{
+            background: 'radial-gradient(circle, #0f172a 0%, transparent 70%)',
+            filter: 'blur(80px)'
+          }}
+        />
+        
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(184,255,44,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(184,255,44,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
       </div>
 
-      {/* Slash bars (left side) - repositioned to avoid overlap */}
+      {/* Slash bars (left side) */}
       <div
         ref={slashNavyRef}
-        className="absolute left-[-5vw] top-0 h-full w-[12vw] bg-navy/90 skew-x-[-12deg] origin-top border-r border-white/5 z-0"
+        className="absolute left-[-5vw] top-0 h-full w-[15vw] bg-background/50 backdrop-blur-3xl skew-x-[-15deg] origin-top border-r border-foreground/5 z-0"
       />
       <div
         ref={slashLimeRef}
-        className="absolute left-[5vw] top-0 h-full w-[4vw] bg-lime skew-x-[-12deg] origin-top z-10"
+        className="absolute left-[8vw] top-0 h-full w-[2px] bg-lime/30 skew-x-[-15deg] origin-top z-10"
       />
 
-      {/* Content - repositioned further right */}
-      <div className="absolute inset-x-6 md:inset-x-auto md:left-[18vw] top-[15vh] md:top-[20vh] md:w-[35vw] max-w-[600px] z-20">
+      {/* Content */}
+      <div className="absolute inset-x-6 md:inset-x-auto md:left-[15vw] top-[15vh] md:top-[20vh] md:w-[45vw] lg:w-[40vw] max-w-[800px] z-20">
         <div ref={headlineRef} className="will-change-transform">
-          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
+          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-foreground mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
             <div className="headline-line block pr-4">
-              POWER ONLY <span className="text-lime">SOLUTIONS.</span>
+              POWER ONLY <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime to-emerald-400">SOLUTIONS.</span>
             </div>
             <div className="headline-line block">
               BUILT FOR SPEED
             </div>
           </h2>
-          <p className="description-text text-gray-300 text-lg md:text-2xl leading-relaxed max-w-md opacity-0">
-            Maximizing efficiency with our dedicated power-only freight network.
+          <p className="description-text text-text-secondary text-lg md:text-2xl leading-relaxed max-w-xl opacity-0 font-medium">
+            Maximizing efficiency with our dedicated power-only freight network. 
+            We focus on velocity, reliability, and the success of every mile.
           </p>
         </div>
       </div>
@@ -179,23 +192,23 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
       {/* Service list */}
       <div
         ref={serviceListRef}
-        className="absolute inset-x-6 md:inset-x-auto md:right-[8vw] bottom-[8vh] md:top-[25vh] md:w-[35vw] max-w-[500px] space-y-4 md:space-y-8 z-20"
+        className="absolute inset-x-6 md:inset-x-auto md:right-[5vw] bottom-[8vh] md:top-[25vh] md:w-[35vw] max-w-[500px] space-y-4 md:space-y-6 z-20"
       >
         {services.map((service, index) => (
           <div
             key={index}
-            className="service-item glass-card p-4 md:p-8 hover:border-lime/40 transition-all duration-300 will-change-transform"
+            className="service-item glass-card p-4 md:p-6 border-foreground/10 hover:border-lime/30 hover:bg-lime/5 group transition-all duration-500 will-change-transform"
           >
-            <div className="flex items-center md:items-start gap-4 md:gap-6">
-              <div className="p-3 md:p-4 bg-lime/10 rounded-sm">
-                <service.icon className="w-6 h-6 md:w-8 md:h-8 text-lime" />
+            <div className="flex items-center gap-4 md:gap-6">
+              <div className="p-3 bg-secondary border border-foreground/10 group-hover:bg-lime group-hover:text-navy group-hover:scale-110 transition-all duration-300">
+                <service.icon className="w-6 h-6 md:w-7 md:h-7" />
               </div>
               <div>
-                <h3 className="font-space font-black text-lg md:text-2xl text-text-primary uppercase tracking-wide mb-1 md:mb-2">
+                <h3 className="font-space font-black text-lg md:text-xl text-foreground uppercase tracking-wider mb-0.5">
                   {service.title}
                 </h3>
                 {service.description && (
-                  <p className="text-gray-400 text-sm md:text-lg leading-relaxed">{service.description}</p>
+                  <p className="text-text-secondary text-sm leading-relaxed">{service.description}</p>
                 )}
               </div>
             </div>
@@ -204,20 +217,21 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
 
         <button 
           onClick={onApplyClick}
-          className="btn-primary inline-flex mt-4 md:mt-8 py-3 md:py-5 px-6 md:px-10 text-xs md:text-base uppercase tracking-widest font-bold text-center"
+          className="group relative inline-flex mt-4 md:mt-8 py-4 px-10 bg-lime text-navy text-sm uppercase tracking-[0.4em] font-black overflow-hidden shadow-[0_0_30px_rgba(184,255,44,0.1)] hover:shadow-[0_0_50px_rgba(184,255,44,0.2)] transition-all"
         >
-          Apply Now
+          <span className="relative z-10">Apply Now</span>
+          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
         </button>
       </div>
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-60 z-30">
-        <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-white to-transparent" />
+        <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-foreground to-transparent" />
         <div className="flex flex-col items-center gap-2">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1.5 overflow-hidden">
+          <div className="w-6 h-10 border-2 border-foreground/30 rounded-full flex justify-center p-1.5 overflow-hidden">
             <div className="scroll-dot w-1.5 h-1.5 bg-lime rounded-full" />
           </div>
-          <span className="text-[10px] text-white uppercase tracking-[0.4em] font-black">Scroll</span>
+          <span className="text-[10px] text-foreground uppercase tracking-[0.4em] font-black">Scroll</span>
         </div>
       </div>
     </section>

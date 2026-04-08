@@ -68,22 +68,22 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden bg-navy flex items-center"
+      className="relative w-full h-screen overflow-hidden bg-background flex items-center"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/careers_driver_cab.jpg" // Using existing image for now, user prompt mentions sunset truck
+          src="/images/careers_driver_cab.jpg"
           alt="Driver recruitment"
           className="hero-bg w-full h-full object-cover opacity-60 grayscale-[0.2]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
       </div>
 
       {/* Futuristic Accents */}
       <div
         ref={slashNavyRef}
-        className="absolute left-[-5vw] top-0 h-full w-[15vw] bg-navy/80 skew-x-[-15deg] origin-top z-10 border-r border-white/5"
+        className="absolute left-[-5vw] top-0 h-full w-[15vw] bg-background/80 skew-x-[-15deg] origin-top z-10 border-r border-foreground/10 shadow-2xl"
       />
       <div
         ref={slashLimeRef}
@@ -93,15 +93,15 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
       <div className="container mx-auto px-6 md:px-12 relative z-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Content */}
         <div ref={contentRef} className="max-w-2xl pt-20 lg:pt-0">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-6">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-foreground leading-[0.9] tracking-tighter mb-6">
             DRIVE YOUR <br />
             <span className="text-lime">FUTURE</span> WITH <br />
             AKA FS
           </h1>
-          <p className="text-xl md:text-2xl font-bold text-white/90 mb-4 font-space">
+          <p className="text-xl md:text-2xl font-bold text-foreground/90 mb-4 font-space">
             Join a team that values safety, professionalism, and top performance.
           </p>
-          <p className="text-gray-400 text-lg md:text-xl leading-relaxed mb-10 max-w-xl">
+          <p className="text-text-secondary text-lg md:text-xl leading-relaxed mb-10 max-w-xl font-bold">
             At AKA FS Logistics we believe our drivers are the backbone of our success.
             We provide competitive pay, modern trucks, reliable dispatch and a respectful work environment.
           </p>
@@ -116,7 +116,7 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
             </button>
             <button 
               onClick={() => document.getElementById('why-choose')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-white/10 backdrop-blur-md text-white border border-white/20 font-black text-lg uppercase tracking-wider hover:bg-white/20 transition-all duration-300"
+              className="px-8 py-4 bg-foreground/10 backdrop-blur-md text-foreground border border-foreground/20 font-black text-lg uppercase tracking-wider hover:bg-foreground/20 transition-all duration-300"
               style={{ clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)' }}
             >
               Benefits
@@ -129,7 +129,7 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
           <div className="glass-card p-10 border-white/10 shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-lime/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-lime/20 transition-all duration-500" />
             
-            <h2 className="text-3xl font-black text-white mb-8 tracking-tight flex items-center gap-3">
+            <h2 className="text-3xl font-black text-foreground mb-8 tracking-tight flex items-center gap-3">
               <span className="w-8 h-1 bg-lime"></span>
               DRIVER BENEFITS
             </h2>
@@ -137,10 +137,10 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
             <div className="space-y-6 mb-10">
               {benefits.map((benefit, idx) => (
                 <div key={idx} className="flex items-center gap-4 group/item">
-                  <div className="p-3 bg-navy border border-white/10 text-lime group-hover/item:bg-lime group-hover/item:text-navy transition-all duration-300">
+                  <div className="p-3 bg-secondary border border-foreground/10 text-lime group-hover/item:bg-lime group-hover/item:text-navy transition-all duration-300">
                     <benefit.icon className="w-6 h-6" />
                   </div>
-                  <span className="text-lg font-bold text-gray-200 group-hover/item:text-white transition-colors">
+                  <span className="text-lg font-bold text-text-secondary group-hover/item:text-foreground transition-colors">
                     {benefit.text}
                   </span>
                 </div>

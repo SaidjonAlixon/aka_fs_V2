@@ -108,7 +108,7 @@ const Coverage = ({ className = '' }: CoverageProps) => {
     <section
       ref={sectionRef}
       id="coverage"
-      className={`relative w-full h-screen overflow-hidden bg-navy ${className}`}
+      className={`relative w-full h-screen overflow-hidden bg-background ${className}`}
     >
       {/* Background image */}
       <div className="absolute inset-0">
@@ -117,13 +117,13 @@ const Coverage = ({ className = '' }: CoverageProps) => {
           alt="Highway interchange aerial view"
           className="bg-full opacity-50"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
       </div>
 
       {/* Slash bars */}
       <div
         ref={slashNavyRef}
-        className="absolute left-[-5vw] top-0 h-full w-[12vw] bg-navy/90 skew-x-[-12deg] origin-top border-r border-white/5 z-0"
+        className="absolute left-[-5vw] top-0 h-full w-[12vw] bg-background/90 skew-x-[-12deg] origin-top border-r border-foreground/10 z-0 shadow-2xl"
       />
       <div
         ref={slashLimeRef}
@@ -133,11 +133,11 @@ const Coverage = ({ className = '' }: CoverageProps) => {
       {/* Content */}
       <div className="absolute inset-x-6 md:inset-x-auto md:left-[18vw] top-[12vh] md:top-[15vh] md:w-[35vw] max-w-[650px] z-20">
         <div ref={headlineRef} className="will-change-transform mb-12">
-          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
+          <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-foreground mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
             COAST <span className="text-lime">TO</span><br />
             COAST.
           </h2>
-          <p className="text-gray-300 text-lg md:text-2xl leading-relaxed max-w-md">
+          <p className="text-foreground text-lg md:text-2xl leading-relaxed max-w-md font-bold">
             Scheduled lanes, real-time tracking, and a network built for consistency.
           </p>
         </div>
@@ -145,13 +145,13 @@ const Coverage = ({ className = '' }: CoverageProps) => {
         {/* Small Floating Cards/Icons */}
         <div ref={cardsRef} className="flex gap-4 md:gap-6">
             {features.map((item, idx) => (
-                <div key={idx} className="small-card glass-card p-5 flex flex-col items-center text-center gap-3 border-white/5 hover:border-lime/30 transition-all duration-300 group">
+                <div key={idx} className="small-card glass-card p-5 flex flex-col items-center text-center gap-3 border-foreground/10 hover:border-lime/30 transition-all duration-300 group">
                     <div className="p-3 bg-lime/10 rounded-sm group-hover:bg-lime/20 transition-colors">
                         <item.icon className="w-6 h-6 text-lime" />
                     </div>
                     <div className="hidden lg:block">
-                        <div className="text-white font-black text-xs uppercase tracking-widest mb-1">{item.title}</div>
-                        <div className="text-gray-400 text-[10px] leading-tight">{item.desc}</div>
+                        <div className="text-foreground font-black text-xs uppercase tracking-widest mb-1">{item.title}</div>
+                        <div className="text-text-secondary text-[10px] leading-tight font-bold">{item.desc}</div>
                     </div>
                 </div>
             ))}
