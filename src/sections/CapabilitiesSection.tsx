@@ -69,7 +69,7 @@ const CapabilitiesSection = ({}: CapabilitiesSectionProps = {}) => {
 
               {/* Overlay badge */}
               <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 right-4 md:right-8 glass-card p-4 md:p-6">
-                <div className="font-mono text-[8px] md:text-[10px] uppercase tracking-widest text-lime mb-2 md:mb-3">Active Right Now</div>
+                <div className="font-mono text-[8px] md:text-[10px] uppercase tracking-widest text-lime-dark dark:text-lime mb-2 md:mb-3">Active Right Now</div>
                 <div className="flex items-end gap-2 md:gap-3">
                   <span className="font-space font-black text-3xl md:text-5xl text-foreground">250+</span>
                   <span className="text-text-secondary text-[10px] md:text-sm pb-1 md:pb-2 font-bold">active trucks on road today</span>
@@ -84,9 +84,9 @@ const CapabilitiesSection = ({}: CapabilitiesSectionProps = {}) => {
 
           {/* Right content */}
           <div ref={contentRef}>
-            <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-8">Our Capabilities</span>
+            <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime block mb-8">Our Capabilities</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground uppercase tracking-tighter leading-[0.85] mb-6 md:mb-8">
-              GROW YOUR <br /><span className="text-lime">BUSINESS</span><br />WITH CONFIDENCE.
+              GROW YOUR <br /><span className="text-lime-dark dark:text-lime">BUSINESS</span><br />WITH CONFIDENCE.
             </h2>
             <p className="text-text-secondary text-lg leading-relaxed mb-12 max-w-lg font-bold">
               Whether you're an owner operator or managing a fleet, we provide consistent power only loads, strong rates, and full dispatch support to keep you moving.
@@ -97,9 +97,9 @@ const CapabilitiesSection = ({}: CapabilitiesSectionProps = {}) => {
               {capabilities.map((cap, idx) => (
                 <div key={idx} className="flex items-center gap-4 group p-4 border border-foreground/10 hover:border-lime/30 transition-all duration-300 bg-secondary">
                   <div className="p-3 bg-lime/10 group-hover:bg-lime/20 transition-colors">
-                    <cap.icon className="w-5 h-5 text-lime" />
+                    <cap.icon className="w-5 h-5 text-lime-dark dark:text-lime" />
                   </div>
-                  <span className="font-space font-bold text-sm uppercase tracking-tight text-foreground group-hover:text-lime transition-colors">
+                  <span className="font-space font-bold text-sm uppercase tracking-tight text-foreground group-hover:text-lime-dark dark:group-hover:text-lime transition-colors">
                     {cap.label}
                   </span>
                 </div>

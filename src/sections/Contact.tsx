@@ -140,11 +140,11 @@ const Contact = () => {
         {/* Refined Header */}
         <div className="mb-20 max-w-3xl">
           <div className="flex items-center gap-6 mb-8">
-            <div className="h-0.5 w-16 bg-lime" />
-            <span className="text-lime font-black tracking-[0.6em] uppercase text-[10px]">CONNECT WITH EXCELLENCE</span>
+            <div className="h-0.5 w-16 bg-lime-dark dark:bg-lime" />
+            <span className="text-lime-dark dark:text-lime font-black tracking-[0.6em] uppercase text-[10px]">CONNECT WITH EXCELLENCE</span>
           </div>
           <h2 className="text-4xl md:text-7xl font-black text-foreground uppercase tracking-tighter leading-none mb-6">
-            GLOBAL <span className="text-lime">STANDARDS.</span><br />
+            GLOBAL <span className="text-lime-dark dark:text-lime">STANDARDS.</span><br />
             LOCAL ROOTS.
           </h2>
           <p className="text-text-secondary text-lg md:text-xl font-medium max-w-[45ch] leading-relaxed">
@@ -162,7 +162,7 @@ const Contact = () => {
                   key={index}
                   className="glass-card bg-background/40 backdrop-blur-2xl p-6 border-foreground/10 flex flex-col gap-4 hover:border-lime/30 hover:bg-secondary transition-all border-l-4 border-l-lime/10 group"
                 >
-                  <div className="p-3 bg-secondary border border-foreground/10 text-lime w-fit group-hover:bg-lime group-hover:text-navy transition-all">
+                  <div className="p-3 bg-secondary border border-foreground/10 text-lime-dark dark:text-lime w-fit group-hover:bg-lime-dark dark:group-hover:bg-lime group-hover:text-[#0A0F1A] transition-all">
                     <info.icon className="w-5 h-5" />
                   </div>
                   <div>
@@ -218,7 +218,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group/btn relative w-full py-6 bg-lime text-navy font-black text-sm uppercase tracking-[0.5em] overflow-hidden transition-all hover:scale-[1.01] shadow-[0_0_60px_rgba(184,255,44,0.15)] disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="group/btn relative w-full py-6 bg-lime text-[#0A0F1A] font-black text-sm uppercase tracking-[0.5em] overflow-hidden transition-all hover:scale-[1.01] shadow-[0_0_60px_rgba(184,255,44,0.15)] disabled:opacity-70 disabled:cursor-not-allowed"
                   style={{ clipPath: 'polygon(1% 0, 100% 0, 99% 100%, 0 100%)' }}
                 >
                   <span className="relative z-10 flex justify-center items-center gap-3">
@@ -253,7 +253,7 @@ const Contact = () => {
               <div className="absolute top-10 left-10">
                 <div className="glass-card bg-background/95 backdrop-blur-3xl border-lime/40 p-6 px-10 flex flex-col gap-2">
                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-lime animate-ping" />
+                    <div className="w-2 h-2 rounded-full bg-lime-dark dark:bg-lime animate-ping" />
                     <h4 className="text-xl font-black text-foreground uppercase tracking-tight">HEADQUARTERS</h4>
                   </div>
                   <p className="text-[10px] text-text-secondary font-black uppercase tracking-[0.2em] ml-5 leading-relaxed">

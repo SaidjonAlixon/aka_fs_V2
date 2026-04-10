@@ -64,9 +64,9 @@ const NetworkSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-start">
           {/* Left: Headline + features */}
           <div>
-            <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-8">National Reach</span>
+            <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime block mb-8">National Reach</span>
             <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-foreground uppercase tracking-tighter leading-[0.85] mb-8 md:mb-10">
-              KEEP YOUR <br />TRUCK <span className="text-lime">MOVING</span><br />ALWAYS.
+              KEEP YOUR <br />TRUCK <span className="text-lime-dark dark:text-lime">MOVING</span><br />ALWAYS.
             </h2>
             <p className="text-text-secondary text-lg leading-relaxed mb-12 max-w-md font-bold">
               We keep your truck loaded with preplanned power only freight, strong RPM, and real dispatch support day and night.
@@ -76,10 +76,10 @@ const NetworkSection = () => {
               {features.map((f, idx) => (
                 <div key={idx} className="network-feature flex flex-col md:flex-row items-start md:items-center gap-4 p-4 border border-foreground/10 hover:border-lime/30 transition-all duration-300 group bg-secondary">
                   <div className="p-3 bg-lime/10 group-hover:bg-lime/20 transition-colors rounded-sm shrink-0">
-                    <f.icon className="w-5 h-5 text-lime" />
+                    <f.icon className="w-5 h-5 text-lime-dark dark:text-lime" />
                   </div>
                   <div className="flex-1">
-                    <div className="font-space font-bold text-sm uppercase tracking-wide text-foreground mb-1 group-hover:text-lime transition-colors">
+                    <div className="font-space font-bold text-sm uppercase tracking-wide text-foreground mb-1 group-hover:text-lime-dark dark:group-hover:text-lime transition-colors">
                       {f.title}
                     </div>
                     <div className="text-text-secondary text-xs font-bold">
@@ -103,16 +103,16 @@ const NetworkSection = () => {
                   <div className="absolute top-0 left-0 w-full h-[2px] bg-lime/0 group-hover:bg-lime/50 transition-all duration-500" />
                   
                   <div className="flex items-start justify-between mb-4">
-                    <MapPin className="w-5 h-5 text-lime" />
+                    <MapPin className="w-5 h-5 text-lime-dark dark:text-lime" />
                     <span className="text-[10px] font-mono uppercase tracking-widest text-green-400 bg-green-400/10 px-2 py-1 animate-pulse">
                       LIVE
                     </span>
                   </div>
-                  <div className="font-space font-black text-xl md:text-2xl text-foreground uppercase tracking-tight mb-1 group-hover:text-lime transition-colors">
+                  <div className="font-space font-black text-xl md:text-2xl text-foreground uppercase tracking-tight mb-1 group-hover:text-lime-dark dark:group-hover:text-lime transition-colors">
                     {region.label}
                   </div>
                   <div className="text-text-secondary text-[10px] md:text-xs font-mono uppercase tracking-widest mb-2 md:mb-3 font-bold">{region.coverage}</div>
-                  <div className="text-lime text-xs md:text-sm font-space font-bold">{region.active} Active</div>
+                  <div className="text-lime-dark dark:text-lime text-xs md:text-sm font-space font-bold">{region.active} Active</div>
                 </div>
               ))}
             </div>

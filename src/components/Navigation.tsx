@@ -49,7 +49,7 @@ const Navigation = ({ onApplyClick }: NavigationProps) => {
       {/* Close Button */}
       <button
         style={{ position: 'absolute', top: '2rem', right: '2rem' }}
-        className="text-text-primary p-2 hover:text-lime transition-colors"
+        className="text-text-primary p-2 hover:text-lime-dark dark:hover:text-lime transition-colors"
         onClick={() => setIsOpen(false)}
       >
         <X size={44} />
@@ -63,7 +63,7 @@ const Navigation = ({ onApplyClick }: NavigationProps) => {
             to={link.href}
             className={({ isActive }) =>
               `font-space font-black text-4xl md:text-6xl tracking-widest transition-all duration-300 px-6 py-2 ${
-                isActive ? 'text-lime' : 'text-text-primary hover:text-lime'
+                isActive ? 'text-lime-dark dark:text-lime' : 'text-text-primary hover:text-lime-dark dark:hover:text-lime'
               }`
             }
             onClick={() => setIsOpen(false)}
@@ -122,8 +122,8 @@ const Navigation = ({ onApplyClick }: NavigationProps) => {
                       : 'opacity-0 -translate-y-4 pointer-events-none'
                   } ${
                     isActive
-                    ? 'text-lime border-foreground/20 bg-foreground/5'
-                    : 'text-text-primary border-transparent hover:text-lime'
+                    ? 'text-lime-dark dark:text-lime border-foreground/20 bg-foreground/5'
+                    : 'text-text-primary border-transparent hover:text-lime-dark dark:hover:text-lime'
                   }`
                 }
               >

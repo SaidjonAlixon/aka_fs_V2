@@ -44,8 +44,8 @@ module.exports = {
           light: 'hsl(var(--navy-light))',
         },
         lime: {
-          DEFAULT: '#B8FF2C',    // Keep constant or use var if needed
-          dark: '#9AD920',
+          DEFAULT: "hsl(var(--primary))",
+          dark: "#5D8500", // A darker, more readable green for light backgrounds
         },
         text: {
           primary: 'hsl(var(--text-primary))',

@@ -88,11 +88,11 @@ const JoinProcess = ({ onApplyClick }: JoinProcessProps) => {
     >
       <div className="container mx-auto px-6">
         <div className="text-center mb-20 md:mb-32">
-          <span className="text-lime font-black tracking-[0.5em] uppercase text-xs mb-4 block">
+          <span className="text-lime-dark dark:text-lime font-black tracking-[0.5em] uppercase text-xs mb-4 block">
             The Journey
           </span>
           <h2 className="text-4xl md:text-8xl font-black text-foreground uppercase tracking-tighter leading-none">
-            HOW TO <span className="text-lime text-outline-foreground">JOIN</span> AKA FS
+            HOW TO <span className="text-lime-dark dark:text-lime transition-colors">JOIN</span> AKA FS
           </h2>
         </div>
 
@@ -122,11 +122,11 @@ const JoinProcess = ({ onApplyClick }: JoinProcessProps) => {
                       <div className="text-4xl md:text-6xl font-black text-foreground/10 group-hover:text-lime/20 transition-colors tracking-tighter">
                         {step.number}
                       </div>
-                      <div className="p-4 bg-secondary border border-foreground/10 text-lime group-hover:bg-lime group-hover:text-navy transition-all duration-500">
+                      <div className="p-4 bg-secondary border border-foreground/10 text-lime-dark dark:text-lime group-hover:bg-lime group-hover:text-[#0A0F1A] transition-all duration-500">
                         <step.icon className="w-6 h-6" />
                       </div>
                     </div>
-                    <h3 className="text-2xl font-black text-foreground uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
+                    <h3 className="text-2xl font-black text-foreground uppercase tracking-tight mb-4 group-hover:text-lime-dark dark:group-hover:text-lime transition-colors">
                       {step.title}
                     </h3>
                     <p className="text-text-secondary font-black leading-relaxed">
@@ -145,7 +145,7 @@ const JoinProcess = ({ onApplyClick }: JoinProcessProps) => {
         <div className="mt-32 text-center">
             <button 
                 onClick={onApplyClick}
-                className="group relative inline-flex items-center justify-center px-12 py-6 bg-lime text-navy font-black text-xl uppercase tracking-[0.2em] transform transition-all duration-500 overflow-hidden shadow-[0_0_50px_rgba(184,255,44,0.3)] hover:scale-105"
+                className="group relative inline-flex items-center justify-center px-12 py-6 bg-lime text-[#0A0F1A] font-black text-xl uppercase tracking-[0.2em] transform transition-all duration-500 overflow-hidden shadow-[0_0_50px_rgba(184,255,44,0.3)] hover:scale-105"
                 style={{ clipPath: 'polygon(5% 0, 100% 0, 95% 100%, 0 100%)' }}
             >
                 <span className="relative z-10 transition-transform group-hover:scale-110">Apply To Become A Driver</span>

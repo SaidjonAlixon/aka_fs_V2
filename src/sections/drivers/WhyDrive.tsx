@@ -87,7 +87,7 @@ const WhyDrive = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="mb-16 md:mb-24 text-center max-w-4xl mx-auto">
-          <span className="text-lime font-black tracking-[0.3em] uppercase text-sm mb-4 block animate-pulse">
+          <span className="text-lime-dark dark:text-lime font-black tracking-[0.3em] uppercase text-sm mb-4 block">
             Premium Carrier
           </span>
           <h2 className="why-title text-4xl md:text-7xl lg:text-8xl font-black text-foreground uppercase tracking-tighter leading-none">
@@ -109,7 +109,7 @@ const WhyDrive = () => {
                 {/* Hover accent */}
                 <div className="absolute inset-0 bg-gradient-to-br from-lime/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
-                <div className={`p-4 bg-secondary border border-foreground/10 ${reason.color === 'lime' ? 'text-lime' : 'text-foreground'} group-hover:bg-lime group-hover:text-navy transition-all duration-500 transform group-hover:rotate-12`}>
+                <div className={`p-4 bg-secondary border border-foreground/10 ${reason.color === 'lime' ? 'text-lime-dark dark:text-lime' : 'text-foreground'} group-hover:bg-lime group-hover:text-[#0A0F1A] transition-all duration-500 transform group-hover:rotate-12`}>
                   <reason.icon className="w-8 h-8" />
                 </div>
 

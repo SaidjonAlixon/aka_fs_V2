@@ -89,10 +89,10 @@ const StatsSection = () => {
     <section ref={sectionRef} className="relative py-20 md:py-40 bg-background overflow-hidden">
       {/* Grid lines */}
       <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(184,255,44,1) 1px, transparent 1px), linear-gradient(90deg, rgba(184,255,44,1) 1px, transparent 1px)',
+            'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }}
       />
@@ -101,7 +101,7 @@ const StatsSection = () => {
       <div className="container mx-auto px-6 lg:px-12">
         {/* Headline */}
         <div className="stats-headline text-center mb-20">
-          <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime">Performance Metrics</span>
+          <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime">Performance Metrics</span>
           {/* Animated connector line under eyebrow */}
           <div className="mx-auto mt-4 w-48 h-[2px] bg-foreground/10 relative overflow-hidden">
             <div className="stats-line absolute inset-0 bg-lime/60 origin-left" style={{ transform: 'scaleX(0)' }} />
@@ -113,7 +113,7 @@ const StatsSection = () => {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className={`stat-card-${idx} group relative text-center p-6 md:p-10 border border-foreground/10 hover:border-lime/30 transition-colors duration-500 bg-foreground/[0.02] hover:bg-foreground/[0.05] overflow-hidden`}
+              className={`stat-card-${idx} group relative text-center p-6 md:p-10 border border-foreground/5 hover:border-lime/30 transition-colors duration-500 bg-foreground/[0.015] dark:bg-foreground/[0.02] hover:bg-foreground/[0.04] dark:hover:bg-foreground/[0.05] overflow-hidden rounded-xs`}
             >
               {/* Top accent bar */}
               <div className="absolute top-0 left-0 w-0 h-[2px] bg-lime group-hover:w-full transition-all duration-700" />
@@ -125,12 +125,12 @@ const StatsSection = () => {
               />
 
               <div className="flex justify-center mb-6">
-                <div className="p-4 bg-lime/10 rounded-sm group-hover:bg-lime/20 group-hover:scale-110 transition-all duration-300">
-                  <stat.icon className="w-7 h-7 text-lime" />
+                <div className="p-4 bg-lime-dark/10 dark:bg-lime/10 rounded-sm group-hover:bg-lime-dark/20 dark:group-hover:bg-lime/20 group-hover:scale-110 transition-all duration-300">
+                <stat.icon className="w-7 h-7 text-lime-dark dark:text-lime" />
                 </div>
               </div>
 
-              <div className="font-space font-black text-3xl md:text-5xl lg:text-6xl text-foreground mb-2 group-hover:text-lime transition-colors duration-300">
+              <div className="font-space font-black text-3xl md:text-5xl lg:text-6xl text-foreground mb-2 group-hover:text-lime-dark dark:group-hover:text-lime transition-colors duration-300">
                 {stat.value}
               </div>
               <div className="font-space font-bold text-sm uppercase tracking-widest text-foreground mb-1">
@@ -141,7 +141,7 @@ const StatsSection = () => {
               </div>
 
               {/* Bottom corner accent */}
-              <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-lime/20 group-hover:border-lime/60 transition-colors" />
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-lime-dark/20 dark:border-lime/20 group-hover:border-lime-dark/60 dark:group-hover:border-lime/60 transition-colors" />
             </div>
           ))}
         </div>

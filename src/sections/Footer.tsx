@@ -51,7 +51,7 @@ const Footer = ({ onApplyClick }: FooterProps) => {
       className="relative bg-background py-12 lg:py-16 px-6 lg:px-[7vw] border-t border-foreground/10"
     >
       {/* Decorative slash */}
-      <div className="absolute top-0 left-[7vw] w-24 h-1 bg-lime slash-bar -translate-y-1/2" />
+      <div className="absolute top-0 left-[7vw] w-24 h-1 bg-lime-dark dark:bg-lime slash-bar -translate-y-1/2" />
 
       <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-8">
         {/* Logo */}
@@ -75,7 +75,7 @@ const Footer = ({ onApplyClick }: FooterProps) => {
           </a>
           <button 
             onClick={onApplyClick}
-            className="text-[10px] font-black text-lime uppercase tracking-[0.3em] hover:text-white transition-colors"
+            className="text-[10px] font-black text-lime-dark dark:text-lime uppercase tracking-[0.3em] hover:text-foreground transition-colors"
           >
             Join Our Fleet →
           </button>
@@ -87,14 +87,14 @@ const Footer = ({ onApplyClick }: FooterProps) => {
             <NavLink
               key={link.label}
               to={link.href}
-              className="font-space font-black text-sm uppercase tracking-[0.15em] text-text-secondary hover:text-lime transition-all duration-200"
+              className="font-space font-black text-sm uppercase tracking-[0.15em] text-text-secondary hover:text-lime-dark dark:hover:text-lime transition-all duration-200"
             >
               {link.label}
             </NavLink>
           ))}
           <button
             onClick={onApplyClick}
-            className="font-space font-black text-sm uppercase tracking-[0.15em] text-lime hover:text-white transition-all duration-200"
+            className="font-space font-black text-sm uppercase tracking-[0.15em] text-lime-dark dark:text-lime hover:text-foreground transition-all duration-200"
           >
             APPLY
           </button>
@@ -105,7 +105,7 @@ const Footer = ({ onApplyClick }: FooterProps) => {
           <a
             href="#"
             onClick={(e) => e.preventDefault()}
-            className="p-2 text-text-secondary hover:text-lime transition-colors"
+            className="p-2 text-text-secondary hover:text-lime-dark dark:hover:text-lime transition-colors"
             aria-label="LinkedIn"
           >
             <Linkedin className="w-5 h-5" />
@@ -113,7 +113,7 @@ const Footer = ({ onApplyClick }: FooterProps) => {
           <a
             href="#"
             onClick={(e) => e.preventDefault()}
-            className="p-2 text-text-secondary hover:text-lime transition-colors"
+            className="p-2 text-text-secondary hover:text-lime-dark dark:hover:text-lime transition-colors"
             aria-label="Twitter"
           >
             <Twitter className="w-5 h-5" />
@@ -121,7 +121,7 @@ const Footer = ({ onApplyClick }: FooterProps) => {
           <a
             href="#"
             onClick={(e) => e.preventDefault()}
-            className="p-2 text-text-secondary hover:text-lime transition-colors"
+            className="p-2 text-text-secondary hover:text-lime-dark dark:hover:text-lime transition-colors"
             aria-label="Facebook"
           >
             <Facebook className="w-5 h-5" />

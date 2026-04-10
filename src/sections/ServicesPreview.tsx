@@ -88,10 +88,10 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">
           <div className="services-headline">
-            <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-4 md:mb-6">What We Move</span>
+            <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime block mb-4 md:mb-6">What We Move</span>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground uppercase tracking-tighter leading-[0.95]">
               POWER ONLY <br />
-              <span className="text-lime">SOLUTIONS.</span><br />
+              <span className="text-lime-dark dark:text-lime">SOLUTIONS.</span><br />
               BUILT FOR SPEED.
             </h2>
           </div>
@@ -109,17 +109,17 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
             >
               {/* Badge */}
               <div className="absolute top-5 right-5">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-lime bg-lime/10 px-2 py-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-lime-dark dark:text-lime bg-lime/10 px-2 py-1">
                   {service.badge}
                 </span>
               </div>
 
               {/* Icon */}
               <div className="p-5 bg-lime/10 inline-flex mb-8 group-hover:bg-lime/20 transition-colors rounded-sm">
-                <service.icon className="w-10 h-10 text-lime" />
+                <service.icon className="w-10 h-10 text-lime-dark dark:text-lime" />
               </div>
 
-              <h3 className="font-space font-black text-3xl text-foreground uppercase mb-4 group-hover:text-lime transition-colors">
+              <h3 className="font-space font-black text-3xl text-foreground uppercase mb-4 group-hover:text-lime-dark dark:group-hover:text-lime transition-colors text-balance">
                 {service.title}
               </h3>
               <p className="text-text-secondary text-sm leading-relaxed mb-6 font-bold">
@@ -129,7 +129,7 @@ const ServicesPreview = ({ onApplyClick }: ServicesPreviewProps) => {
               {/* Hover bottom bar */}
               <div className="absolute bottom-0 left-0 w-0 h-1 bg-lime group-hover:w-full transition-all duration-700" />
 
-              <span className="text-lime text-xs font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-lime-dark dark:text-lime text-xs font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 Apply Now →
               </span>
             </div>

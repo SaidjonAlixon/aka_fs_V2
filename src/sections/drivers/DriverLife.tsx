@@ -47,9 +47,9 @@ const DriverLife = () => {
       <div className="container mx-auto px-6 mb-16">
         <div className="flex flex-col md:flex-row items-baseline gap-4">
           <h2 className="text-4xl md:text-8xl font-black text-foreground uppercase tracking-tighter leading-none">
-            LIFE ON <span className="text-lime">THE ROAD</span>
+            LIFE ON <span className="text-lime-dark dark:text-lime">THE ROAD</span>
           </h2>
-          <span className="text-lime/60 font-black tracking-[0.5em] uppercase text-xs">
+          <span className="text-lime-dark dark:text-lime font-black tracking-[0.5em] uppercase text-xs">
             Experience AKA FS
           </span>
         </div>
@@ -75,7 +75,7 @@ const DriverLife = () => {
             
             {/* Context */}
             <div className="absolute inset-x-0 bottom-0 p-8 md:p-12 z-10 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-              <span className="text-lime font-black tracking-[1em] uppercase text-[10px] mb-2 block opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="text-lime-dark dark:text-lime font-black tracking-[1em] uppercase text-[10px] mb-2 block opacity-0 group-hover:opacity-100 transition-opacity">
                 Featured
               </span>
               <h3 className="text-3xl md:text-5xl font-black text-foreground uppercase tracking-tighter mb-2">

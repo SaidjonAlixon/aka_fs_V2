@@ -200,7 +200,7 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
         ref={p1Ref}
         className="absolute inset-x-6 md:inset-x-auto md:right-[8vw] top-[20vh] md:top-[25vh] md:w-[35vw] max-w-[500px] text-right z-20 invisible flex flex-col items-end will-change-transform"
       >
-        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-lime/30 bg-background/60 backdrop-blur-md mb-6 shadow-[0_0_20px_rgba(182,255,0,0.15)] text-lime eyebrow">
+        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-lime/30 bg-background/60 backdrop-blur-md mb-6 shadow-[0_0_20px_rgba(182,255,0,0.05)] text-lime-dark dark:text-lime eyebrow">
           <Cpu className="w-5 h-5" />
           Smart dispatch. Maximum Efficiency.
         </div>
@@ -219,7 +219,7 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
       >
         <div className="bg-background/80 backdrop-blur-lg p-6 md:p-10 border-l-4 border-l-lime flex flex-col sm:flex-row items-start gap-4 md:gap-6 shadow-2xl relative overflow-hidden ring-1 ring-foreground/5">
           <div className="absolute top-0 right-0 w-32 h-32 bg-lime/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-          <ShieldCheck className="w-12 h-12 text-lime shrink-0" />
+          <ShieldCheck className="w-12 h-12 text-lime-dark dark:text-lime shrink-0" />
           <div>
             <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-foreground mb-3 md:mb-4 uppercase tracking-wide">
               Built for Reliability.<br />Trusted Every Mile.
@@ -237,10 +237,10 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
         className="absolute inset-0 flex flex-col items-center justify-center z-30 invisible will-change-transform"
       >
         <div className="flex flex-col items-center bg-background/50 backdrop-blur-md p-12 md:p-16 rounded-3xl border border-foreground/10 pointer-events-auto shadow-2xl">
-          <Zap className="w-24 h-24 text-lime mb-8 drop-shadow-[0_0_30px_rgba(182,255,0,0.8)]" />
+          <Zap className="w-24 h-24 text-lime-dark dark:text-lime mb-8 drop-shadow-[0_0_30px_rgba(182,255,0,0.8)] dark:drop-shadow-[0_0_30px_rgba(182,255,0,0.4)]" />
           <h2 className="text-5xl md:text-8xl lg:text-9xl font-black text-foreground text-center uppercase tracking-tighter drop-shadow-2xl leading-[0.9]">
             THE FUTURE OF <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime to-emerald-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-dark dark:from-lime to-emerald-600 dark:to-emerald-400">
               FREIGHT
             </span>
           </h2>

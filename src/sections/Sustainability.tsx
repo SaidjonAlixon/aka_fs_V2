@@ -125,7 +125,7 @@ const Sustainability = ({ className = '' }: SustainabilityProps) => {
       <div className="absolute inset-x-6 md:inset-x-auto md:left-[15vw] top-[12vh] md:top-[20vh] md:w-[35vw] max-w-[600px] z-20">
         <div ref={headlineRef} className="will-change-transform">
           <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-foreground mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
-            GREENER <span className="text-lime">MILES.</span><br />
+            GREENER <span className="text-lime-dark dark:text-lime">MILES.</span><br />
             SMARTER ROUTES.
           </h2>
           <p className="text-foreground text-lg md:text-2xl leading-relaxed max-w-md font-bold">
@@ -149,7 +149,7 @@ const Sustainability = ({ className = '' }: SustainabilityProps) => {
                 className="initiative-item flex items-center gap-4 will-change-transform"
               >
                 <div className="p-3 bg-lime/10 rounded-sm">
-                  <item.icon className="w-5 h-5 text-lime" />
+                  <item.icon className="w-5 h-5 text-lime-dark dark:text-lime" />
                 </div>
                 <span className="font-space font-semibold text-text-primary">
                   {item.text}

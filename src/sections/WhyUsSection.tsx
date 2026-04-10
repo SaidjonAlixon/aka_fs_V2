@@ -50,9 +50,9 @@ const WhyUsSection = () => {
 
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-12 md:mb-20">
-          <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-4 md:mb-6">Why AKA FS</span>
+          <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime block mb-4 md:mb-6">Why AKA FS</span>
           <h2 className="text-4xl md:text-7xl lg:text-9xl font-black text-foreground uppercase tracking-tighter leading-[0.85]">
-            WHY <span className="text-lime">CHOOSE</span> US?
+            WHY <span className="text-lime-dark dark:text-lime">CHOOSE</span> US?
           </h2>
         </div>
 
@@ -66,11 +66,11 @@ const WhyUsSection = () => {
               
               <div className="relative z-10 flex-shrink-0">
                 <div className="p-4 bg-lime/10 rounded-sm group-hover:bg-lime/20 transition-colors">
-                  <reason.icon className="w-7 h-7 text-lime" />
+                  <reason.icon className="w-7 h-7 text-lime-dark dark:text-lime" />
                 </div>
               </div>
               <div className="relative z-10">
-                <h3 className="font-space font-black text-xl text-foreground uppercase tracking-tight mb-3 group-hover:text-lime transition-colors">
+                <h3 className="font-space font-black text-xl text-foreground uppercase tracking-tight mb-3 group-hover:text-lime-dark dark:group-hover:text-lime transition-colors">
                   {reason.title}
                 </h3>
                 <p className="text-text-secondary text-sm leading-relaxed font-bold">{reason.desc}</p>

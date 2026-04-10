@@ -176,7 +176,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
       id: 'company' as PositionType,
       title: 'Company Driver',
       description: 'Drive our late-model equipment with full benefits and consistent freight.',
-      tags: ['Health & Dental', 'Weekly Pay', 'Modern Fleet', 'Home Time'],
+      tags: ['Weekly Pay', 'Modern Fleet', 'Home Time'],
       icon: Truck
     },
     {
@@ -205,16 +205,16 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
 
       {/* Main Container */}
       <div 
-        className={`relative w-full max-w-4xl bg-[#0A0F1D] border border-white/10 rounded-sm overflow-hidden flex flex-col max-h-[90vh] shadow-[0_30px_60px_rgba(0,0,0,0.5)] transition-all duration-500 transform ${isVisible ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-4 opacity-0'}`}
+        className={`relative w-full max-w-4xl bg-background border border-foreground/10 rounded-sm overflow-hidden flex flex-col max-h-[90vh] shadow-[0_30px_60px_rgba(0,0,0,0.5)] transition-all duration-500 transform ${isVisible ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-4 opacity-0'}`}
       >
         {/* Header */}
-        <div className="p-6 md:p-8 border-b border-white/5 flex items-center justify-between bg-[#0D1426]">
+        <div className="p-6 md:p-8 border-b border-foreground/5 flex items-center justify-between bg-secondary">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-lime/10 border border-lime/20 rounded-full mb-3 text-[10px] font-black tracking-widest text-lime uppercase font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-lime-dark/10 dark:bg-lime/10 border border-lime-dark/20 dark:border-lime/20 rounded-full mb-3 text-[10px] font-black tracking-widest text-lime-dark dark:text-lime uppercase font-mono">
               <Truck className="w-3 h-3" />
               AKA FS LOGISTICS
             </div>
-            <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter">
+            <h2 className="text-2xl md:text-3xl font-black text-text-primary uppercase tracking-tighter">
               Driver Application
             </h2>
             <p className="text-text-secondary font-mono text-xs mt-1 uppercase tracking-wider">
@@ -227,16 +227,16 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
           </div>
           <button 
             onClick={onClose}
-            className="p-3 hover:bg-white/5 rounded-full transition-colors text-white/50 hover:text-white"
+            className="p-3 hover:bg-foreground/5 rounded-full transition-colors text-text-secondary hover:text-text-primary"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
         {/* Progress Bar */}
-        <div className="h-1 bg-white/5 w-full relative">
+        <div className="h-1 bg-foreground/5 w-full relative">
           <div 
-            className="h-full bg-lime shadow-[0_0_10px_#B8FF2C] transition-all duration-500"
+            className="h-full bg-lime-dark dark:bg-lime shadow-[0_0_10px_rgba(93,133,0,0.4)] dark:shadow-[0_0_10px_rgba(184,255,44,0.4)] transition-all duration-500"
             style={{ width: `${(currentStep / STEP_COUNT) * 100}%` }}
           />
         </div>
@@ -257,19 +257,19 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                       onClick={() => setSelectedPosition(pos.id)}
                       className={`group relative p-6 text-left border transition-all duration-300 ${
                         selectedPosition === pos.id 
-                        ? 'bg-lime/5 border-lime shadow-[0_0_30px_rgba(184,255,44,0.1)]' 
-                        : 'bg-white/[0.02] border-white/5 hover:border-white/20'
+                        ? 'bg-lime-dark/5 dark:bg-lime/5 border-lime-dark dark:border-lime shadow-[0_0_30px_rgba(184,255,44,0.1)]' 
+                        : 'bg-foreground/[0.02] border-foreground/5 hover:border-foreground/20'
                       }`}
                     >
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex gap-4">
                           <div className={`p-4 rounded-sm transition-colors ${
-                            selectedPosition === pos.id ? 'bg-lime text-black' : 'bg-white/5 text-white/50'
+                            selectedPosition === pos.id ? 'bg-lime-dark dark:bg-lime text-white dark:text-[#0A0F1A]' : 'bg-foreground/5 text-text-secondary'
                           }`}>
                             <pos.icon className="w-6 h-6" />
                           </div>
                           <div>
-                            <h3 className="font-space font-black text-xl text-white uppercase tracking-tight">
+                             <h3 className="font-space font-black text-xl text-text-primary uppercase tracking-tight">
                               {pos.title}
                             </h3>
                             <p className="text-text-secondary text-sm leading-relaxed max-w-md mt-1">
@@ -279,7 +279,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {pos.tags.map(tag => (
-                            <span key={tag} className="px-2 py-1 bg-white/5 text-[9px] font-mono text-white/40 uppercase tracking-widest border border-white/10">
+                            <span key={tag} className="px-2 py-1 bg-foreground/5 text-[9px] font-mono text-text-secondary uppercase tracking-widest border border-foreground/10">
                               {tag}
                             </span>
                           ))}
@@ -287,7 +287,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                       </div>
                       
                       {selectedPosition === pos.id && (
-                        <div className="absolute top-4 right-4 text-lime drop-shadow-glow">
+                        <div className="absolute top-4 right-4 text-lime-dark dark:text-lime drop-shadow-glow">
                           <CheckCircle2 className="w-6 h-6" />
                         </div>
                       )}
@@ -304,7 +304,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                   <input 
                     type="text" 
                     placeholder="Enter your first name"
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all uppercase font-medium"
+                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all uppercase font-medium"
                     value={formData.firstName}
                     onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                   />
@@ -314,7 +314,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                   <input 
                     type="text" 
                     placeholder="Enter your last name"
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all uppercase font-medium"
+                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all uppercase font-medium"
                     value={formData.lastName}
                     onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                   />
@@ -324,7 +324,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                   <input 
                     type="email" 
                     placeholder="name@example.com"
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all font-medium"
+                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all uppercase font-medium"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                   />
@@ -334,7 +334,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                   <input 
                     type="tel" 
                     placeholder="+1 (---) --- ----"
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all font-medium"
+                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all uppercase font-medium"
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   />
@@ -342,11 +342,11 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 <div className="space-y-2 md:col-span-2">
                   <label className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">Current Location (City, State)</label>
                   <div className="relative">
-                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 w-5 h-5" />
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary/30 w-5 h-5" />
                     <input 
                       type="text" 
                       placeholder="e.g. Chicago, IL"
-                      className="w-full bg-white/[0.03] border border-white/10 p-4 pl-12 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all uppercase font-medium"
+                      className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 pl-12 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all uppercase font-medium"
                       value={formData.location}
                       onChange={(e) => setFormData({...formData, location: e.target.value})}
                     />
@@ -358,15 +358,15 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
             {currentStep === 3 && selectedPosition === 'company' && (
               /* Company Driver – Step 3: Experience & License (3-rasm) */
               <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
-                <h3 className="text-xl font-space font-black text-white uppercase tracking-tight">Experience & License</h3>
+                <h3 className="text-xl font-space font-black text-text-primary uppercase tracking-tight">Experience & License</h3>
 
                 <div className="space-y-3" ref={cdlDropdownRef}>
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.25em] block">Choose your CDL type</label>
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.25em] block">Choose your CDL type</label>
                   <div className="relative">
                     <button
                       type="button"
                       onClick={() => setCdlDropdownOpen((o) => !o)}
-                      className="w-full flex items-center justify-between px-4 py-3 border border-white/10 rounded-sm bg-lime text-navy font-space font-bold uppercase tracking-wide transition-all hover:bg-lime/90"
+                      className="w-full flex items-center justify-between px-4 py-3 border border-foreground/10 rounded-sm bg-lime-dark dark:bg-lime text-white dark:text-[#0A0F1A] font-space font-bold uppercase tracking-wide transition-all hover:opacity-90"
                     >
                       {(formData.cdlType || 'Class A') === 'Class A' && 'CLASS A CDL'}
                       {(formData.cdlType || 'Class A') === 'Class B' && 'CLASS B CDL'}
@@ -374,7 +374,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                       <ChevronDown className={`w-5 h-5 transition-transform ${cdlDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
                     {cdlDropdownOpen && (
-                      <div className="absolute top-full left-0 right-0 mt-1 border border-white/10 overflow-hidden rounded-sm bg-[#0A0F1D] z-10 shadow-xl">
+                      <div className="absolute top-full left-0 right-0 mt-1 border border-foreground/10 overflow-hidden rounded-sm bg-background z-10 shadow-xl">
                         {CDL_OPTIONS.map((opt) => (
                           <button
                             key={opt.value}
@@ -383,10 +383,10 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                               setFormData({ ...formData, cdlType: opt.value });
                               setCdlDropdownOpen(false);
                             }}
-                            className={`w-full text-left px-4 py-3 border-b border-white/5 last:border-b-0 transition-all font-medium ${
+                            className={`w-full text-left px-4 py-3 border-b border-foreground/5 last:border-b-0 transition-all font-medium ${
                               (formData.cdlType || 'Class A') === opt.value
-                                ? 'bg-lime text-navy font-bold'
-                                : 'bg-white/[0.03] text-white/90 hover:bg-white/5 hover:text-white'
+                                ? 'bg-lime-dark dark:bg-lime text-white dark:text-[#0A0F1A] font-bold'
+                                : 'bg-foreground/[0.03] text-text-secondary hover:bg-foreground/5 hover:text-text-primary'
                             }`}
                           >
                             {opt.label}
@@ -398,18 +398,18 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Your SSN or EID number</label>
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Your SSN or EID number</label>
                   <input
                     type="text"
                     placeholder="Your SSN or EID number"
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all font-medium"
+                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all font-medium uppercase"
                     value={formData.ssnOrEid}
                     onChange={(e) => setFormData({ ...formData, ssnOrEid: e.target.value })}
                   />
                 </div>
 
-                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">SSN (Image copy)</label>
+                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">SSN (Image copy)</label>
                   <div className="flex flex-wrap items-center gap-3">
                     <input
                       ref={ssnInputRef}
@@ -432,11 +432,11 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                     <button
                       type="button"
                       onClick={() => ssnInputRef.current?.click()}
-                      className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all"
+                      className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all"
                     >
                       Choose file
                     </button>
-                    <span className={`text-sm font-mono ${formData.ssnImageUrl ? 'text-lime' : 'text-white/50'}`}>
+                    <span className={`text-sm font-mono ${formData.ssnImageUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>
                       {formData.ssnImage ? (formData.ssnImageUrl ? 'UPLOAD' : formData.ssnImage.name) : 'File not selected'}
                     </span>
                   </div>
@@ -447,16 +447,16 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                   <input
                     type="number"
                     min={0}
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white focus:border-lime focus:outline-none transition-all font-medium"
+                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all font-medium"
                     value={formData.drivingExperienceYears}
                     onChange={(e) => setFormData({ ...formData, drivingExperienceYears: Math.max(0, parseInt(e.target.value, 10) || 0) })}
                   />
                 </div>
 
-                <div className="space-y-3 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
+                <div className="space-y-3 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-foreground/10 bg-foreground/5">
                     <input
                       ref={licenseFrontRef}
                       type="file"
@@ -473,10 +473,10 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                      <button type="button" onClick={() => licenseFrontRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
-                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFrontUrl ? 'text-lime' : 'text-white/50'}`}>{formData.licenseFront ? (formData.licenseFrontUrl ? 'UPLOAD' : formData.licenseFront.name) : 'File not selected'}</span>
+                      <button type="button" onClick={() => licenseFrontRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all shrink-0">Choose file</button>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFrontUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.licenseFront ? (formData.licenseFrontUrl ? 'UPLOAD' : formData.licenseFront.name) : 'File not selected'}</span>
                     </div>
-                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-foreground/10 bg-foreground/5">
                       <input
                         ref={licenseBackRef}
                         type="file"
@@ -493,14 +493,14 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                           }
                         }}
                       />
-                      <button type="button" onClick={() => licenseBackRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
-                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBackUrl ? 'text-lime' : 'text-white/50'}`}>{formData.licenseBack ? (formData.licenseBackUrl ? 'UPLOAD' : formData.licenseBack.name) : 'File not selected'}</span>
+                      <button type="button" onClick={() => licenseBackRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all shrink-0">Choose file</button>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBackUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.licenseBack ? (formData.licenseBackUrl ? 'UPLOAD' : formData.licenseBack.name) : 'File not selected'}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Medical Card</label>
+                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Medical Card</label>
                   <div className="flex flex-wrap items-center gap-3">
                     <input
                       ref={medicalRef}
@@ -518,21 +518,21 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                    <button type="button" onClick={() => medicalRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.medicalCardUrl ? 'text-lime' : 'text-white/50'}`}>{formData.medicalCard ? (formData.medicalCardUrl ? 'UPLOAD' : formData.medicalCard.name) : 'File not selected'}</span>
+                    <button type="button" onClick={() => medicalRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.medicalCardUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.medicalCard ? (formData.medicalCardUrl ? 'UPLOAD' : formData.medicalCard.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Resume / Document (Optional)</label>
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Resume / Document (Optional)</label>
                   <div
-                    className="p-8 border-2 border-dashed border-white/20 bg-white/[0.02] hover:border-lime/40 hover:bg-lime/5 transition-all cursor-pointer flex flex-col items-center justify-center text-center gap-2 rounded-sm"
+                    className="p-8 border-2 border-dashed border-foreground/10 bg-foreground/[0.02] hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/5 dark:hover:bg-lime/5 transition-all cursor-pointer flex flex-col items-center justify-center text-center gap-2 rounded-sm"
                     onClick={() => resumeRef.current?.click()}
-                    onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('border-lime', 'bg-lime/10'); }}
-                    onDragLeave={(e) => { e.currentTarget.classList.remove('border-lime', 'bg-lime/10'); }}
+                    onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('border-lime-dark', 'dark:border-lime', 'bg-lime-dark/10', 'dark:bg-lime/10'); }}
+                    onDragLeave={(e) => { e.currentTarget.classList.remove('border-lime-dark', 'dark:border-lime', 'bg-lime-dark/10', 'dark:bg-lime/10'); }}
                     onDrop={(e) => {
                       e.preventDefault();
-                      e.currentTarget.classList.remove('border-lime', 'bg-lime/10');
+                      e.currentTarget.classList.remove('border-lime-dark', 'dark:border-lime', 'bg-lime-dark/10', 'dark:bg-lime/10');
                       const f = e.dataTransfer.files?.[0];
                       if (f) setFormData((prev) => ({ ...prev, resumeDoc: f }));
                     }}
@@ -553,13 +553,13 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                    <div className={`p-3 rounded-full ${formData.resumeDoc ? 'bg-lime/20 text-lime' : 'bg-white/5 text-white/50'}`}>
+                    <div className={`p-3 rounded-full ${formData.resumeDoc ? 'bg-lime-dark/20 dark:bg-lime/20 text-lime-dark dark:text-lime' : 'bg-foreground/5 text-text-secondary/50'}`}>
                       <Upload className="w-6 h-6" />
                     </div>
-                    <p className="text-white/70 text-sm">to upload or drag and drop</p>
-                    <p className="text-[10px] font-mono text-white/40">PDF, JPEG, JPG, PNG (Max 10MB)</p>
+                    <p className="text-text-primary/70 text-sm">to upload or drag and drop</p>
+                    <p className="text-[10px] font-mono text-text-secondary/60">PDF, JPEG, JPG, PNG (Max 10MB)</p>
                     {formData.resumeDoc && (
-                      <p className={`text-sm font-mono font-bold ${formData.resumeDocUrl ? 'text-lime' : 'text-white/70'}`}>
+                      <p className={`text-sm font-mono font-bold ${formData.resumeDocUrl ? 'text-lime-dark dark:text-lime' : 'text-text-primary/70'}`}>
                         {formData.resumeDocUrl ? 'UPLOAD' : formData.resumeDoc.name}
                       </p>
                     )}
@@ -574,8 +574,8 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                       checked={formData.termsAccepted}
                       onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
                     />
-                    <div className="w-5 h-5 bg-white/5 border-2 border-white/10 peer-checked:bg-lime peer-checked:border-lime transition-all rounded" />
-                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+                      <div className="w-5 h-5 bg-foreground/5 border-2 border-foreground/10 peer-checked:bg-lime-dark dark:peer-checked:bg-lime peer-checked:border-lime-dark dark:peer-checked:border-lime transition-all rounded" />
+                      <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-white dark:text-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
                   </div>
                   <span className="text-sm text-text-secondary">Accept terms and conditions</span>
                 </label>
@@ -585,21 +585,21 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
             {currentStep === 3 && selectedPosition === 'owner' && (
               /* Owner Operator – Step 3: Documents & Truck (3-rasm) */
               <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
-                <h3 className="text-xl font-space font-black text-white uppercase tracking-tight">Owner Operator – Documents & Truck</h3>
+                <h3 className="text-xl font-space font-black text-text-primary uppercase tracking-tight">Owner Operator – Documents & Truck</h3>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Your SSN or EID number</label>
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Your SSN or EID number</label>
                   <input
                     type="text"
                     placeholder="Your SSN or EID number"
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 text-white placeholder:text-white/20 focus:border-lime focus:outline-none transition-all font-medium rounded-sm"
+                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all font-medium rounded-sm uppercase"
                     value={formData.ssnOrEid}
                     onChange={(e) => setFormData({ ...formData, ssnOrEid: e.target.value })}
                   />
                 </div>
 
-                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">SSN (Image Copy)</label>
+                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">SSN (Image Copy)</label>
                   <div className="flex flex-wrap items-center gap-3">
                     <input
                       ref={ssnInputRef}
@@ -617,15 +617,15 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                    <button type="button" onClick={() => ssnInputRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.ssnImageUrl ? 'text-lime' : 'text-white/50'}`}>{formData.ssnImage ? (formData.ssnImageUrl ? 'UPLOAD' : formData.ssnImage.name) : 'File not selected'}</span>
+                    <button type="button" onClick={() => ssnInputRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.ssnImageUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.ssnImage ? (formData.ssnImageUrl ? 'UPLOAD' : formData.ssnImage.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
-                <div className="space-y-3 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
+                <div className="space-y-3 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-foreground/10 bg-foreground/5">
                     <input
                       ref={licenseFrontRef}
                       type="file"
@@ -642,10 +642,10 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                      <button type="button" onClick={() => licenseFrontRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
-                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFrontUrl ? 'text-lime' : 'text-white/50'}`}>{formData.licenseFront ? (formData.licenseFrontUrl ? 'UPLOAD' : formData.licenseFront.name) : 'File not selected'}</span>
+                      <button type="button" onClick={() => licenseFrontRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all shrink-0">Choose file</button>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseFrontUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.licenseFront ? (formData.licenseFrontUrl ? 'UPLOAD' : formData.licenseFront.name) : 'File not selected'}</span>
                     </div>
-                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-white/10 bg-black/20">
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded border border-dashed border-foreground/15 bg-foreground/5">
                       <input
                         ref={licenseBackRef}
                         type="file"
@@ -662,14 +662,14 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                           }
                         }}
                       />
-                      <button type="button" onClick={() => licenseBackRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all shrink-0">Choose file</button>
-                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBackUrl ? 'text-lime' : 'text-white/50'}`}>{formData.licenseBack ? (formData.licenseBackUrl ? 'UPLOAD' : formData.licenseBack.name) : 'File not selected'}</span>
+                      <button type="button" onClick={() => licenseBackRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all shrink-0">Choose file</button>
+                      <span className={`text-sm font-mono truncate min-w-0 ${formData.licenseBackUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.licenseBack ? (formData.licenseBackUrl ? 'UPLOAD' : formData.licenseBack.name) : 'File not selected'}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Medical Card</label>
+                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Medical Card</label>
                   <div className="flex flex-wrap items-center gap-3">
                     <input
                       ref={medicalRef}
@@ -687,13 +687,13 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                    <button type="button" onClick={() => medicalRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.medicalCardUrl ? 'text-lime' : 'text-white/50'}`}>{formData.medicalCard ? (formData.medicalCardUrl ? 'UPLOAD' : formData.medicalCard.name) : 'File not selected'}</span>
+                    <button type="button" onClick={() => medicalRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.medicalCardUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.medicalCard ? (formData.medicalCardUrl ? 'UPLOAD' : formData.medicalCard.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
-                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Annual truck inspection</label>
+                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Annual truck inspection</label>
                   <div className="flex flex-wrap items-center gap-3">
                     <input
                       ref={annualInspectionRef}
@@ -711,16 +711,16 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                    <button type="button" onClick={() => annualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.annualTruckInspectionUrl ? 'text-lime' : 'text-white/50'}`}>{formData.annualTruckInspection ? (formData.annualTruckInspectionUrl ? 'UPLOAD' : formData.annualTruckInspection.name) : 'File not selected'}</span>
+                    <button type="button" onClick={() => annualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.annualTruckInspectionUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.annualTruckInspection ? (formData.annualTruckInspectionUrl ? 'UPLOAD' : formData.annualTruckInspection.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
-                <div className="space-y-3 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Please upload truck pictures (engine, under engine, tires)</label>
+                <div className="space-y-3 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Please upload truck pictures (engine, under engine, tires)</label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-white/50 uppercase">Engine</div>
+                      <div className="text-[9px] font-mono text-text-secondary/60 uppercase">Engine</div>
                       <div className="flex flex-wrap items-center gap-2">
                         <input
                           ref={truckEngineRef}
@@ -738,12 +738,12 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                             }
                           }}
                         />
-                        <button type="button" onClick={() => truckEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.truckEngineUrl ? 'text-lime' : 'text-white/50'}`}>{formData.truckEngine ? (formData.truckEngineUrl ? 'UPLOAD' : formData.truckEngine.name) : 'File not selected'}</span>
+                        <button type="button" onClick={() => truckEngineRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.truckEngineUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.truckEngine ? (formData.truckEngineUrl ? 'UPLOAD' : formData.truckEngine.name) : 'File not selected'}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-white/50 uppercase">Under engine</div>
+                      <div className="text-[9px] font-mono text-text-secondary/60 uppercase">Under engine</div>
                       <div className="flex flex-wrap items-center gap-2">
                         <input
                           ref={truckUnderEngineRef}
@@ -761,12 +761,12 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                             }
                           }}
                         />
-                        <button type="button" onClick={() => truckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.truckUnderEngineUrl ? 'text-lime' : 'text-white/50'}`}>{formData.truckUnderEngine ? (formData.truckUnderEngineUrl ? 'UPLOAD' : formData.truckUnderEngine.name) : 'File not selected'}</span>
+                        <button type="button" onClick={() => truckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.truckUnderEngineUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.truckUnderEngine ? (formData.truckUnderEngineUrl ? 'UPLOAD' : formData.truckUnderEngine.name) : 'File not selected'}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-white/50 uppercase">Tires</div>
+                      <div className="text-[9px] font-mono text-text-secondary/60 uppercase">Tires</div>
                       <div className="flex flex-wrap items-center gap-2">
                         <input
                           ref={truckTiresRef}
@@ -784,8 +784,8 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                             }
                           }}
                         />
-                        <button type="button" onClick={() => truckTiresRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.truckTiresUrl ? 'text-lime' : 'text-white/50'}`}>{formData.truckTires ? (formData.truckTiresUrl ? 'UPLOAD' : formData.truckTires.name) : 'File not selected'}</span>
+                        <button type="button" onClick={() => truckTiresRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.truckTiresUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.truckTires ? (formData.truckTiresUrl ? 'UPLOAD' : formData.truckTires.name) : 'File not selected'}</span>
                       </div>
                     </div>
                   </div>
@@ -794,10 +794,10 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 <label className="flex items-start gap-4 cursor-pointer group">
                   <div className="relative mt-0.5">
                     <input type="checkbox" className="peer sr-only" checked={formData.termsAccepted} onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })} />
-                    <div className="w-5 h-5 bg-transparent border-2 border-white/30 rounded-sm peer-checked:bg-lime peer-checked:border-lime transition-all" />
-                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-navy opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="w-5 h-5 bg-transparent border-2 border-foreground/30 rounded-sm peer-checked:bg-lime-dark dark:peer-checked:bg-lime peer-checked:border-lime-dark dark:peer-checked:border-lime transition-all" />
+                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-white dark:text-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
                   </div>
-                  <span className="text-sm text-white/90 leading-relaxed">Accept terms and conditions</span>
+                  <span className="text-sm text-text-primary leading-relaxed">Accept terms and conditions</span>
                 </label>
               </div>
             )}
@@ -805,10 +805,10 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
             {currentStep === 3 && selectedPosition === 'lease' && (
               /* Lease Purchase – Documents & Truck (3-rasm) */
               <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
-                <h3 className="text-xl font-space font-black text-white uppercase tracking-tight">Lease Purchase – Documents & Truck</h3>
+                <h3 className="text-xl font-space font-black text-text-primary uppercase tracking-tight">Lease Purchase – Documents & Truck</h3>
 
-                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Registration Card (CAP Card)</label>
+                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Registration Card (CAP Card)</label>
                   <div className="flex flex-wrap items-center gap-3">
                     <input
                       ref={leaseCapCardRef}
@@ -826,13 +826,13 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                    <button type="button" onClick={() => leaseCapCardRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.leaseCapCardUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseCapCard ? (formData.leaseCapCardUrl ? 'UPLOAD' : formData.leaseCapCard.name) : 'File not selected'}</span>
+                     <button type="button" onClick={() => leaseCapCardRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.leaseCapCardUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.leaseCapCard ? (formData.leaseCapCardUrl ? 'UPLOAD' : formData.leaseCapCard.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
-                <div className="space-y-2 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Annual truck inspection</label>
+                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Annual truck inspection</label>
                   <div className="flex flex-wrap items-center gap-3">
                     <input
                       ref={leaseAnnualInspectionRef}
@@ -850,16 +850,16 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       }}
                     />
-                    <button type="button" onClick={() => leaseAnnualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-white/30 bg-white/5 text-white text-xs font-mono font-bold uppercase tracking-widest hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.leaseAnnualInspectionUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseAnnualInspection ? (formData.leaseAnnualInspectionUrl ? 'UPLOAD' : formData.leaseAnnualInspection.name) : 'File not selected'}</span>
+                    <button type="button" onClick={() => leaseAnnualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
+                    <span className={`text-sm font-mono ${formData.leaseAnnualInspectionUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.leaseAnnualInspection ? (formData.leaseAnnualInspectionUrl ? 'UPLOAD' : formData.leaseAnnualInspection.name) : 'File not selected'}</span>
                   </div>
                 </div>
 
-                <div className="space-y-3 p-4 rounded-sm border border-white/15 bg-white/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-white uppercase tracking-[0.2em] block">Please upload truck pictures (engine, under engine, tires)</label>
+                <div className="space-y-3 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
+                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Please upload truck pictures (engine, under engine, tires)</label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-white/50 uppercase">Engine</div>
+                      <div className="text-[9px] font-mono text-text-secondary/70 uppercase">Engine</div>
                       <div className="flex flex-wrap items-center gap-2">
                         <input
                           ref={leaseTruckEngineRef}
@@ -877,12 +877,12 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                             }
                           }}
                         />
-                        <button type="button" onClick={() => leaseTruckEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckEngineUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckEngine ? (formData.leaseTruckEngineUrl ? 'UPLOAD' : formData.leaseTruckEngine.name) : 'File not selected'}</span>
+                        <button type="button" onClick={() => leaseTruckEngineRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckEngineUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.leaseTruckEngine ? (formData.leaseTruckEngineUrl ? 'UPLOAD' : formData.leaseTruckEngine.name) : 'File not selected'}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-white/50 uppercase">Under engine</div>
+                      <div className="text-[9px] font-mono text-text-secondary/70 uppercase">Under engine</div>
                       <div className="flex flex-wrap items-center gap-2">
                         <input
                           ref={leaseTruckUnderEngineRef}
@@ -900,12 +900,12 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                             }
                           }}
                         />
-                        <button type="button" onClick={() => leaseTruckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckUnderEngineUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckUnderEngine ? (formData.leaseTruckUnderEngineUrl ? 'UPLOAD' : formData.leaseTruckUnderEngine.name) : 'File not selected'}</span>
+                        <button type="button" onClick={() => leaseTruckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckUnderEngineUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.leaseTruckUnderEngine ? (formData.leaseTruckUnderEngineUrl ? 'UPLOAD' : formData.leaseTruckUnderEngine.name) : 'File not selected'}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-white/50 uppercase">Tires</div>
+                      <div className="text-[9px] font-mono text-text-secondary/70 uppercase">Tires</div>
                       <div className="flex flex-wrap items-center gap-2">
                         <input
                           ref={leaseTruckTiresRef}
@@ -923,8 +923,8 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                             }
                           }}
                         />
-                        <button type="button" onClick={() => leaseTruckTiresRef.current?.click()} className="px-4 py-2 border-2 border-white/30 bg-white/5 text-white text-xs font-mono uppercase tracking-wider hover:border-lime hover:bg-lime/10 transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckTiresUrl ? 'text-lime' : 'text-white/50'}`}>{formData.leaseTruckTires ? (formData.leaseTruckTiresUrl ? 'UPLOAD' : formData.leaseTruckTires.name) : 'File not selected'}</span>
+                        <button type="button" onClick={() => leaseTruckTiresRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
+                        <span className={`text-xs font-mono truncate ${formData.leaseTruckTiresUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.leaseTruckTires ? (formData.leaseTruckTiresUrl ? 'UPLOAD' : formData.leaseTruckTires.name) : 'File not selected'}</span>
                       </div>
                     </div>
                   </div>
@@ -933,10 +933,10 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 <label className="flex items-start gap-4 cursor-pointer group">
                   <div className="relative mt-0.5">
                     <input type="checkbox" className="peer sr-only" checked={formData.termsAccepted} onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })} />
-                    <div className="w-5 h-5 bg-transparent border-2 border-white/30 rounded-sm peer-checked:bg-lime peer-checked:border-lime transition-all" />
-                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-navy opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="w-5 h-5 bg-transparent border-2 border-foreground/30 rounded-sm peer-checked:bg-lime-dark dark:peer-checked:bg-lime peer-checked:border-lime-dark dark:peer-checked:border-lime transition-all" />
+                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-white dark:text-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
                   </div>
-                  <span className="text-sm text-white/90 leading-relaxed">Accept terms and conditions</span>
+                  <span className="text-sm text-text-primary leading-relaxed">Accept terms and conditions</span>
                 </label>
               </div>
             )}
@@ -946,28 +946,28 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
                   <div className="space-y-6">
                     <div>
-                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Selected Position</div>
-                      <div className="text-lime font-space font-black uppercase text-lg md:text-xl">
+                      <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Selected Position</div>
+                      <div className="text-lime-dark dark:text-lime font-space font-black uppercase text-lg md:text-xl">
                         {selectedPosition === 'company' ? 'Company Driver' : selectedPosition === 'owner' ? 'Owner Operator' : selectedPosition === 'lease' ? 'Lease Purchase' : ''}
                       </div>
                     </div>
                     <div>
-                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Full Name</div>
-                      <div className="text-white font-space font-bold uppercase">{formData.firstName && formData.lastName ? `${formData.firstName} ${formData.lastName}` : '—'}</div>
+                      <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Full Name</div>
+                      <div className="text-text-primary font-space font-bold uppercase">{formData.firstName && formData.lastName ? `${formData.firstName} ${formData.lastName}` : '—'}</div>
                     </div>
                     <div>
-                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Phone</div>
-                      <div className="text-white font-space font-bold uppercase">{formData.phone || '—'}</div>
+                      <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Phone</div>
+                      <div className="text-text-primary font-space font-bold uppercase">{formData.phone || '—'}</div>
                     </div>
                   </div>
                   <div className="space-y-6">
                     <div>
-                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Email</div>
-                      <div className="text-white font-space font-bold uppercase">{formData.email || '—'}</div>
+                      <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Email</div>
+                      <div className="text-text-primary font-space font-bold uppercase">{formData.email || '—'}</div>
                     </div>
                     <div>
-                      <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">CDL / Experience</div>
-                      <div className="text-white font-space font-bold uppercase">
+                      <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">CDL / Experience</div>
+                      <div className="text-text-primary font-space font-bold uppercase">
                         {selectedPosition === 'company'
                           ? `${(formData.cdlType || 'Class A').toUpperCase()} • ${formData.drivingExperienceYears} YRS`
                           : `${(formData.cdlType || 'Class A').toUpperCase()} • ${formData.experienceYears || '—'}`
@@ -976,16 +976,16 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                     </div>
                     {(selectedPosition === 'company' || selectedPosition === 'owner') && (
                       <div>
-                        <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">SSN / EID</div>
-                        <div className="text-white font-space font-bold uppercase">{formData.ssnOrEid || '—'}</div>
+                        <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">SSN / EID</div>
+                        <div className="text-text-primary font-space font-bold uppercase">{formData.ssnOrEid || '—'}</div>
                       </div>
                     )}
                   </div>
                 </div>
                 {selectedPosition === 'company' && (formData.licenseFront || formData.licenseBack || formData.medicalCard || formData.resumeDoc) && (
                   <div>
-                    <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Documents</div>
-                    <div className="text-white/80 text-sm font-mono">
+                    <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Documents</div>
+                    <div className="text-text-primary/80 text-sm font-mono">
                       {formData.licenseFront && <>License (front): {formData.licenseFront.name}</>}
                       {formData.licenseBack && <> · License (back): {formData.licenseBack.name}</>}
                       {formData.medicalCard && <> · Medical: {formData.medicalCard.name}</>}
@@ -995,8 +995,8 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 )}
                 {selectedPosition === 'owner' && (formData.licenseFront || formData.licenseBack || formData.medicalCard || formData.annualTruckInspection || formData.truckEngine || formData.truckUnderEngine || formData.truckTires) && (
                   <div>
-                    <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Documents & Truck</div>
-                    <div className="text-white/80 text-sm font-mono space-y-1">
+                    <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Documents & Truck</div>
+                    <div className="text-text-primary/80 text-sm font-mono space-y-1">
                       {formData.licenseFront && <div>License (front): {formData.licenseFront.name}</div>}
                       {formData.licenseBack && <div>License (back): {formData.licenseBack.name}</div>}
                       {formData.medicalCard && <div>Medical card: {formData.medicalCard.name}</div>}
@@ -1009,8 +1009,8 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 )}
                 {selectedPosition === 'lease' && (formData.leaseCapCard || formData.leaseAnnualInspection || formData.leaseTruckEngine || formData.leaseTruckUnderEngine || formData.leaseTruckTires) && (
                   <div>
-                    <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-1">Documents & Truck</div>
-                    <div className="text-white/80 text-sm font-mono space-y-1">
+                    <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Documents & Truck</div>
+                    <div className="text-text-primary/80 text-sm font-mono space-y-1">
                       {formData.leaseCapCard && <div>Registration (CAP Card): {formData.leaseCapCard.name}</div>}
                       {formData.leaseAnnualInspection && <div>Annual truck inspection: {formData.leaseAnnualInspection.name}</div>}
                       {formData.leaseTruckEngine && <div>Truck (engine): {formData.leaseTruckEngine.name}</div>}
@@ -1021,7 +1021,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                 )}
 
                 {submitError && (
-                  <p className="text-red-400 text-sm font-mono">{submitError}</p>
+                  <p className="text-red-500 dark:text-red-400 text-sm font-mono">{submitError}</p>
                 )}
                 <label className="flex items-start gap-4 cursor-pointer group">
                   <div className="relative mt-0.5">
@@ -1031,10 +1031,10 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                       checked={formData.termsAccepted}
                       onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
                     />
-                    <div className="w-5 h-5 bg-transparent border-2 border-white/30 rounded-sm peer-checked:bg-lime peer-checked:border-lime transition-all" />
-                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-navy opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+                    <div className="w-5 h-5 bg-transparent border-2 border-foreground/30 rounded-sm peer-checked:bg-lime-dark dark:peer-checked:bg-lime peer-checked:border-lime-dark dark:peer-checked:border-lime transition-all" />
+                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-white dark:text-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
                   </div>
-                  <span className="text-sm text-white/90 leading-relaxed">
+                  <span className="text-sm text-text-primary leading-relaxed">
                     I confirm that the information provided is accurate and I agree to AKA FS LOGISTICS’ terms and conditions regarding driver recruitment and data handling.
                   </span>
                 </label>
@@ -1044,9 +1044,9 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
         </div>
 
         {/* Footer / Navigation Buttons */}
-        <div className="p-6 md:p-8 border-t border-white/5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-[#0D1426]">
+        <div className="p-6 md:p-8 border-t border-foreground/5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-secondary">
           <div className="flex flex-col gap-1">
-            <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
+            <span className="font-mono text-[10px] text-text-secondary/70 uppercase tracking-widest">
               Submission ID: #AKA-{Math.random().toString(36).substr(2, 6).toUpperCase()}
             </span>
           </div>
@@ -1055,7 +1055,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
             {currentStep > 1 && (
               <button 
                 onClick={prevStep}
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-4 border border-white/10 text-white font-space font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-all"
+                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-4 border border-foreground/10 text-text-primary font-space font-bold text-xs uppercase tracking-widest hover:bg-foreground/5 transition-all"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back
@@ -1066,7 +1066,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
               <button 
                 onClick={nextStep}
                 disabled={currentStep === 1 && !selectedPosition}
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-lime text-navy font-space font-black text-xs uppercase tracking-widest hover:bg-white disabled:opacity-30 disabled:hover:bg-lime transition-all group"
+                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-lime-dark dark:bg-lime text-white dark:text-[#0A0F1A] font-space font-black text-xs uppercase tracking-widest hover:opacity-90 disabled:opacity-30 transition-all group"
               >
                 Continue
                 <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -1075,7 +1075,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
               <button
                 onClick={handleSubmitApplication}
                 disabled={!formData.termsAccepted || isSubmitting}
-                className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-lime text-navy font-space font-black text-xs uppercase tracking-widest hover:bg-white disabled:opacity-30 disabled:hover:bg-lime transition-all shadow-[0_0_30px_rgba(184,255,44,0.3)]"
+                className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-lime-dark dark:bg-lime text-white dark:text-[#0A0F1A] font-space font-black text-xs uppercase tracking-widest hover:opacity-90 disabled:opacity-30 transition-all shadow-[0_0_30_rgba(184,255,44,0.3)]"
               >
                 {isSubmitting ? (
                   <>

@@ -113,10 +113,10 @@ const TestimonialsHome = () => {
             return (
               <div key={i} className="relative">
                 <Star className="w-4 h-4 text-foreground/10" />
-                {isFull && <Star className="w-4 h-4 text-lime fill-lime absolute top-0 left-0" />}
+                {isFull && <Star className="w-4 h-4 text-lime-dark dark:text-lime fill-lime-dark dark:fill-lime absolute top-0 left-0" />}
                 {isHalf && (
                   <div className="absolute top-0 left-0 w-[50%] overflow-hidden">
-                    <Star className="w-4 h-4 text-lime fill-lime" />
+                    <Star className="w-4 h-4 text-lime-dark dark:text-lime fill-lime-dark dark:fill-lime" />
                   </div>
                 )}
               </div>
@@ -127,14 +127,12 @@ const TestimonialsHome = () => {
         <p className="text-foreground text-base leading-relaxed mb-8 font-space font-bold italic">"{t.quote}"</p>
 
         <div className="flex items-center gap-4">
-          <div
-            className="w-12 h-12 flex items-center justify-center rounded-full font-space font-black text-navy text-xl bg-lime flex-shrink-0"
-          >
+          <div className="w-12 h-12 rounded-full bg-lime border-2 border-background flex items-center justify-center font-space font-black text-[#0A0F1A] text-lg shrink-0">
             {t.name[0]}
           </div>
           <div>
             <div className="font-space font-black text-foreground uppercase tracking-tight text-sm">{t.name}</div>
-            <div className="text-lime/60 text-[10px] font-mono uppercase tracking-widest font-black">{t.role}</div>
+            <div className="text-lime-dark/70 dark:text-lime/60 text-[10px] uppercase tracking-widest font-mono font-bold">{t.role}</div>
           </div>
         </div>
 
@@ -162,9 +160,9 @@ const TestimonialsHome = () => {
 
       <div className="container mx-auto px-6 lg:px-12 mb-20">
         <div className="t-headline text-center">
-          <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime block mb-6">Client Voices</span>
+          <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime block mb-6">Testimonials</span>
           <h2 className="text-4xl md:text-7xl lg:text-9xl font-black text-foreground uppercase tracking-tighter leading-[0.85]">
-            WHAT THEY <span className="text-lime">SAY</span>
+            TRUSTED BY <br /><span className="text-lime-dark dark:text-lime">THE BEST</span> IN THE BUSINESS
           </h2>
         </div>
       </div>

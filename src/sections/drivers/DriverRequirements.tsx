@@ -61,7 +61,7 @@ const DriverRequirements = () => {
         <div className="text-center mb-16 md:mb-24">
           <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-foreground uppercase tracking-tighter leading-none mb-6">
             QUALIFICATION <br />
-            <span className="text-lime text-outline-lime">STANDARDS</span>
+            <span className="text-lime-dark dark:text-lime transition-colors">STANDARDS</span>
           </h2>
           <div className="w-24 h-1 bg-lime mx-auto mb-8" />
           <p className="text-text-secondary text-lg md:text-2xl max-w-2xl mx-auto uppercase tracking-widest font-black opacity-80 transition-opacity">
@@ -73,11 +73,11 @@ const DriverRequirements = () => {
           {requirements.map((req, idx) => (
             <div key={idx} className="requirement-card group">
               <div className="glass-card p-8 md:p-12 border-foreground/10 group-hover:bg-lime/5 group-hover:border-lime/20 transition-all duration-500 flex flex-col sm:flex-row items-start gap-8">
-                <div className="p-6 bg-secondary border border-foreground/10 text-lime group-hover:scale-110 group-hover:bg-lime group-hover:text-navy transition-all duration-500">
+                <div className="p-6 bg-secondary border border-foreground/10 text-lime-dark dark:text-lime group-hover:scale-110 group-hover:bg-lime group-hover:text-[#0A0F1A] transition-all duration-500">
                   <req.icon className="w-8 h-8 md:w-10 md:h-10" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-black text-foreground uppercase tracking-tight mb-4 group-hover:text-lime transition-colors">
+                  <h3 className="text-2xl font-black text-foreground uppercase tracking-tight mb-4 group-hover:text-lime-dark dark:group-hover:text-lime transition-colors">
                     {req.title}
                   </h3>
                   <p className="text-text-secondary text-lg leading-relaxed font-black">

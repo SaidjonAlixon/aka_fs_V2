@@ -134,7 +134,7 @@ const Coverage = ({ className = '' }: CoverageProps) => {
       <div className="absolute inset-x-6 md:inset-x-auto md:left-[18vw] top-[12vh] md:top-[15vh] md:w-[35vw] max-w-[650px] z-20">
         <div ref={headlineRef} className="will-change-transform mb-12">
           <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-foreground mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
-            COAST <span className="text-lime">TO</span><br />
+            COAST <span className="text-lime-dark dark:text-lime">TO</span><br />
             COAST.
           </h2>
           <p className="text-foreground text-lg md:text-2xl leading-relaxed max-w-md font-bold">
@@ -147,7 +147,7 @@ const Coverage = ({ className = '' }: CoverageProps) => {
             {features.map((item, idx) => (
                 <div key={idx} className="small-card glass-card p-5 flex flex-col items-center text-center gap-3 border-foreground/10 hover:border-lime/30 transition-all duration-300 group">
                     <div className="p-3 bg-lime/10 rounded-sm group-hover:bg-lime/20 transition-colors">
-                        <item.icon className="w-6 h-6 text-lime" />
+                        <item.icon className="w-6 h-6 text-lime-dark dark:text-lime" />
                     </div>
                     <div className="hidden lg:block">
                         <div className="text-foreground font-black text-xs uppercase tracking-widest mb-1">{item.title}</div>
@@ -164,7 +164,7 @@ const Coverage = ({ className = '' }: CoverageProps) => {
         className="absolute inset-x-6 md:inset-x-auto md:right-[8vw] bottom-[10vh] md:top-[18vh] md:w-[38vw] max-w-[550px] z-20"
       >
         <div className="glass-card p-6 md:p-10 h-auto md:h-[65vh] flex flex-col border-lime/20">
-          <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-lime mb-6 md:mb-10 block font-bold">
+          <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime mb-6 md:mb-10 block font-bold">
             Active Lanes
           </span>
 
@@ -183,32 +183,34 @@ const Coverage = ({ className = '' }: CoverageProps) => {
               />
               <path
                 d="M80 120 Q150 100 200 110 Q280 120 350 100"
-                stroke="#B8FF2C"
+                stroke="currentColor"
+                className="text-lime-dark/30 dark:text-lime/20"
                 strokeWidth="2.5"
                 strokeDasharray="6 6"
                 fill="none"
               />
               <path
                 d="M100 150 Q180 140 250 150 Q320 160 360 140"
-                stroke="#B8FF2C"
+                stroke="currentColor"
+                className="text-lime-dark/20 dark:text-lime/10"
+                opacity="0.6"
                 strokeWidth="1.5"
                 strokeDasharray="4 4"
                 fill="none"
-                opacity="0.6"
               />
-              <circle cx="80" cy="120" r="5" fill="#B8FF2C" />
-              <circle cx="200" cy="110" r="5" fill="#B8FF2C" />
-              <circle cx="350" cy="100" r="5" fill="#B8FF2C" />
-              <circle cx="100" cy="150" r="4" fill="#B8FF2C" opacity="0.7" />
-              <circle cx="250" cy="150" r="4" fill="#B8FF2C" opacity="0.7" />
-              <circle cx="360" cy="140" r="4" fill="#B8FF2C" opacity="0.7" />
+              <circle cx="80" cy="120" r="5" fill="currentColor" className="text-lime-dark dark:text-lime" />
+              <circle cx="200" cy="110" r="5" fill="currentColor" className="text-lime-dark dark:text-lime" />
+              <circle cx="350" cy="100" r="5" fill="currentColor" className="text-lime-dark dark:text-lime" />
+              <circle cx="100" cy="150" r="4" fill="currentColor" className="text-lime-dark dark:text-lime opacity-70" />
+              <circle cx="250" cy="150" r="4" fill="currentColor" className="text-lime-dark dark:text-lime opacity-70" />
+              <circle cx="360" cy="140" r="4" fill="currentColor" className="text-lime-dark dark:text-lime opacity-70" />
             </svg>
           </div>
 
           <div ref={statsRef} className="grid grid-cols-3 gap-4 md:gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="stat-item text-center">
-                <stat.icon className="w-7 h-7 text-lime mx-auto mb-3" />
+                <stat.icon className="w-7 h-7 text-lime-dark dark:text-lime mx-auto mb-3" />
                 <div className="font-space font-black text-xl md:text-3xl text-text-primary mb-1">
                   {stat.value}
                 </div>

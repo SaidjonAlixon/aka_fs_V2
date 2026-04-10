@@ -99,11 +99,12 @@ const Testimonials = () => {
             key={index}
             className="testimonial-card glass-card p-8 hover:border-lime/30 transition-all duration-300"
           >
-            <Quote className="w-8 h-8 text-lime mb-6" />
+            <Quote className="w-8 h-8 text-lime-dark dark:text-lime mb-6" />
             <p className="font-space text-lg text-text-primary leading-relaxed mb-6">
               "{testimonial.quote}"
             </p>
             <div className="border-t border-foreground/10 pt-4">
+              <span className="font-mono text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime block mb-6 px-1">What Clients Say</span>
               <div className="font-space font-semibold text-text-primary text-sm">
                 {testimonial.author}
               </div>

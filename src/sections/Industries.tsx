@@ -130,7 +130,7 @@ const Industries = ({ className = '', onApplyClick }: IndustriesProps) => {
       <div className="absolute inset-x-6 md:inset-x-auto md:left-[18vw] top-[12vh] md:top-[20vh] md:w-[35vw] max-w-[650px] z-20">
         <div ref={headlineRef} className="will-change-transform">
           <h2 className="text-4xl sm:text-5xl md:text-8xl lg:text-9xl font-black text-foreground mb-4 md:mb-8 uppercase tracking-tighter leading-[0.85]">
-            BUILT <span className="text-lime">FOR</span><br />
+            BUILT <span className="text-lime-dark dark:text-lime">FOR</span><br />
             YOUR SECTOR.
           </h2>
           <p className="text-foreground text-base sm:text-lg md:text-2xl leading-relaxed max-w-lg mb-6 md:mb-12 font-bold">
@@ -170,11 +170,11 @@ const Industries = ({ className = '', onApplyClick }: IndustriesProps) => {
                 
                 <div className="flex flex-col items-start gap-3 sm:gap-4 lg:gap-6 relative z-10">
                   <div className="p-2 sm:p-3 md:p-5 bg-secondary border border-foreground/10 rounded-sm group-hover:border-lime/50 group-hover:bg-lime/10 transition-all duration-500 transform group-hover:rotate-[360deg]">
-                    <industry.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-lime" />
+                    <industry.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-lime-dark dark:text-lime" />
                   </div>
                   
                   <div>
-                    <h3 className="font-space font-black text-xs sm:text-lg lg:text-3xl text-text-primary uppercase tracking-tight mb-1 group-hover:text-lime transition-colors">
+                    <h3 className="font-space font-black text-xs sm:text-lg lg:text-3xl text-text-primary uppercase tracking-tight mb-1 group-hover:text-lime-dark dark:group-hover:text-lime transition-colors">
                       {industry.name}
                     </h3>
                     <p className="text-text-secondary text-[10px] sm:text-sm lg:text-base leading-snug opacity-0 sm:opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 sm:translate-y-4 group-hover:translate-y-0 line-clamp-2 hidden sm:block font-bold">

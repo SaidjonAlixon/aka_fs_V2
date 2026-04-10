@@ -18,7 +18,6 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
 
   const benefits = [
     { icon: DollarSign, text: 'Competitive Pay + Weekly Bonuses' },
-    { icon: Heart, text: 'Health + Dental Insurance' },
     { icon: PiggyBank, text: '401k Retirement Plan' },
     { icon: Calendar, text: 'Paid Time Off' },
     { icon: Truck, text: 'New Equipment Fleet' },
@@ -95,7 +94,7 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
         <div ref={contentRef} className="max-w-2xl pt-20 lg:pt-0">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-foreground leading-[0.9] tracking-tighter mb-6">
             DRIVE YOUR <br />
-            <span className="text-lime">FUTURE</span> WITH <br />
+            <span className="text-lime-dark dark:text-lime">FUTURE</span> WITH <br />
             AKA FS
           </h1>
           <p className="text-xl md:text-2xl font-bold text-foreground/90 mb-4 font-space">
@@ -137,7 +136,7 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
             <div className="space-y-6 mb-10">
               {benefits.map((benefit, idx) => (
                 <div key={idx} className="flex items-center gap-4 group/item">
-                  <div className="p-3 bg-secondary border border-foreground/10 text-lime group-hover/item:bg-lime group-hover/item:text-navy transition-all duration-300">
+                  <div className="p-3 bg-secondary border border-foreground/10 text-lime-dark dark:text-lime group-hover/item:bg-lime group-hover/item:text-[#0A0F1A] transition-all duration-300">
                     <benefit.icon className="w-6 h-6" />
                   </div>
                   <span className="text-lg font-bold text-text-secondary group-hover/item:text-foreground transition-colors">
@@ -149,7 +148,7 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
 
             <button 
               onClick={onApplyClick}
-              className="w-full group/btn relative flex items-center justify-center gap-3 px-8 py-5 bg-navy border border-lime text-lime font-black text-lg uppercase tracking-widest hover:bg-lime hover:text-navy transition-all duration-500 overflow-hidden"
+              className="w-full group/btn relative flex items-center justify-center gap-3 px-8 py-5 bg-navy border border-lime text-lime-dark dark:text-lime font-black text-lg uppercase tracking-widest hover:bg-lime hover:text-[#0A0F1A] transition-all duration-500 overflow-hidden"
             >
               <span>Start Application</span>
               <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />

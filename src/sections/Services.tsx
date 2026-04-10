@@ -176,7 +176,7 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
         <div ref={headlineRef} className="will-change-transform">
           <h2 className="text-4xl md:text-8xl lg:text-9xl font-black text-foreground mb-6 md:mb-8 uppercase tracking-tighter leading-[0.85]">
             <div className="headline-line block pr-4">
-              POWER ONLY <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime to-emerald-400">SOLUTIONS.</span>
+              POWER ONLY <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-dark dark:from-lime to-emerald-600 dark:to-emerald-400">SOLUTIONS.</span>
             </div>
             <div className="headline-line block">
               BUILT FOR SPEED
@@ -200,8 +200,8 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
             className="service-item glass-card p-4 md:p-6 border-foreground/10 hover:border-lime/30 hover:bg-lime/5 group transition-all duration-500 will-change-transform"
           >
             <div className="flex items-center gap-4 md:gap-6">
-              <div className="p-3 bg-secondary border border-foreground/10 group-hover:bg-lime group-hover:text-navy group-hover:scale-110 transition-all duration-300">
-                <service.icon className="w-6 h-6 md:w-7 md:h-7" />
+              <div className="p-3 bg-lime/10 rounded-sm group-hover:bg-lime/20 transition-colors">
+                <service.icon className="w-6 h-6 text-lime-dark dark:text-lime" />
               </div>
               <div>
                 <h3 className="font-space font-black text-lg md:text-xl text-foreground uppercase tracking-wider mb-0.5">
@@ -228,9 +228,11 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
         <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-foreground to-transparent" />
         <div className="flex flex-col items-center gap-2">
           <div className="w-6 h-10 border-2 border-foreground/30 rounded-full flex justify-center p-1.5 overflow-hidden">
-            <div className="scroll-dot w-1.5 h-1.5 bg-lime rounded-full" />
+            <div className="scroll-dot w-1.5 h-1.5 bg-lime-dark dark:bg-lime rounded-full" />
           </div>
-          <span className="text-[10px] text-foreground uppercase tracking-[0.4em] font-black">Scroll</span>
+          <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-lime-dark dark:text-lime mb-6 md:mb-10 block font-bold">
+            Active Lanes
+          </span>
         </div>
       </div>
     </section>
