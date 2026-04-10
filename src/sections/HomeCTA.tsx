@@ -64,8 +64,8 @@ const HomeCTA = ({ onApplyClick }: HomeCTAProps) => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <button
               onClick={onApplyClick}
-              className="group relative inline-flex items-center gap-4 bg-lime text-navy font-black text-base md:text-lg uppercase tracking-[0.15em] px-8 md:px-14 py-5 md:py-7 overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_60px_rgba(184,255,44,0.4)]"
-              style={{ clipPath: 'polygon(8% 0, 100% 0, 92% 100%, 0 100%)' }}
+              className="group relative inline-flex items-center gap-4 bg-lime text-[#0A0F1A] font-black text-base md:text-lg uppercase tracking-[0.15em] px-8 md:px-14 py-5 md:py-7 overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_60px_rgba(184,255,44,0.4)]"
+              style={{ clipPath: 'polygon(8% 0, 100% 0, 92% 100%, 0 100%)', backgroundImage: 'linear-gradient(165deg, #B8FF2C 0%, #a2e61a 100%)' }}
             >
               <span className="relative z-10">Apply Now</span>
               <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />

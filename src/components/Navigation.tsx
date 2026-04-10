@@ -73,15 +73,15 @@ const Navigation = ({ onApplyClick }: NavigationProps) => {
         ))}
         <div className="pt-8 w-full max-w-sm flex flex-col gap-4 items-center">
           <ThemeToggle />
-          <button
-            onClick={() => {
-              onApplyClick?.();
-              setIsOpen(false);
-            }}
-            className="w-full py-5 bg-lime text-navy font-space font-black text-base tracking-[0.2em] uppercase rounded-sm shadow-[0_0_30px_rgba(184,255,44,0.4)]"
-          >
-            Apply Now
-          </button>
+            <button
+              onClick={() => {
+                onApplyClick?.();
+                setIsOpen(false);
+              }}
+              className="btn-primary w-full py-5 text-base"
+            >
+              Apply Now
+            </button>
         </div>
       </div>
     </div>,
@@ -134,7 +134,7 @@ const Navigation = ({ onApplyClick }: NavigationProps) => {
               <ThemeToggle />
               <button
                 onClick={onApplyClick}
-                className="px-6 py-2 bg-lime text-navy font-space font-black text-xs tracking-[0.15em] hover:bg-foreground hover:text-background transition-all uppercase rounded-sm shadow-[0_0_20px_rgba(184,255,44,0.3)]"
+                className="btn-primary px-6 py-2 text-xs"
               >
                 Apply Now
               </button>

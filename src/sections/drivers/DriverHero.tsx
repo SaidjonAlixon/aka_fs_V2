@@ -109,8 +109,8 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
           <div className="flex flex-wrap gap-4">
             <button 
               onClick={onApplyClick}
-              className="px-8 py-4 bg-lime text-navy font-black text-lg uppercase tracking-wider hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(184,255,44,0.3)]"
-              style={{ clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)' }}
+              className="px-8 py-4 bg-lime text-[#0A0F1A] font-black text-lg uppercase tracking-wider hover:brightness-110 transition-all duration-300 shadow-[0_0_20px_rgba(184,255,44,0.3)]"
+              style={{ clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)', backgroundImage: 'linear-gradient(165deg, #B8FF2C 0%, #a2e61a 100%)' }}
             >
               Apply Now
             </button>

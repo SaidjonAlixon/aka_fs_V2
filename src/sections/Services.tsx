@@ -217,10 +217,9 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
 
         <button 
           onClick={onApplyClick}
-          className="group relative inline-flex mt-4 md:mt-8 py-4 px-10 bg-lime text-navy text-sm uppercase tracking-[0.4em] font-black overflow-hidden shadow-[0_0_30px_rgba(184,255,44,0.1)] hover:shadow-[0_0_50px_rgba(184,255,44,0.2)] transition-all"
+          className="btn-primary mt-4 md:mt-8"
         >
-          <span className="relative z-10">Apply Now</span>
-          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
+          Apply Now
         </button>
       </div>
 

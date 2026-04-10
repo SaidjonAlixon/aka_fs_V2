@@ -188,7 +188,7 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
         <div className="flex flex-wrap gap-4">
           <button
             onClick={onApplyClick}
-            className="px-8 py-4 bg-lime text-navy font-bold tracking-widest text-sm hover:bg-foreground hover:text-background transition-all uppercase rounded-sm shadow-[0_0_30px_rgba(184,255,44,0.3)]"
+            className="btn-primary"
           >
             Apply Now
           </button>
@@ -247,7 +247,7 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
           <div className="mt-12">
             <button
               onClick={onApplyClick}
-              className="px-10 py-5 bg-lime text-navy text-lg font-bold tracking-widest hover:bg-foreground hover:text-background transition-all uppercase rounded-sm shadow-[0_0_30px_rgba(182,255,0,0.3)]"
+              className="btn-primary px-10 py-5 text-lg"
             >
               Apply Now
             </button>

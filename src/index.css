@@ -138,11 +138,12 @@
   
   /* CTA Button primary */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-lime text-navy font-space font-semibold text-sm uppercase tracking-wider transition-all duration-200;
+    @apply inline-flex items-center justify-center px-8 py-3.5 bg-lime text-[#0A0F1A] font-space font-black text-sm uppercase tracking-[0.15em] transition-all duration-300 rounded-sm shadow-glow;
+    background-image: linear-gradient(165deg, #B8FF2C 0%, #a2e61a 100%);
   }
   
   .btn-primary:hover {
-    @apply -translate-y-0.5 scale-[1.02] shadow-glow;
+    @apply -translate-y-1 scale-105 shadow-glow-lg brightness-110;
   }
   
   /* CTA Button secondary */

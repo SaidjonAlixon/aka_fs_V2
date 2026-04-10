@@ -141,12 +141,11 @@ const Industries = ({ className = '', onApplyClick }: IndustriesProps) => {
           <div className="flex justify-start">
             <button 
               onClick={onApplyClick}
-              className="group relative inline-flex items-center justify-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 bg-lime text-navy font-black text-xs sm:text-sm md:text-lg uppercase tracking-[0.2em] transform transition-all duration-500 overflow-hidden shadow-[0_0_20px_rgba(184,255,44,0.3)]"
-              style={{ clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)' }}
+              className="group relative inline-flex items-center justify-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 bg-lime text-[#0A0F1A] font-black text-xs sm:text-sm md:text-lg uppercase tracking-[0.2em] transform transition-all duration-500 overflow-hidden shadow-[0_0_20px_rgba(184,255,44,0.3)]"
+              style={{ clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)', backgroundImage: 'linear-gradient(165deg, #B8FF2C 0%, #a2e61a 100%)' }}
             >
               <span className="relative z-10 group-hover:scale-110 transition-transform duration-300">Apply Now</span>
               <div className="absolute inset-0 bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
-              <div className="absolute inset-0 border-2 border-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
           </div>
         </div>
