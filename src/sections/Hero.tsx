@@ -36,7 +36,6 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
   const { theme } = useTheme();
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   
   const [activePhraseIndex, setActivePhraseIndex] = useState(0);
   const [activeShipmentIndex, setActiveShipmentIndex] = useState(0);
@@ -107,9 +106,6 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
         y += (Math.random() - 0.5) * 400;
       }
       
-      // Define colors based on theme
-      const pathColorDark = '#B8FF2C'; // Lime
-      const pathColorLight = '#10B981'; // Emerald/Darker
       
       return {
         points,
