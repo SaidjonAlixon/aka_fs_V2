@@ -57,13 +57,11 @@ app.post('/api/applications', async (req, res) => {
       `Address: ${body.address ?? '—'}`,
       `Experience: ${body.experience ?? '—'}`,
       `CDL Type: ${body.cdlType ?? '—'}`,
-      `SSN / EID: ${body.ssn ?? '—'}`,
       '',
       `Documents: 📎 ${Object.values(d).filter(Boolean).length} file(s)`,
       '',
     ];
 
-    if (d.ssnImage) lines.push(`📎 SSN Image: ${d.ssnImage}`);
     if (d.licenseFront) lines.push(`📎 Driver License Front: ${d.licenseFront}`);
     if (d.licenseBack) lines.push(`📎 Driver License Back: ${d.licenseBack}`);
     if (d.medicalCard) lines.push(`📎 Medical Card: ${d.medicalCard}`);

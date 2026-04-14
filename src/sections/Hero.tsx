@@ -326,7 +326,7 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
                 </div>
                 <div>
                    <h4 className="text-xs font-black text-foreground uppercase tracking-wider">Fleet Live Status</h4>
-                   <p className="text-[10px] font-mono text-emerald-600 dark:text-lime">1,240+ Units Active</p>
+                   <p className="text-[10px] font-mono text-emerald-600 dark:text-lime">100+ Units Active</p>
                 </div>
              </div>
              <div className="w-full h-1 bg-foreground/5 rounded-full overflow-hidden">

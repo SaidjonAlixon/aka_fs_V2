@@ -16,6 +16,47 @@ type PositionType = 'company' | 'owner' | 'lease';
 
 const STEP_COUNT = 4;
 
+const initialFormData = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  location: '',
+  cdlType: '',
+  experienceYears: '',
+  // Company Driver – Experience & License (Step 3)
+  licenseFront: null as File | null,
+  licenseFrontUrl: '',
+  licenseBack: null as File | null,
+  licenseBackUrl: '',
+  medicalCard: null as File | null,
+  medicalCardUrl: '',
+  resumeDoc: null as File | null,
+  resumeDocUrl: '',
+  drivingExperienceYears: 0,
+  termsAccepted: false,
+  // Owner Operator – Documents & Truck (Step 3)
+  annualTruckInspection: null as File | null,
+  annualTruckInspectionUrl: '',
+  truckEngine: null as File | null,
+  truckEngineUrl: '',
+  truckUnderEngine: null as File | null,
+  truckUnderEngineUrl: '',
+  truckTires: null as File | null,
+  truckTiresUrl: '',
+  // Lease Purchase – Documents & Truck (Step 3, 3-rasm)
+  leaseCapCard: null as File | null,
+  leaseCapCardUrl: '',
+  leaseAnnualInspection: null as File | null,
+  leaseAnnualInspectionUrl: '',
+  leaseTruckEngine: null as File | null,
+  leaseTruckEngineUrl: '',
+  leaseTruckUnderEngine: null as File | null,
+  leaseTruckUnderEngineUrl: '',
+  leaseTruckTires: null as File | null,
+  leaseTruckTiresUrl: '',
+};
+
 const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedPosition, setSelectedPosition] = useState<PositionType | null>(null);
@@ -25,63 +66,28 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
   const [submitError, setSubmitError] = useState<string | null>(null);
   const cdlDropdownRef = useRef<HTMLDivElement>(null);
   
-  // Handle open/close animation
+  // Form State
+  const [formData, setFormData] = useState(initialFormData);
+
+  // Handle open/close animation and state reset
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
       document.body.style.overflow = 'hidden';
+      
+      // Reset form on open
+      setCurrentStep(1);
+      setSelectedPosition(null);
+      setFormData(initialFormData);
+      setCdlDropdownOpen(false);
+      setIsSubmitting(false);
+      setSubmitError(null);
     } else {
       setIsVisible(false);
       document.body.style.overflow = 'unset';
     }
   }, [isOpen]);
 
-  // Form State
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    location: '',
-    cdlType: '',
-    experienceYears: '',
-    // Company Driver – Experience & License (Step 3)
-    ssnOrEid: '',
-    ssnImage: null as File | null,
-    ssnImageUrl: '',
-    licenseFront: null as File | null,
-    licenseFrontUrl: '',
-    licenseBack: null as File | null,
-    licenseBackUrl: '',
-    medicalCard: null as File | null,
-    medicalCardUrl: '',
-    resumeDoc: null as File | null,
-    resumeDocUrl: '',
-    drivingExperienceYears: 0,
-    termsAccepted: false,
-    // Owner Operator – Documents & Truck (Step 3)
-    annualTruckInspection: null as File | null,
-    annualTruckInspectionUrl: '',
-    truckEngine: null as File | null,
-    truckEngineUrl: '',
-    truckUnderEngine: null as File | null,
-    truckUnderEngineUrl: '',
-    truckTires: null as File | null,
-    truckTiresUrl: '',
-    // Lease Purchase – Documents & Truck (Step 3, 3-rasm)
-    leaseCapCard: null as File | null,
-    leaseCapCardUrl: '',
-    leaseAnnualInspection: null as File | null,
-    leaseAnnualInspectionUrl: '',
-    leaseTruckEngine: null as File | null,
-    leaseTruckEngineUrl: '',
-    leaseTruckUnderEngine: null as File | null,
-    leaseTruckUnderEngineUrl: '',
-    leaseTruckTires: null as File | null,
-    leaseTruckTiresUrl: '',
-  });
-
-  const ssnInputRef = useRef<HTMLInputElement>(null);
   const licenseFrontRef = useRef<HTMLInputElement>(null);
   const licenseBackRef = useRef<HTMLInputElement>(null);
   const medicalRef = useRef<HTMLInputElement>(null);
@@ -124,13 +130,11 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
       const documents: ApplicationPayload['documents'] = {};
 
       if (selectedPosition === 'company') {
-        documents.ssnImage = formData.ssnImageUrl || undefined;
         documents.licenseFront = formData.licenseFrontUrl || undefined;
         documents.licenseBack = formData.licenseBackUrl || undefined;
         documents.medicalCard = formData.medicalCardUrl || undefined;
         documents.resume = formData.resumeDocUrl || undefined;
       } else if (selectedPosition === 'owner') {
-        documents.ssnImage = formData.ssnImageUrl || undefined;
         documents.licenseFront = formData.licenseFrontUrl || undefined;
         documents.licenseBack = formData.licenseBackUrl || undefined;
         documents.medicalCard = formData.medicalCardUrl || undefined;
@@ -159,7 +163,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
         address: formData.location || '—',
         experience,
         cdlType: `${formData.cdlType || 'Class A'} CDL`,
-        ssn: formData.ssnOrEid || '—',
         documents,
       };
       await submitApplication(payload);
@@ -396,54 +399,9 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                     )}
                   </div>
                 </div>
-
-                <div className="space-y-2">
-                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Your SSN or EID number</label>
-                  <input
-                    type="text"
-                    placeholder="Your SSN or EID number"
-                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all font-medium uppercase"
-                    value={formData.ssnOrEid}
-                    onChange={(e) => setFormData({ ...formData, ssnOrEid: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">SSN (Image copy)</label>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <input
-                      ref={ssnInputRef}
-                      type="file"
-                      accept="image/*,.pdf"
-                      className="hidden"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0] ?? null;
-                        setFormData((prev) => ({ ...prev, ssnImage: file, ssnImageUrl: '' }));
-                        if (file) {
-                          try {
-                            const url = await uploadToBlob(file);
-                            setFormData((prev) => ({ ...prev, ssnImageUrl: url }));
-                          } catch {
-                            // ignore upload error here; submit will fail later
-                          }
-                        }
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => ssnInputRef.current?.click()}
-                      className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all"
-                    >
-                      Choose file
-                    </button>
-                    <span className={`text-sm font-mono ${formData.ssnImageUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>
-                      {formData.ssnImage ? (formData.ssnImageUrl ? 'UPLOAD' : formData.ssnImage.name) : 'File not selected'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">Years of commercial driving experience?</label>
+ 
+                 <div className="space-y-2">
+                   <label className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">Years of commercial driving experience?</label>
                   <input
                     type="number"
                     min={0}
@@ -586,41 +544,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
               /* Owner Operator – Step 3: Documents & Truck (3-rasm) */
               <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
                 <h3 className="text-xl font-space font-black text-text-primary uppercase tracking-tight">Owner Operator – Documents & Truck</h3>
-
-                <div className="space-y-2">
-                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Your SSN or EID number</label>
-                  <input
-                    type="text"
-                    placeholder="Your SSN or EID number"
-                    className="w-full bg-foreground/[0.03] border border-foreground/10 p-4 text-text-primary placeholder:text-text-secondary/50 focus:border-lime-dark dark:focus:border-lime focus:outline-none transition-all font-medium rounded-sm uppercase"
-                    value={formData.ssnOrEid}
-                    onChange={(e) => setFormData({ ...formData, ssnOrEid: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">SSN (Image Copy)</label>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <input
-                      ref={ssnInputRef}
-                      type="file"
-                      accept="image/*,.pdf"
-                      className="hidden"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0] ?? null;
-                        setFormData((prev) => ({ ...prev, ssnImage: file, ssnImageUrl: '' }));
-                        if (file) {
-                          try {
-                            const url = await uploadToBlob(file);
-                            setFormData((prev) => ({ ...prev, ssnImageUrl: url }));
-                          } catch {}
-                        }
-                      }}
-                    />
-                    <button type="button" onClick={() => ssnInputRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.ssnImageUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.ssnImage ? (formData.ssnImageUrl ? 'UPLOAD' : formData.ssnImage.name) : 'File not selected'}</span>
-                  </div>
-                </div>
 
                 <div className="space-y-3 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
                   <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Driver License (Both Sides)</label>
@@ -974,12 +897,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                         }
                       </div>
                     </div>
-                    {(selectedPosition === 'company' || selectedPosition === 'owner') && (
-                      <div>
-                        <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">SSN / EID</div>
-                        <div className="text-text-primary font-space font-bold uppercase">{formData.ssnOrEid || '—'}</div>
-                      </div>
-                    )}
                   </div>
                 </div>
                 {selectedPosition === 'company' && (formData.licenseFront || formData.licenseBack || formData.medicalCard || formData.resumeDoc) && (

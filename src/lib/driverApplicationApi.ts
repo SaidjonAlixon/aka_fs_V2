@@ -26,9 +26,7 @@ export interface ApplicationPayload {
   address: string;
   experience: string;
   cdlType: string;
-  ssn: string;
   documents: {
-    ssnImage?: string;
     licenseFront?: string;
     licenseBack?: string;
     medicalCard?: string;
