@@ -28,68 +28,61 @@ const Technology = ({ className = '' }: TechnologyProps) => {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      const scrollTl = gsap.timeline({
+      // ENTRANCE
+      const entranceTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'top top',
-          end: '+=130%',
-          pin: true,
-          scrub: 0.6,
-        },
+          start: 'top 80%',
+        }
       });
 
-      // ENTRANCE (0-30%)
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         headlineRef.current,
-        { x: '-55vw', opacity: 0 },
-        { x: 0, opacity: 1, ease: 'none' },
+        { x: '-20vw', opacity: 0 },
+        { x: 0, opacity: 1, duration: 1, ease: 'power3.out' },
         0
       );
 
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         [slashNavyRef.current, slashLimeRef.current],
-        { x: '-30vw', opacity: 0 },
-        { x: 0, opacity: 1, stagger: 0.05, ease: 'none' },
+        { x: '-100%', opacity: 0 },
+        { x: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'power3.out' },
         0
       );
 
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         panelRef.current,
-        { x: '45vw', opacity: 0, scale: 0.96 },
-        { x: 0, opacity: 1, scale: 1, ease: 'none' },
-        0.05
+        { x: '10vw', opacity: 0, scale: 0.96 },
+        { x: 0, opacity: 1, scale: 1, duration: 1, ease: 'power3.out' },
+        0.1
       );
 
       const items = panelRef.current?.querySelectorAll('.feature-item');
       if (items) {
-        scrollTl.fromTo(
+        entranceTl.fromTo(
           items,
           { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.07, ease: 'none' },
-          0.18
+          { y: 0, opacity: 1, stagger: 0.07, duration: 0.8, ease: 'power3.out' },
+          0.3
         );
       }
 
-      // EXIT (70-100%)
-      scrollTl.fromTo(
-        headlineRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-22vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      );
+      // SCROLL PIN & EXIT
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=100%',
+          pin: true,
+          scrub: 1,
+        },
+      });
 
-      scrollTl.fromTo(
-        panelRef.current,
-        { x: 0, opacity: 1 },
-        { x: '18vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-      scrollTl.fromTo(
-        [slashNavyRef.current, slashLimeRef.current],
-        { x: 0, opacity: 1 },
-        { x: '-18vw', opacity: 0, ease: 'power2.in' },
-        0.7
+      // EXIT
+      scrollTl.to(
+        [headlineRef.current, panelRef.current, slashNavyRef.current, slashLimeRef.current],
+        { x: '-15vw', opacity: 0, stagger: 0.05, ease: 'power2.in', duration: 0.5 },
+        0.5
       );
     }, section);
 
@@ -100,14 +93,14 @@ const Technology = ({ className = '' }: TechnologyProps) => {
     <section
       ref={sectionRef}
       id="technology"
-      className={`section-pinned ${className}`}
+      className={`relative w-full h-screen overflow-hidden bg-background ${className}`}
     >
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src="/images/tech_dashboard.jpg"
-          alt="Fleet dashboard technology"
-          className="bg-full"
+          src="/home_diz/photo_2026-04-26_13-48-46.jpg"
+          alt="Fleet technology"
+          className="bg-full opacity-40 grayscale-[0.1]"
         />
         <div className="bg-overlay" />
       </div>

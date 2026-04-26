@@ -72,8 +72,8 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/careers_driver_cab.jpg"
-          alt="Driver recruitment"
+          src="/drivers/photo_2026-04-26_14-06-57.jpg"
+          alt="Driver recruitment sunset"
           className="hero-bg w-full h-full object-cover opacity-60 grayscale-[0.2]"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />

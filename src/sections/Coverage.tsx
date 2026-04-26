@@ -35,69 +35,77 @@ const Coverage = ({ className = '' }: CoverageProps) => {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      const scrollTl = gsap.timeline({
+      // ENTRANCE
+      const entranceTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'top top',
-          end: '+=150%',
-          pin: true,
-          scrub: 1,
-        },
+          start: 'top 80%',
+        }
       });
 
-      // ENTRANCE
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         headlineRef.current,
-        { x: '-40vw', opacity: 0 },
-        { x: 0, opacity: 1, ease: 'power2.out' },
+        { x: '-20vw', opacity: 0 },
+        { x: 0, opacity: 1, duration: 1, ease: 'power3.out' },
         0
       );
 
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         [slashNavyRef.current, slashLimeRef.current],
         { x: '-100%', opacity: 0 },
-        { x: 0, opacity: 1, stagger: 0.1, ease: 'power2.out' },
+        { x: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'power3.out' },
         0
       );
 
       const smallCards = cardsRef.current?.querySelectorAll('.small-card');
       if (smallCards) {
-        scrollTl.fromTo(
+        entranceTl.fromTo(
             smallCards,
             { x: -50, opacity: 0, scale: 0.8 },
-            { x: 0, opacity: 1, stagger: 0.1, scale: 1, ease: 'back.out(1.4)' },
-            0.1
+            { x: 0, opacity: 1, stagger: 0.1, scale: 1, duration: 0.8, ease: 'back.out(1.4)' },
+            0.2
         );
       }
 
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         mapPanelRef.current,
-        { x: '30vw', opacity: 0, scale: 0.95 },
-        { x: 0, opacity: 1, scale: 1, ease: 'power2.out' },
-        0.1
+        { x: '10vw', opacity: 0, scale: 0.95 },
+        { x: 0, opacity: 1, scale: 1, duration: 1, ease: 'power3.out' },
+        0.2
       );
 
       const statItems = statsRef.current?.querySelectorAll('.stat-item');
       if (statItems) {
-        scrollTl.fromTo(
+        entranceTl.fromTo(
           statItems,
           { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.08, ease: 'power2.out' },
-          0.2
+          { y: 0, opacity: 1, stagger: 0.08, duration: 0.8, ease: 'power3.out' },
+          0.4
         );
       }
+
+      // SCROLL PIN & EXIT
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=100%',
+          pin: true,
+          scrub: 1,
+        },
+      });
 
       // EXIT
       scrollTl.to(
         [headlineRef.current, slashNavyRef.current, slashLimeRef.current, cardsRef.current],
-        { x: '-20vw', opacity: 0, ease: 'power2.in', duration: 0.3 },
-        0.75
+        { x: '-20vw', opacity: 0, ease: 'power2.in', duration: 0.5 },
+        0.5
       );
 
       scrollTl.to(
         mapPanelRef.current,
-        { x: '20vw', opacity: 0, ease: 'power2.in', duration: 0.3 },
-        0.75
+        { x: '20vw', opacity: 0, ease: 'power2.in', duration: 0.5 },
+        0.5
       );
     }, section);
 
@@ -113,9 +121,9 @@ const Coverage = ({ className = '' }: CoverageProps) => {
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src="/images/coverage_interchange.jpg"
-          alt="Highway interchange aerial view"
-          className="bg-full opacity-50"
+          src="/home_diz/photo_2026-04-26_13-47-51.jpg"
+          alt="Flatbed truck on road"
+          className="bg-full opacity-50 grayscale-[0.2]"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
       </div>

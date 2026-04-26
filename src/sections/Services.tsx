@@ -45,78 +45,80 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '+=150%',
-          pin: true,
-          scrub: 1,
-        },
-      });
+      // ENTRANCE TIMELINE - Plays immediately on mount
+      const entranceTl = gsap.timeline();
 
-      // ENTRANCE - More aggressive reveal for ONE TEAM
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         headlineRef.current,
-        { x: '-15vw', opacity: 0 },
-        { x: 0, opacity: 1, ease: 'power2.out', duration: 0.4 },
+        { x: '-10vw', opacity: 0 },
+        { x: 0, opacity: 1, ease: 'power3.out', duration: 1 },
         0
       );
 
-      // Sequential line reveal
       const lines = headlineRef.current?.querySelectorAll('.headline-line');
       if (lines) {
-        scrollTl.fromTo(
+        entranceTl.fromTo(
           lines,
-          { y: 80, opacity: 0, rotateX: -20 },
+          { y: 60, opacity: 0, rotateX: -15 },
           { 
             y: 0, 
             opacity: 1, 
             rotateX: 0, 
-            stagger: 0.4, 
+            stagger: 0.1, 
             duration: 0.8, 
-            ease: 'back.out(1.2)' 
+            ease: 'power3.out' 
           },
-          0.1
+          0.2
         );
       }
 
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         '.description-text',
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
-        0.8
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
+        0.5
       );
 
-      scrollTl.fromTo(
+      entranceTl.fromTo(
         [slashNavyRef.current, slashLimeRef.current],
         { x: '-100%', opacity: 0 },
-        { x: 0, opacity: 1, stagger: 0.1, ease: 'power2.out' },
+        { x: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'power3.out' },
         0
       );
 
       const serviceItems = serviceListRef.current?.querySelectorAll('.service-item');
       if (serviceItems) {
-        scrollTl.fromTo(
+        entranceTl.fromTo(
           serviceItems,
-          { x: '30vw', opacity: 0, scale: 0.9 },
-          { x: 0, opacity: 1, stagger: 0.1, scale: 1, ease: 'power2.out' },
-          0.1
+          { x: '10vw', opacity: 0, scale: 0.95 },
+          { x: 0, opacity: 1, stagger: 0.1, scale: 1, duration: 0.8, ease: 'power3.out' },
+          0.3
         );
       }
 
-      // EXIT
+      // SCROLL TIMELINE - Handles pinning and EXIT
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=100%',
+          pin: true,
+          scrub: 1,
+        },
+      });
+
+      // Exit animations
       scrollTl.to(
         [headlineRef.current, slashNavyRef.current, slashLimeRef.current],
-        { x: '-20vw', opacity: 0, ease: 'power2.in', duration: 0.3 },
-        0.75
+        { x: '-20vw', opacity: 0, ease: 'power2.in', duration: 0.5 },
+        0.5
       );
 
       if (serviceItems) {
         scrollTl.to(
           serviceItems,
-          { x: '20vw', opacity: 0, stagger: 0.05, ease: 'power2.in', duration: 0.3 },
-          0.75
+          { x: '20vw', opacity: 0, stagger: 0.05, ease: 'power2.in', duration: 0.5 },
+          0.5
         );
       }
 
@@ -140,24 +142,15 @@ const Services = ({ className = '', onApplyClick }: ServicesProps) => {
       className={`relative w-full h-screen overflow-hidden bg-background ${className}`}
     >
       {/* Dynamic Background Visuals */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Abstract Glows */}
-        <div 
-          className="absolute top-[20%] right-[-5%] w-[60vw] h-[60vw] opacity-30 will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(184,255,44,0.15) 0%, transparent 70%)',
-            filter: 'blur(100px)'
-          }}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/home_diz/photo_2026-04-26_13-48-53.jpg"
+          alt="Warehouse loading dock"
+          className="bg-full opacity-40 grayscale-[0.2]"
         />
-        <div 
-          className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] opacity-20 will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, #0f172a 0%, transparent 70%)',
-            filter: 'blur(80px)'
-          }}
-        />
+        <div className="bg-overlay" />
         
-        {/* Subtle Grid Pattern */}
+        {/* Subtle Grid Pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(184,255,44,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(184,255,44,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
       </div>
 

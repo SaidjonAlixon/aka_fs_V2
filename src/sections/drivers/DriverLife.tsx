@@ -9,10 +9,10 @@ const DriverLife = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const galleryItems = [
-    { title: 'Modern Fleet', img: '/images/Modern Fleet.jpeg', desc: 'Late-model Kenworth & Peterbilt trucks.' },
-    { title: 'Team Culture', img: '/images/Team Culture.jpeg', desc: 'A community of professionals.' },
-    { title: 'Expert Service', img: '/images/Expert Service.jpeg', desc: 'In-house maintenance protocols.' },
-    { title: 'Global Reach', img: '/images/Global Reach.jpeg', desc: 'Routes covering the entire US & Canada.' },
+    { title: 'Modern Fleet', img: '/drivers/333.jpg', desc: 'Late-model Kenworth & Peterbilt trucks.' },
+    { title: 'Team Culture', img: '/drivers/photo_2026-04-26_14-07-02.jpg', desc: 'A community of professionals.' },
+    { title: 'Expert Service', img: '/drivers/444.jpg', desc: 'In-house maintenance protocols.' },
+    { title: 'Global Reach', img: '/drivers/photo_2026-04-26_14-07-06.jpg', desc: 'Routes covering the entire US & Canada.' },
   ];
 
   useLayoutEffect(() => {

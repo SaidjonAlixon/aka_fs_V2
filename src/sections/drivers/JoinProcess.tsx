@@ -60,6 +60,20 @@ const JoinProcess = ({ onApplyClick }: JoinProcessProps) => {
           );
         });
 
+        // Title animation
+        gsap.fromTo('.join-title', 
+          { y: 30, opacity: 0 },
+          { 
+            y: 0, 
+            opacity: 1, 
+            duration: 1,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+            }
+          }
+        );
+
         // Line animation
         gsap.fromTo('.timeline-line',
             { scaleY: 0 },
@@ -84,14 +98,23 @@ const JoinProcess = ({ onApplyClick }: JoinProcessProps) => {
   return (
     <section 
       ref={sectionRef} 
-      className="relative py-24 md:py-32 bg-background"
+      className="relative py-24 md:py-32 bg-background overflow-hidden"
     >
-      <div className="container mx-auto px-6">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/drivers/photo_2026-04-26_14-07-06.jpg"
+          alt="Join AKA FS night truck"
+          className="w-full h-full object-cover opacity-10 grayscale"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+      </div>
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-20 md:mb-32">
           <span className="text-lime-dark dark:text-lime font-black tracking-[0.5em] uppercase text-xs mb-4 block">
             The Journey
           </span>
-          <h2 className="text-4xl md:text-8xl font-black text-foreground uppercase tracking-tighter leading-none">
+          <h2 className="join-title text-4xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
             HOW TO <span className="text-lime-dark dark:text-lime transition-colors">JOIN</span> AKA FS
           </h2>
         </div>

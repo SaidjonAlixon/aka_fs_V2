@@ -184,17 +184,17 @@ const Hero = ({ className = '', onApplyClick }: HeroProps) => {
 
       tl.fromTo('.hero-title-part', 
         { y: 100, opacity: 0 }, 
-        { y: 0, opacity: 1, stagger: 0.2, duration: 1.2, ease: 'power4.out' }
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power4.out' }
       )
       .fromTo('.hero-glass-card',
         { scale: 0.8, opacity: 0, backdropFilter: 'blur(0px)' },
-        { scale: 1, opacity: 1, backdropFilter: 'blur(24px)', stagger: 0.3, duration: 1.5, ease: 'elastic.out(1, 0.75)' },
-        "-=0.8"
+        { scale: 1, opacity: 1, backdropFilter: 'blur(24px)', stagger: 0.15, duration: 1.2, ease: 'elastic.out(1, 0.75)' },
+        "-=0.6"
       )
       .fromTo('.hero-cta-btn',
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
-        "-=1"
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' },
+        "-=0.8"
       );
 
       gsap.to('.float-element', {

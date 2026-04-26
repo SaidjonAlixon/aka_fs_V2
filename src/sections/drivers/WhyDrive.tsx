@@ -81,6 +81,16 @@ const WhyDrive = () => {
       id="why-choose"
       className="relative py-24 md:py-32 bg-background overflow-hidden"
     >
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/drivers/photo_2026-04-26_14-06-48.jpg"
+          alt="Driver city night"
+          className="w-full h-full object-cover opacity-35 grayscale-[0.3]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/40 to-background" />
+      </div>
+
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-lime/5 rounded-full blur-[120px] -mr-[25vw] -mt-[25vw]" />
       <div className="absolute bottom-0 left-0 w-[30vw] h-[30vw] bg-secondary rounded-full blur-[100px] -ml-[15vw] -mb-[15vw]" />
@@ -90,7 +100,7 @@ const WhyDrive = () => {
           <span className="text-lime-dark dark:text-lime font-black tracking-[0.3em] uppercase text-sm mb-4 block">
             Premium Carrier
           </span>
-          <h2 className="why-title text-4xl md:text-7xl lg:text-8xl font-black text-foreground uppercase tracking-tighter leading-none">
+          <h2 className="why-title text-4xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none">
             WHY DRIVERS CHOOSE <br className="hidden md:block" />
             <span className="text-outline text-transparent opacity-30">AKA FS</span>
           </h2>

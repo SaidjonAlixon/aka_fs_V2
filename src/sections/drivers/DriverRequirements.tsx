@@ -55,13 +55,22 @@ const DriverRequirements = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="relative py-24 md:py-32 bg-background"
+      className="relative py-24 md:py-32 bg-background overflow-hidden"
     >
-      <div className="container mx-auto px-6">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/drivers/photo_2026-04-26_14-06-30.jpg"
+          alt="Driver requirements white truck"
+          className="w-full h-full object-cover opacity-30 grayscale-[0.2]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/20 to-background" />
+      </div>
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16 md:mb-24">
-          <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-foreground uppercase tracking-tighter leading-none mb-6">
+          <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none mb-6">
             QUALIFICATION <br />
-            <span className="text-lime-dark dark:text-lime transition-colors">STANDARDS</span>
+            <span className="text-lime transition-colors">STANDARDS</span>
           </h2>
           <div className="w-24 h-1 bg-lime mx-auto mb-8" />
           <p className="text-text-secondary text-lg md:text-2xl max-w-2xl mx-auto uppercase tracking-widest font-black opacity-80 transition-opacity">
