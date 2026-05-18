@@ -72,16 +72,15 @@ const Navigation = ({ onApplyClick }: NavigationProps) => {
           </NavLink>
         ))}
         <div className="pt-8 w-full max-w-sm flex flex-col gap-4 items-center">
-          <ThemeToggle />
-            <button
-              onClick={() => {
-                onApplyClick?.();
-                setIsOpen(false);
-              }}
-              className="btn-primary w-full py-5 text-base"
-            >
-              Apply Now
-            </button>
+          <button
+            onClick={() => {
+              onApplyClick?.();
+              setIsOpen(false);
+            }}
+            className="btn-primary w-full py-5 text-base"
+          >
+            Apply Now
+          </button>
         </div>
       </div>
     </div>,
@@ -141,13 +140,18 @@ const Navigation = ({ onApplyClick }: NavigationProps) => {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden text-text-primary p-2"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X size={32} /> : <Menu size={32} />}
-          </button>
+          {/* Mobile: theme pill + menu (like reference layout) */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle variant="pill" />
+            <button
+              type="button"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-foreground/10 bg-background/90 text-text-primary shadow-sm backdrop-blur-sm transition-colors hover:border-foreground/20"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            >
+              {isOpen ? <X size={22} strokeWidth={2.5} /> : <Menu size={22} strokeWidth={2.5} />}
+            </button>
+          </div>
         </div>
       </nav>
 
