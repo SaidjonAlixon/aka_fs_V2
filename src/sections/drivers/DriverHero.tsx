@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { DollarSign, PiggyBank, Calendar, Truck, ArrowRight } from 'lucide-react';
+import { DollarSign, Truck, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,8 +18,6 @@ const DriverHero = ({ onApplyClick }: DriverHeroProps) => {
 
   const benefits = [
     { icon: DollarSign, text: 'Competitive Pay + Weekly Bonuses' },
-    { icon: PiggyBank, text: '401k Retirement Plan' },
-    { icon: Calendar, text: 'Paid Time Off' },
     { icon: Truck, text: 'New Equipment Fleet' },
   ];
 
