@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  X, Truck, Briefcase, CheckCircle2, 
+  X, Truck, CheckCircle2, 
   ArrowRight, ArrowLeft, Upload,
   ShieldCheck, MapPin, ChevronRight, ChevronDown,
   Loader2
@@ -12,7 +12,7 @@ interface DriverApplicationFormProps {
   onClose: () => void;
 }
 
-type PositionType = 'company' | 'owner' | 'lease';
+type PositionType = 'company' | 'owner';
 
 const STEP_COUNT = 4;
 
@@ -44,17 +44,6 @@ const initialFormData = {
   truckUnderEngineUrl: '',
   truckTires: null as File | null,
   truckTiresUrl: '',
-  // Lease Purchase – Documents & Truck (Step 3, 3-rasm)
-  leaseCapCard: null as File | null,
-  leaseCapCardUrl: '',
-  leaseAnnualInspection: null as File | null,
-  leaseAnnualInspectionUrl: '',
-  leaseTruckEngine: null as File | null,
-  leaseTruckEngineUrl: '',
-  leaseTruckUnderEngine: null as File | null,
-  leaseTruckUnderEngineUrl: '',
-  leaseTruckTires: null as File | null,
-  leaseTruckTiresUrl: '',
 };
 
 const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, onClose }) => {
@@ -96,11 +85,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
   const truckEngineRef = useRef<HTMLInputElement>(null);
   const truckUnderEngineRef = useRef<HTMLInputElement>(null);
   const truckTiresRef = useRef<HTMLInputElement>(null);
-  const leaseCapCardRef = useRef<HTMLInputElement>(null);
-  const leaseAnnualInspectionRef = useRef<HTMLInputElement>(null);
-  const leaseTruckEngineRef = useRef<HTMLInputElement>(null);
-  const leaseTruckUnderEngineRef = useRef<HTMLInputElement>(null);
-  const leaseTruckTiresRef = useRef<HTMLInputElement>(null);
 
   const CDL_OPTIONS = [
     { value: 'Class A', label: 'CLASS A CDL' },
@@ -142,15 +126,9 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
         documents.enginePhoto = formData.truckEngineUrl || undefined;
         documents.underEnginePhoto = formData.truckUnderEngineUrl || undefined;
         documents.tirePhoto = formData.truckTiresUrl || undefined;
-      } else if (selectedPosition === 'lease') {
-        documents.capCard = formData.leaseCapCardUrl || undefined;
-        documents.truckInspection = formData.leaseAnnualInspectionUrl || undefined;
-        documents.enginePhoto = formData.leaseTruckEngineUrl || undefined;
-        documents.underEnginePhoto = formData.leaseTruckUnderEngineUrl || undefined;
-        documents.tirePhoto = formData.leaseTruckTiresUrl || undefined;
       }
 
-      const positionLabel = selectedPosition === 'company' ? 'Company Driver' : selectedPosition === 'owner' ? 'Owner Operator' : 'Lease Purchase';
+      const positionLabel = selectedPosition === 'company' ? 'Company Driver' : 'Owner Operator';
       const experience = selectedPosition === 'company'
         ? String(formData.drivingExperienceYears)
         : (formData.experienceYears || '');
@@ -188,13 +166,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
       description: 'Bring your own truck and leverage our nationwide network for maximum earnings.',
       tags: ['High % Pay', 'Fuel Cards', '24/7 Dispatch', 'Flexibility'],
       icon: ShieldCheck
-    },
-    {
-      id: 'lease' as PositionType,
-      title: 'Lease Purchase',
-      description: 'Become your own boss with our path to truck ownership and stable support.',
-      tags: ['No Money Down', 'Maintenance Plan', 'Stable Freight', 'Success Support'],
-      icon: Briefcase
     }
   ];
 
@@ -224,7 +195,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
               Step {currentStep} of {STEP_COUNT} — {
                 currentStep === 1 ? 'Position Selection' :
                 currentStep === 2 ? 'Contact Details' :
-                currentStep === 3 ? (selectedPosition === 'company' ? 'Experience & License' : selectedPosition === 'owner' || selectedPosition === 'lease' ? 'Documents & Truck' : 'Professional Experience') : 'Application Review'
+                currentStep === 3 ? (selectedPosition === 'company' ? 'Experience & License' : selectedPosition === 'owner' ? 'Documents & Truck' : 'Professional Experience') : 'Application Review'
               }
             </p>
           </div>
@@ -725,145 +696,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
               </div>
             )}
 
-            {currentStep === 3 && selectedPosition === 'lease' && (
-              /* Lease Purchase – Documents & Truck (3-rasm) */
-              <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-6">
-                <h3 className="text-xl font-space font-black text-text-primary uppercase tracking-tight">Lease Purchase – Documents & Truck</h3>
-
-                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Registration Card (CAP Card)</label>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <input
-                      ref={leaseCapCardRef}
-                      type="file"
-                      accept="image/*,.pdf"
-                      className="hidden"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0] ?? null;
-                        setFormData((prev) => ({ ...prev, leaseCapCard: file, leaseCapCardUrl: '' }));
-                        if (file) {
-                          try {
-                            const url = await uploadToBlob(file);
-                            setFormData((prev) => ({ ...prev, leaseCapCardUrl: url }));
-                          } catch {}
-                        }
-                      }}
-                    />
-                     <button type="button" onClick={() => leaseCapCardRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.leaseCapCardUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.leaseCapCard ? (formData.leaseCapCardUrl ? 'UPLOAD' : formData.leaseCapCard.name) : 'File not selected'}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-2 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Annual truck inspection</label>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <input
-                      ref={leaseAnnualInspectionRef}
-                      type="file"
-                      accept="image/*,.pdf"
-                      className="hidden"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0] ?? null;
-                        setFormData((prev) => ({ ...prev, leaseAnnualInspection: file, leaseAnnualInspectionUrl: '' }));
-                        if (file) {
-                          try {
-                            const url = await uploadToBlob(file);
-                            setFormData((prev) => ({ ...prev, leaseAnnualInspectionUrl: url }));
-                          } catch {}
-                        }
-                      }}
-                    />
-                    <button type="button" onClick={() => leaseAnnualInspectionRef.current?.click()} className="px-5 py-3 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono font-bold uppercase tracking-widest hover:border-lime-dark dark:hover:border-lime hover:bg-lime-dark/10 dark:hover:bg-lime/10 transition-all">Choose file</button>
-                    <span className={`text-sm font-mono ${formData.leaseAnnualInspectionUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary'}`}>{formData.leaseAnnualInspection ? (formData.leaseAnnualInspectionUrl ? 'UPLOAD' : formData.leaseAnnualInspection.name) : 'File not selected'}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-3 p-4 rounded-sm border border-foreground/15 bg-foreground/[0.02]">
-                  <label className="text-[10px] font-mono font-bold text-text-primary uppercase tracking-[0.2em] block">Please upload truck pictures (engine, under engine, tires)</label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-text-secondary/70 uppercase">Engine</div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <input
-                          ref={leaseTruckEngineRef}
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0] ?? null;
-                            setFormData((prev) => ({ ...prev, leaseTruckEngine: file, leaseTruckEngineUrl: '' }));
-                            if (file) {
-                              try {
-                                const url = await uploadToBlob(file);
-                                setFormData((prev) => ({ ...prev, leaseTruckEngineUrl: url }));
-                              } catch {}
-                            }
-                          }}
-                        />
-                        <button type="button" onClick={() => leaseTruckEngineRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckEngineUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.leaseTruckEngine ? (formData.leaseTruckEngineUrl ? 'UPLOAD' : formData.leaseTruckEngine.name) : 'File not selected'}</span>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-text-secondary/70 uppercase">Under engine</div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <input
-                          ref={leaseTruckUnderEngineRef}
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0] ?? null;
-                            setFormData((prev) => ({ ...prev, leaseTruckUnderEngine: file, leaseTruckUnderEngineUrl: '' }));
-                            if (file) {
-                              try {
-                                const url = await uploadToBlob(file);
-                                setFormData((prev) => ({ ...prev, leaseTruckUnderEngineUrl: url }));
-                              } catch {}
-                            }
-                          }}
-                        />
-                        <button type="button" onClick={() => leaseTruckUnderEngineRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckUnderEngineUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.leaseTruckUnderEngine ? (formData.leaseTruckUnderEngineUrl ? 'UPLOAD' : formData.leaseTruckUnderEngine.name) : 'File not selected'}</span>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-text-secondary/70 uppercase">Tires</div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <input
-                          ref={leaseTruckTiresRef}
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0] ?? null;
-                            setFormData((prev) => ({ ...prev, leaseTruckTires: file, leaseTruckTiresUrl: '' }));
-                            if (file) {
-                              try {
-                                const url = await uploadToBlob(file);
-                                setFormData((prev) => ({ ...prev, leaseTruckTiresUrl: url }));
-                              } catch {}
-                            }
-                          }}
-                        />
-                        <button type="button" onClick={() => leaseTruckTiresRef.current?.click()} className="px-4 py-2 border-2 border-foreground/30 bg-foreground/5 text-text-primary text-xs font-mono uppercase tracking-wider hover:border-lime-dark dark:hover:border-lime transition-all">Choose file</button>
-                        <span className={`text-xs font-mono truncate ${formData.leaseTruckTiresUrl ? 'text-lime-dark dark:text-lime' : 'text-text-secondary/50'}`}>{formData.leaseTruckTires ? (formData.leaseTruckTiresUrl ? 'UPLOAD' : formData.leaseTruckTires.name) : 'File not selected'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <label className="flex items-start gap-4 cursor-pointer group">
-                  <div className="relative mt-0.5">
-                    <input type="checkbox" className="peer sr-only" checked={formData.termsAccepted} onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })} />
-                    <div className="w-5 h-5 bg-transparent border-2 border-foreground/30 rounded-sm peer-checked:bg-lime-dark dark:peer-checked:bg-lime peer-checked:border-lime-dark dark:peer-checked:border-lime transition-all" />
-                    <CheckCircle2 className="absolute top-0 left-0 w-5 h-5 text-white dark:text-black opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
-                  </div>
-                  <span className="text-sm text-text-primary leading-relaxed">Accept terms and conditions</span>
-                </label>
-              </div>
-            )}
-
             {currentStep === 4 && (
               <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
@@ -871,7 +703,7 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                     <div>
                       <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Selected Position</div>
                       <div className="text-lime-dark dark:text-lime font-space font-black uppercase text-lg md:text-xl">
-                        {selectedPosition === 'company' ? 'Company Driver' : selectedPosition === 'owner' ? 'Owner Operator' : selectedPosition === 'lease' ? 'Lease Purchase' : ''}
+                        {selectedPosition === 'company' ? 'Company Driver' : selectedPosition === 'owner' ? 'Owner Operator' : ''}
                       </div>
                     </div>
                     <div>
@@ -924,19 +756,6 @@ const DriverApplicationForm: React.FC<DriverApplicationFormProps> = ({ isOpen, o
                     </div>
                   </div>
                 )}
-                {selectedPosition === 'lease' && (formData.leaseCapCard || formData.leaseAnnualInspection || formData.leaseTruckEngine || formData.leaseTruckUnderEngine || formData.leaseTruckTires) && (
-                  <div>
-                    <div className="text-[10px] font-mono text-text-secondary/60 uppercase tracking-[0.2em] mb-1">Documents & Truck</div>
-                    <div className="text-text-primary/80 text-sm font-mono space-y-1">
-                      {formData.leaseCapCard && <div>Registration (CAP Card): {formData.leaseCapCard.name}</div>}
-                      {formData.leaseAnnualInspection && <div>Annual truck inspection: {formData.leaseAnnualInspection.name}</div>}
-                      {formData.leaseTruckEngine && <div>Truck (engine): {formData.leaseTruckEngine.name}</div>}
-                      {formData.leaseTruckUnderEngine && <div>Truck (under engine): {formData.leaseTruckUnderEngine.name}</div>}
-                      {formData.leaseTruckTires && <div>Truck (tires): {formData.leaseTruckTires.name}</div>}
-                    </div>
-                  </div>
-                )}
-
                 {submitError && (
                   <p className="text-red-500 dark:text-red-400 text-sm font-mono">{submitError}</p>
                 )}
